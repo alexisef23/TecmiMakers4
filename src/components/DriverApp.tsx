@@ -83,9 +83,9 @@ export function DriverApp({ onLogout }: DriverAppProps) {
       <div className="bg-emerald-600 dark:bg-emerald-800 text-white p-4 sticky top-0 z-10 shadow-lg">
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center gap-3">
-            <img src={oxxoGoLogo} alt="OXXO GO" className="w-10 h-10" />
+            {/* Removed OXXO GO logo and name */}
             <div>
-              <h1 className="text-lg">App Conductor</h1>
+              <h1 className="text-lg font-semibold">Panel del Conductor</h1>
               <p className="text-xs text-emerald-100 dark:text-emerald-200">Juan Pérez - VH-001</p>
             </div>
           </div>

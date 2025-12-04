@@ -45,14 +45,6 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
         } flex flex-col`}
       >
         <div className="p-4 border-b border-blue-800 dark:border-blue-900 flex items-center justify-between">
-          {sidebarOpen ? (
-            <div className="flex items-center gap-3">
-              <img src={oxxoGoLogo} alt="OXXO GO" className="w-10 h-10" />
-              <span className="font-semibold">OXXO GO</span>
-            </div>
-          ) : (
-            <img src={oxxoGoLogo} alt="OXXO GO" className="w-8 h-8 mx-auto hidden lg:block" />
-          )}
           <Button
             variant="ghost"
             size="icon"

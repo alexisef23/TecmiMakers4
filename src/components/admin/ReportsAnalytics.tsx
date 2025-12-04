@@ -71,6 +71,7 @@ export function ReportsAnalytics() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
+          {/* Removed OXXO GO logo and name */}
           <h1>Reportes y Analíticas</h1>
           <p className="text-slate-600 mt-1">Análisis detallado de métricas y rendimiento</p>
         </div>

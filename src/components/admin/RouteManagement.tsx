@@ -239,15 +239,15 @@ export function RouteManagement() {
                       <div className="flex items-center gap-2">
                         <Navigation className="w-4 h-4 text-blue-900" />
                         <div>
-                          <div>{route.name}</div>
-                          <div className="text-xs text-slate-500">{route.distance}</div>
+                          <p className="font-medium dark:text-white">{route.name}</p>
+                          <div className="text-xs text-slate-500 dark:text-slate-300">{route.distance}</div>
                         </div>
                       </div>
                     </TableCell>
                     <TableCell>
                       <Badge 
                         variant={route.status === 'Activa' ? 'default' : 'secondary'}
-                        className={route.status === 'Activa' ? 'bg-emerald-600' : ''}
+                        className={route.status === 'Activa' ? 'bg-emerald-600 dark:bg-emerald-700' : ''}
                       >
                         {route.status}
                       </Badge>
@@ -291,7 +291,7 @@ export function RouteManagement() {
       </Card>
 
       {/* Route Optimization Card */}
-      <Card className="border-l-4 border-l-emerald-600">
+      <Card className="border-l-4 border-l-emerald-600 dark:bg-slate-900 dark:border-slate-700">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Navigation className="w-5 h-5 text-emerald-600" />
@@ -300,17 +300,17 @@ export function RouteManagement() {
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="bg-slate-50 p-4 rounded-lg">
-              <p className="text-sm text-slate-600 mb-1">Distancia Total Diaria</p>
-              <p className="text-2xl">123.6 km</p>
+            <div className="bg-slate-50 dark:bg-slate-800 p-4 rounded-lg">
+              <p className="text-sm text-slate-600 dark:text-slate-300 mb-1">Distancia Total Diaria</p>
+              <p className="text-2xl dark:text-white">123.6 km</p>
             </div>
-            <div className="bg-slate-50 p-4 rounded-lg">
-              <p className="text-sm text-slate-600 mb-1">Tiempo Promedio de Ruta</p>
-              <p className="text-2xl">1h 45m</p>
+            <div className="bg-slate-50 dark:bg-slate-800 p-4 rounded-lg">
+              <p className="text-sm text-slate-600 dark:text-slate-300 mb-1">Tiempo Promedio de Ruta</p>
+              <p className="text-2xl dark:text-white">1h 45m</p>
             </div>
-            <div className="bg-slate-50 p-4 rounded-lg">
-              <p className="text-sm text-slate-600 mb-1">Eficiencia Estimada</p>
-              <p className="text-2xl text-emerald-600">92%</p>
+            <div className="bg-slate-50 dark:bg-slate-800 p-4 rounded-lg">
+              <p className="text-sm text-slate-600 dark:text-slate-300 mb-1">Eficiencia Estimada</p>
+              <p className="text-2xl text-emerald-600 dark:text-emerald-400">92%</p>
             </div>
           </div>
           <div className="mt-4">
