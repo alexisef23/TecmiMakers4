@@ -1,0 +1,22 @@
+Actúa como un desarrollador experto en frontend, UI y accesibilidad. Necesito realizar una limpieza profunda de funcionalidades obsoletas y corregir inconsistencias visuales severas en el modo oscuro, además de actualizar assets gráficos.
+
+Por favor, ejecuta las siguientes tareas paso a paso en el código:
+
+1. **LIMPIEZA DE CÓDIGO (FUNCIONALIDAD INACTIVA):**
+   - **Eliminar Modo Daltonismo:** Busca y elimina absolutamente todo el código relacionado con el "modo daltonismo" (funciones JS, variables de estado, clases CSS específicas, y selectores HTML).
+   - **Eliminar Opción "Equipo" (Empleado):** En la barra de navegación o menú del panel de "Empleado", elimina el botón o enlace que lleva a la sección "Equipo". Si existe una ruta o vista asociada que quede huérfana, elimínala también.
+
+2. **IMPLEMENTACIÓN DE TOGGLE MODO OSCURO (ADMIN/CONDUCTOR):**
+   - Agrega el botón/interruptor funcional para activar/desactivar el "Modo Oscuro" en los encabezados (headers) de las vistas de **Administrador** y **Conductor**. Debe funcionar exactamente igual que el del Login (asegurando que la preferencia se guarde y aplique).
+
+3. **CORRECCIÓN VISUAL PROFUNDA DEL MODO OSCURO:**
+   - **Vistas de Empleado:** Corrige la aplicación de estilos oscuros en las secciones Inicio, Alertas e Historial. Los fondos y textos deben ser coherentes.
+   - **Widgets de Datos y Mapas (CRÍTICO):** Actualmente, los widgets que contienen números, letras informativas y mapas se ven mal en modo oscuro.
+     - *Texto/Números:* Asegura que los contenedores de métricas tengan el fondo oscuro correcto y que el texto tenga suficiente contraste (blanco o gris claro) para ser legible.
+     - *Mapas:* Si utilizas librerías de mapas (Google Maps, Leaflet, Mapbox), fuerza el estilo oscuro en el mapa mismo (cambiando el 'tile layer' o el estilo del mapa) para que no desentone con el resto de la interfaz oscura.
+
+4. **REEMPLAZO DE LOGOTIPO:**
+   - Localiza la etiqueta `<img>` del logotipo principal situado en la parte superior izquierda de las barras de navegación de los paneles de **Administrador**, **Conductor** y **Empleado**.
+   - Cambia la ruta (`src`) de esas imágenes para que apunten al nuevo archivo de imagen que he subido al proyecto llamado: `[NOMBRE_EXACTO_DE_TU_IMAGEN.png]`. Adecúa el tamaño si es necesario para que no rompa el header.
+
+Por favor, confirma cuando hayas realizado estos cambios y verifica que la navegación y la visualización en modo oscuro sean fluidas y coherentes en todas las secciones y widgets.
