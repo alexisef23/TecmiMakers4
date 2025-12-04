@@ -36,40 +36,11 @@ export function LoadingScreen({ onLoadingComplete }: { onLoadingComplete: () => 
       >
         <div className="relative">
           {/* Logo OXXO GO */}
-          <svg width="120" height="120" viewBox="0 0 120 120" className="drop-shadow-2xl">
-            {/* Fondo circular */}
-            <circle cx="60" cy="60" r="55" fill="#1e3a8a" />
-            
-            {/* X roja */}
-            <path
-              d="M 35 35 L 50 50 M 50 35 L 35 50"
-              stroke="#dc2626"
-              strokeWidth="6"
-              strokeLinecap="round"
-            />
-            
-            {/* Camión amarillo simplificado */}
-            <rect x="50" y="45" width="35" height="20" rx="3" fill="#fbbf24" />
-            <rect x="75" y="50" width="8" height="15" fill="#f59e0b" />
-            <circle cx="60" cy="68" r="4" fill="#1e3a8a" />
-            <circle cx="75" cy="68" r="4" fill="#1e3a8a" />
-            
-            {/* Arcos decorativos */}
-            <path
-              d="M 25 75 Q 30 65 35 75"
-              stroke="#dc2626"
-              strokeWidth="3"
-              fill="none"
-              strokeLinecap="round"
-            />
-            <path
-              d="M 85 75 Q 90 65 95 75"
-              stroke="#fbbf24"
-              strokeWidth="3"
-              fill="none"
-              strokeLinecap="round"
-            />
-          </svg>
+          <img 
+            src="/src/assets/oxxo-go-logo.png" 
+            alt="OXXO GO Logo" 
+            className="w-32 h-32 drop-shadow-2xl rounded-3xl"
+          />
           
           {/* Resplandor */}
           <div className="absolute inset-0 -z-10 animate-pulse">
