@@ -36,7 +36,7 @@ import {
   SelectValue,
 } from './ui/select';
 import { ThemeToggle } from './ThemeToggle';
-import oxxoGoLogo from 'figma:asset/7b84f0311e8c52a14b450647f0813bd5b562c75b.png';
+import oxxoGoLogo from '../assets/oxxo-go-logo.png';
 
 interface DriverAppProps {
   onLogout: () => void;
@@ -103,68 +103,68 @@ export function DriverApp({ onLogout }: DriverAppProps) {
         {activeView === 'dashboard' && (
           <div className="space-y-4">
             {/* Status Card */}
-            <Card className="border-l-4 border-l-emerald-600">
+            <Card className="border-l-4 border-l-emerald-600 dark:bg-slate-900 dark:border-slate-700 dark:border-l-emerald-500">
               <CardContent className="pt-6">
                 <div className="flex items-center justify-between mb-4">
                   <div>
-                    <p className="text-sm text-slate-600">Estado</p>
+                    <p className="text-sm text-slate-600 dark:text-slate-400">Estado</p>
                     <div className="flex items-center gap-2 mt-1">
-                      <div className="w-3 h-3 bg-emerald-500 rounded-full animate-pulse"></div>
-                      <span className="text-lg">Disponible</span>
+                      <div className="w-3 h-3 bg-emerald-500 dark:bg-emerald-400 rounded-full animate-pulse"></div>
+                      <span className="text-lg dark:text-white">Disponible</span>
                     </div>
                   </div>
-                  <Badge className="bg-emerald-600">En Servicio</Badge>
+                  <Badge className="bg-emerald-600 dark:bg-emerald-700">En Servicio</Badge>
                 </div>
                 <div className="grid grid-cols-2 gap-4 text-center">
-                  <div className="bg-slate-50 p-3 rounded-lg">
-                    <Clock className="w-5 h-5 mx-auto mb-1 text-blue-600" />
-                    <p className="text-sm text-slate-600">Hoy</p>
-                    <p className="text-xl">2 viajes</p>
+                  <div className="bg-slate-50 dark:bg-slate-800 p-3 rounded-lg">
+                    <Clock className="w-5 h-5 mx-auto mb-1 text-blue-600 dark:text-blue-400" />
+                    <p className="text-sm text-slate-600 dark:text-slate-400">Hoy</p>
+                    <p className="text-xl dark:text-white">2 viajes</p>
                   </div>
-                  <div className="bg-slate-50 p-3 rounded-lg">
-                    <Users className="w-5 h-5 mx-auto mb-1 text-emerald-600" />
-                    <p className="text-sm text-slate-600">Total</p>
-                    <p className="text-xl">22 pasajeros</p>
+                  <div className="bg-slate-50 dark:bg-slate-800 p-3 rounded-lg">
+                    <Users className="w-5 h-5 mx-auto mb-1 text-emerald-600 dark:text-emerald-400" />
+                    <p className="text-sm text-slate-600 dark:text-slate-400">Total</p>
+                    <p className="text-xl dark:text-white">22 pasajeros</p>
                   </div>
                 </div>
               </CardContent>
             </Card>
 
             {/* Current Trip */}
-            <Card className="border-2 border-blue-600">
-              <CardHeader className="bg-blue-50">
-                <CardTitle className="flex items-center gap-2">
-                  <Navigation className="w-5 h-5 text-blue-600" />
+            <Card className="border-2 border-blue-600 dark:bg-slate-900 dark:border-slate-700 dark:border-blue-500">
+              <CardHeader className="bg-blue-50 dark:bg-slate-800">
+                <CardTitle className="flex items-center gap-2 dark:text-white">
+                  <Navigation className="w-5 h-5 text-blue-600 dark:text-blue-400" />
                   Viaje Actual
                 </CardTitle>
               </CardHeader>
               <CardContent className="pt-6 space-y-4">
                 <div>
-                  <p className="text-sm text-slate-600">Ruta</p>
-                  <p className="font-semibold">{currentTrip.route}</p>
+                  <p className="text-sm text-slate-600 dark:text-slate-400">Ruta</p>
+                  <p className="font-semibold dark:text-white">{currentTrip.route}</p>
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <p className="text-sm text-slate-600">Hora de Inicio</p>
+                    <p className="text-sm text-slate-600 dark:text-slate-400">Hora de Inicio</p>
                     <div className="flex items-center gap-1 mt-1">
-                      <Clock className="w-4 h-4 text-slate-500" />
-                      <span>{currentTrip.startTime}</span>
+                      <Clock className="w-4 h-4 text-slate-500 dark:text-slate-400" />
+                      <span className="dark:text-white">{currentTrip.startTime}</span>
                     </div>
                   </div>
                   <div>
-                    <p className="text-sm text-slate-600">ETA Final</p>
+                    <p className="text-sm text-slate-600 dark:text-slate-400">ETA Final</p>
                     <div className="flex items-center gap-1 mt-1">
-                      <Clock className="w-4 h-4 text-emerald-600" />
-                      <span>{currentTrip.eta}</span>
+                      <Clock className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+                      <span className="dark:text-white">{currentTrip.eta}</span>
                     </div>
                   </div>
                 </div>
                 <div>
-                  <p className="text-sm text-slate-600 mb-2">Pasajeros</p>
+                  <p className="text-sm text-slate-600 dark:text-slate-400 mb-2">Pasajeros</p>
                   <div className="flex items-center gap-2">
-                    <Users className="w-4 h-4 text-slate-500" />
-                    <span className="text-lg">{currentTrip.passengers}</span>
-                    <Badge variant="outline">12 embarcados</Badge>
+                    <Users className="w-4 h-4 text-slate-500 dark:text-slate-400" />
+                    <span className="text-lg dark:text-white">{currentTrip.passengers}</span>
+                    <Badge variant="outline" className="dark:border-slate-600 dark:text-slate-300">12 embarcados</Badge>
                   </div>
                 </div>
                 <div className="grid grid-cols-2 gap-2">
@@ -219,18 +219,18 @@ export function DriverApp({ onLogout }: DriverAppProps) {
             </div>
 
             {/* Upcoming Trips */}
-            <Card>
+            <Card className="dark:bg-slate-900 dark:border-slate-700">
               <CardHeader>
-                <CardTitle className="text-lg">Próximos Viajes</CardTitle>
+                <CardTitle className="text-lg dark:text-white">Próximos Viajes</CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
                 {upcomingTrips.map((trip) => (
-                  <div key={trip.id} className="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
+                  <div key={trip.id} className="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-800 rounded-lg">
                     <div>
-                      <p className="font-medium">{trip.route}</p>
-                      <p className="text-sm text-slate-600">{trip.time}</p>
+                      <p className="font-medium dark:text-white">{trip.route}</p>
+                      <p className="text-sm text-slate-600 dark:text-slate-400">{trip.time}</p>
                     </div>
-                    <Badge variant="outline">{trip.passengers} pax</Badge>
+                    <Badge variant="outline" className="dark:border-slate-600 dark:text-slate-300">{trip.passengers} pax</Badge>
                   </div>
                 ))}
               </CardContent>
@@ -240,32 +240,32 @@ export function DriverApp({ onLogout }: DriverAppProps) {
 
         {activeView === 'navigation' && (
           <div className="space-y-4">
-            <Button variant="outline" onClick={() => setActiveView('dashboard')}>
+            <Button variant="outline" onClick={() => setActiveView('dashboard')} className="dark:border-slate-600 dark:text-white dark:hover:bg-slate-800">
               ← Volver
             </Button>
 
             {/* Map Simulation */}
-            <Card>
+            <Card className="dark:bg-slate-900 dark:border-slate-700">
               <CardContent className="p-0">
-                <div className="bg-gradient-to-br from-blue-100 to-emerald-100 h-80 flex items-center justify-center rounded-t-lg relative">
-                  <div className="text-center p-4 bg-white/90 rounded-lg shadow-lg">
-                    <MapPin className="w-12 h-12 mx-auto mb-2 text-blue-600" />
-                    <p>Mapa en Tiempo Real</p>
-                    <p className="text-sm text-slate-600 mt-1">Google Maps / Waze</p>
+                <div className="bg-gradient-to-br from-blue-100 to-emerald-100 dark:from-blue-900/30 dark:to-emerald-900/30 h-80 flex items-center justify-center rounded-t-lg relative dark:border dark:border-slate-700">
+                  <div className="text-center p-4 bg-white/90 dark:bg-slate-800/90 rounded-lg shadow-lg">
+                    <MapPin className="w-12 h-12 mx-auto mb-2 text-blue-600 dark:text-blue-400" />
+                    <p className="dark:text-white">Mapa en Tiempo Real</p>
+                    <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">Google Maps / Waze</p>
                   </div>
-                  <div className="absolute top-4 right-4 bg-white px-3 py-2 rounded-lg shadow">
-                    <p className="text-sm">Próxima parada</p>
-                    <p className="font-semibold">Politécnico</p>
-                    <p className="text-xs text-slate-600">500m - 2 min</p>
+                  <div className="absolute top-4 right-4 bg-white dark:bg-slate-800 px-3 py-2 rounded-lg shadow">
+                    <p className="text-sm dark:text-slate-400">Próxima parada</p>
+                    <p className="font-semibold dark:text-white">Politécnico</p>
+                    <p className="text-xs text-slate-600 dark:text-slate-400">500m - 2 min</p>
                   </div>
                 </div>
               </CardContent>
             </Card>
 
             {/* Route Progress */}
-            <Card>
+            <Card className="dark:bg-slate-900 dark:border-slate-700">
               <CardHeader>
-                <CardTitle className="text-lg">Progreso de Ruta</CardTitle>
+                <CardTitle className="text-lg dark:text-white">Progreso de Ruta</CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
                 {currentTrip.stops.map((stop, index) => (
@@ -288,19 +288,19 @@ export function DriverApp({ onLogout }: DriverAppProps) {
                     </div>
                     <div className="flex-1 pb-2">
                       <div className="flex items-center justify-between">
-                        <p className="font-medium">{stop.name}</p>
+                        <p className="font-medium dark:text-white">{stop.name}</p>
                         <Badge variant={
                           stop.status === 'completed' ? 'default' : 
                           stop.status === 'current' ? 'default' : 'outline'
                         } className={
-                          stop.status === 'completed' ? 'bg-emerald-600' :
-                          stop.status === 'current' ? 'bg-blue-600' : ''
+                          stop.status === 'completed' ? 'bg-emerald-600 dark:bg-emerald-700' :
+                          stop.status === 'current' ? 'bg-blue-600 dark:bg-blue-700' : 'dark:border-slate-600 dark:text-slate-300'
                         }>
                           {stop.status === 'completed' ? 'Completado' :
                            stop.status === 'current' ? 'Actual' : stop.time}
                         </Badge>
                       </div>
-                      <p className="text-sm text-slate-600">{stop.address}</p>
+                      <p className="text-sm text-slate-600 dark:text-slate-400">{stop.address}</p>
                     </div>
                   </div>
                 ))}
@@ -311,36 +311,36 @@ export function DriverApp({ onLogout }: DriverAppProps) {
 
         {activeView === 'passengers' && (
           <div className="space-y-4">
-            <Button variant="outline" onClick={() => setActiveView('dashboard')}>
+            <Button variant="outline" onClick={() => setActiveView('dashboard')} className="dark:border-slate-600 dark:text-white dark:hover:bg-slate-800">
               ← Volver
             </Button>
 
-            <Card>
+            <Card className="dark:bg-slate-900 dark:border-slate-700">
               <CardHeader>
-                <CardTitle className="text-lg">Lista de Pasajeros</CardTitle>
-                <p className="text-sm text-slate-600">{passengers.length} pasajeros totales</p>
+                <CardTitle className="text-lg dark:text-white">Lista de Pasajeros</CardTitle>
+                <p className="text-sm text-slate-600 dark:text-slate-400">{passengers.length} pasajeros totales</p>
               </CardHeader>
               <CardContent className="space-y-3">
                 {passengers.map((passenger) => (
-                  <div key={passenger.id} className="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
+                  <div key={passenger.id} className="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-800 rounded-lg">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-blue-600 text-white rounded-full flex items-center justify-center">
+                      <div className="w-10 h-10 bg-blue-600 dark:bg-blue-700 text-white rounded-full flex items-center justify-center">
                         {passenger.avatar}
                       </div>
                       <div>
-                        <p className="font-medium">{passenger.name}</p>
-                        <p className="text-xs text-slate-600">{passenger.stop}</p>
+                        <p className="font-medium dark:text-white">{passenger.name}</p>
+                        <p className="text-xs text-slate-600 dark:text-slate-400">{passenger.stop}</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-2">
                       {passenger.status === 'boarded' ? (
-                        <Badge className="bg-emerald-600">Embarcado</Badge>
+                        <Badge className="bg-emerald-600 dark:bg-emerald-700">Embarcado</Badge>
                       ) : (
                         <div className="flex gap-2">
-                          <Button size="sm" variant="outline">
+                          <Button size="sm" variant="outline" className="dark:border-slate-600 dark:text-white dark:hover:bg-slate-700">
                             <QrCode className="w-4 h-4" />
                           </Button>
-                          <Button size="sm" variant="outline" className="text-red-600">
+                          <Button size="sm" variant="outline" className="text-red-600 dark:text-red-400 dark:border-slate-600 dark:hover:bg-slate-700">
                             <UserX className="w-4 h-4" />
                           </Button>
                         </div>
@@ -355,22 +355,22 @@ export function DriverApp({ onLogout }: DriverAppProps) {
 
         {activeView === 'history' && (
           <div className="space-y-4">
-            <Button variant="outline" onClick={() => setActiveView('dashboard')}>
+            <Button variant="outline" onClick={() => setActiveView('dashboard')} className="dark:border-slate-600 dark:text-white dark:hover:bg-slate-800">
               ← Volver
             </Button>
 
-            <Card>
+            <Card className="dark:bg-slate-900 dark:border-slate-700">
               <CardHeader>
-                <CardTitle className="text-lg">Historial de Viajes</CardTitle>
+                <CardTitle className="text-lg dark:text-white">Historial de Viajes</CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
                 {[1, 2, 3, 4, 5].map((i) => (
-                  <div key={i} className="p-3 bg-slate-50 rounded-lg">
+                  <div key={i} className="p-3 bg-slate-50 dark:bg-slate-800 rounded-lg">
                     <div className="flex items-center justify-between mb-2">
-                      <p className="font-medium">Ruta Norte - Corporativo</p>
-                      <Badge className="bg-emerald-600">Completado</Badge>
+                      <p className="font-medium dark:text-white">Ruta Norte - Corporativo</p>
+                      <Badge className="bg-emerald-600 dark:bg-emerald-700">Completado</Badge>
                     </div>
-                    <div className="grid grid-cols-2 gap-2 text-sm text-slate-600">
+                    <div className="grid grid-cols-2 gap-2 text-sm text-slate-600 dark:text-slate-400">
                       <div>18/11/2025</div>
                       <div>12 pasajeros</div>
                     </div>

@@ -129,14 +129,14 @@ export function EmployeeApp({ onLogout }: EmployeeAppProps) {
             {activeView === 'home' && (
               <div className="space-y-4">
                 {/* Today's Transport Card */}
-                <Card className="border-l-4 border-l-blue-600 dark:bg-slate-900 dark:border-slate-700">
-                  <CardHeader className="bg-blue-50 dark:bg-blue-900/30">
+                <Card className="border-l-4 border-l-blue-600 dark:bg-slate-900 dark:border-l-blue-500">
+                  <CardHeader className="bg-blue-50 dark:bg-slate-800">
                     <CardTitle className="flex items-center gap-2 dark:text-white">
                       <Bus className="w-5 h-5 text-blue-600 dark:text-blue-400" />
                       Mi Transporte de Hoy
                     </CardTitle>
                   </CardHeader>
-                  <CardContent className="pt-6 space-y-4">
+                  <CardContent className="pt-6 space-y-4 dark:bg-slate-900">
                     <div className="flex items-start justify-between">
                       <div>
                         <p className="text-sm text-slate-600 dark:text-slate-400">Hora de Recogida</p>
@@ -193,28 +193,30 @@ export function EmployeeApp({ onLogout }: EmployeeAppProps) {
                 <Card className="dark:bg-slate-900 dark:border-slate-700">
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2 text-lg dark:text-white">
-                      <QrCode className="w-5 h-5" />
+                      <QrCode className="w-5 h-5 dark:text-blue-400" />
                       Tu Código Personal
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="bg-gradient-to-br from-blue-600 to-blue-700 dark:from-blue-700 dark:to-blue-900 p-8 rounded-lg text-center shadow-lg">
-                      <p className="text-sm text-blue-100 mb-3">Código de Empleado</p>
+                      <p className="text-sm text-blue-100 dark:text-blue-200 mb-3">Código de Empleado</p>
                       <div className="text-6xl text-white tracking-wider mb-3" style={{ fontFamily: 'monospace' }}>
                         {todayTransport.employeeCode}
                       </div>
-                      <p className="text-sm text-blue-100">Proporciona este código al abordar</p>
+                      <p className="text-sm text-blue-100 dark:text-blue-200">Proporciona este código al abordar</p>
                     </div>
                   </CardContent>
                 </Card>
 
                 {/* Live Map */}
-                <Card>
+                <Card className="dark:bg-slate-900 dark:border-slate-700">
                   <CardHeader>
-                    <CardTitle className="text-lg">Ubicación en Tiempo Real</CardTitle>
+                    <CardTitle className="text-lg dark:text-white">Ubicación en Tiempo Real</CardTitle>
                   </CardHeader>
                   <CardContent className="p-0">
-                    <GoogleMap />
+                    <div className="dark:border dark:border-slate-700 rounded-b-lg overflow-hidden">
+                      <GoogleMap />
+                    </div>
                   </CardContent>
                 </Card>
 
@@ -293,10 +295,10 @@ export function EmployeeApp({ onLogout }: EmployeeAppProps) {
                             <p className="text-sm text-slate-600 dark:text-slate-400">{trip.date}</p>
                           </div>
                           <div className="text-right">
-                            <Badge className="bg-emerald-600 mb-1">{trip.status}</Badge>
+                            <Badge className="bg-emerald-600 dark:bg-emerald-700 mb-1">{trip.status}</Badge>
                             <div className="flex items-center gap-1 text-sm">
                               {[...Array(trip.rating)].map((_, i) => (
-                                <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
+                                <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400 dark:fill-amber-500 dark:text-amber-500" />
                               ))}
                             </div>
                           </div>
@@ -318,70 +320,70 @@ export function EmployeeApp({ onLogout }: EmployeeAppProps) {
               <div className="space-y-4">
                 {/* Summary Cards */}
                 <div className="grid grid-cols-2 gap-4">
-                  <Card>
+                  <Card className="dark:bg-slate-900 dark:border-slate-700">
                     <CardContent className="pt-6 text-center">
-                      <Users className="w-8 h-8 mx-auto mb-2 text-blue-600" />
-                      <p className="text-2xl">18</p>
-                      <p className="text-sm text-slate-600">Empleados Totales</p>
+                      <Users className="w-8 h-8 mx-auto mb-2 text-blue-600 dark:text-blue-400" />
+                      <p className="text-2xl dark:text-white">18</p>
+                      <p className="text-sm text-slate-600 dark:text-slate-400">Empleados Totales</p>
                     </CardContent>
                   </Card>
-                  <Card>
+                  <Card className="dark:bg-slate-900 dark:border-slate-700">
                     <CardContent className="pt-6 text-center">
-                      <Bus className="w-8 h-8 mx-auto mb-2 text-emerald-600" />
-                      <p className="text-2xl">3</p>
-                      <p className="text-sm text-slate-600">Rutas Asignadas</p>
+                      <Bus className="w-8 h-8 mx-auto mb-2 text-emerald-600 dark:text-emerald-400" />
+                      <p className="text-2xl dark:text-white">3</p>
+                      <p className="text-sm text-slate-600 dark:text-slate-400">Rutas Asignadas</p>
                     </CardContent>
                   </Card>
                 </div>
 
                 {/* Transport Status */}
-                <Card>
+                <Card className="dark:bg-slate-900 dark:border-slate-700">
                   <CardHeader>
-                    <CardTitle className="text-lg">Estado de Transportes</CardTitle>
+                    <CardTitle className="text-lg dark:text-white">Estado de Transportes</CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-3">
-                    <div className="flex items-center justify-between p-3 bg-emerald-50 rounded-lg">
+                    <div className="flex items-center justify-between p-3 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg">
                       <div>
-                        <p className="font-medium">Ruta Norte</p>
-                        <p className="text-sm text-slate-600">12/12 embarcados</p>
+                        <p className="font-medium dark:text-white">Ruta Norte</p>
+                        <p className="text-sm text-slate-600 dark:text-slate-400">12/12 embarcados</p>
                       </div>
-                      <Badge className="bg-emerald-600">En ruta</Badge>
+                      <Badge className="bg-emerald-600 dark:bg-emerald-700">En ruta</Badge>
                     </div>
-                    <div className="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
+                    <div className="flex items-center justify-between p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
                       <div>
-                        <p className="font-medium">Ruta Sur</p>
-                        <p className="text-sm text-slate-600">3/4 embarcados</p>
+                        <p className="font-medium dark:text-white">Ruta Sur</p>
+                        <p className="text-sm text-slate-600 dark:text-slate-400">3/4 embarcados</p>
                       </div>
-                      <Badge className="bg-blue-600">Abordando</Badge>
+                      <Badge className="bg-blue-600 dark:bg-blue-700">Abordando</Badge>
                     </div>
-                    <div className="flex items-center justify-between p-3 bg-amber-50 rounded-lg">
+                    <div className="flex items-center justify-between p-3 bg-amber-50 dark:bg-amber-900/20 rounded-lg">
                       <div>
-                        <p className="font-medium">Ruta Centro</p>
-                        <p className="text-sm text-slate-600">Retraso de 15 min</p>
+                        <p className="font-medium dark:text-white">Ruta Centro</p>
+                        <p className="text-sm text-slate-600 dark:text-slate-400">Retraso de 15 min</p>
                       </div>
-                      <Badge className="bg-amber-600">Retrasado</Badge>
+                      <Badge className="bg-amber-600 dark:bg-amber-700">Retrasado</Badge>
                     </div>
                   </CardContent>
                 </Card>
 
                 {/* Employee List */}
-                <Card>
+                <Card className="dark:bg-slate-900 dark:border-slate-700">
                   <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <Users className="w-5 h-5" />
+                    <CardTitle className="flex items-center gap-2 dark:text-white">
+                      <Users className="w-5 h-5 dark:text-blue-400" />
                       Empleados Asignados
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-2">
                     {storeEmployees.map((emp) => (
-                      <div key={emp.id} className="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
+                      <div key={emp.id} className="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-800 rounded-lg">
                         <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm">
+                          <div className="w-10 h-10 bg-blue-600 dark:bg-blue-700 text-white rounded-full flex items-center justify-center text-sm">
                             {emp.name.split(' ').map(n => n[0]).join('')}
                           </div>
                           <div>
-                            <p className="font-medium text-sm">{emp.name}</p>
-                            <p className="text-xs text-slate-600">{emp.route} - {emp.pickup}</p>
+                            <p className="font-medium text-sm dark:text-white">{emp.name}</p>
+                            <p className="text-xs text-slate-600 dark:text-slate-400">{emp.route} - {emp.pickup}</p>
                           </div>
                         </div>
                         <Badge 
@@ -389,7 +391,7 @@ export function EmployeeApp({ onLogout }: EmployeeAppProps) {
                             emp.status === 'embarcado' ? 'default' :
                             emp.status === 'no-show' ? 'destructive' : 'secondary'
                           }
-                          className={emp.status === 'embarcado' ? 'bg-emerald-600' : ''}
+                          className={emp.status === 'embarcado' ? 'bg-emerald-600 dark:bg-emerald-700' : ''}
                         >
                           {emp.status === 'embarcado' ? 'Embarcado' :
                            emp.status === 'no-show' ? 'No Show' : 'Pendiente'}
@@ -400,21 +402,21 @@ export function EmployeeApp({ onLogout }: EmployeeAppProps) {
                 </Card>
 
                 {/* Critical Alerts */}
-                <Card className="border-l-4 border-l-amber-500">
+                <Card className="border-l-4 border-l-amber-500 dark:bg-slate-900 dark:border-slate-700 dark:border-l-amber-600">
                   <CardHeader>
-                    <CardTitle className="flex items-center gap-2 text-lg">
-                      <AlertTriangle className="w-5 h-5 text-amber-600" />
+                    <CardTitle className="flex items-center gap-2 text-lg dark:text-white">
+                      <AlertTriangle className="w-5 h-5 text-amber-600 dark:text-amber-400" />
                       Alertas Críticas
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-2">
-                    <div className="p-3 bg-amber-50 rounded-lg">
-                      <p className="text-sm">Retraso en Ruta Centro - 15 minutos</p>
-                      <p className="text-xs text-slate-600 mt-1">Hace 10 minutos</p>
+                    <div className="p-3 bg-amber-50 dark:bg-amber-900/20 rounded-lg">
+                      <p className="text-sm dark:text-white">Retraso en Ruta Centro - 15 minutos</p>
+                      <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">Hace 10 minutos</p>
                     </div>
-                    <div className="p-3 bg-red-50 rounded-lg">
-                      <p className="text-sm">Luis Torres marcado como No-Show</p>
-                      <p className="text-xs text-slate-600 mt-1">Hace 5 minutos</p>
+                    <div className="p-3 bg-red-50 dark:bg-red-900/20 rounded-lg">
+                      <p className="text-sm dark:text-white">Luis Torres marcado como No-Show</p>
+                      <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">Hace 5 minutos</p>
                     </div>
                   </CardContent>
                 </Card>

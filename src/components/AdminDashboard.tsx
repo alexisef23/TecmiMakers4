@@ -16,7 +16,7 @@ import { FinanceModule } from './admin/FinanceModule';
 import { ReportsAnalytics } from './admin/ReportsAnalytics';
 import { SettingsModule } from './admin/SettingsModule';
 import { ThemeToggle } from './ThemeToggle';
-import oxxoGoLogo from 'figma:asset/7b84f0311e8c52a14b450647f0813bd5b562c75b.png';
+import oxxoGoLogo from '../assets/oxxo-go-logo.png';
 
 interface AdminDashboardProps {
   onLogout: () => void;
