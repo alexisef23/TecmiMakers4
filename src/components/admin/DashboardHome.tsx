@@ -64,61 +64,61 @@ export function DashboardHome() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <Card className="border-l-4 border-l-blue-600">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm text-slate-600 dark:text-slate-300">Índice de Puntualidad</CardTitle>
+            <CardTitle className="text-sm text-slate-600">Índice de Puntualidad</CardTitle>
             <Clock className="w-5 h-5 text-blue-600" />
           </CardHeader>
           <CardContent>
             <div className="flex items-baseline gap-2">
-              <span className="text-3xl dark:text-white">94.5%</span>
+              <span className="text-3xl">94.5%</span>
               <span className="flex items-center text-emerald-600 text-sm">
                 <TrendingUp className="w-4 h-4 mr-1" />
                 +2.3%
               </span>
             </div>
-            <p className="text-sm text-slate-600 dark:text-slate-300 mt-1">vs. semana anterior</p>
+            <p className="text-sm text-slate-600 mt-1">vs. semana anterior</p>
           </CardContent>
         </Card>
 
         <Card className="border-l-4 border-l-emerald-600">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm text-slate-600 dark:text-slate-300">Servicios Hoy</CardTitle>
+            <CardTitle className="text-sm text-slate-600">Servicios Hoy</CardTitle>
             <Bus className="w-5 h-5 text-emerald-600" />
           </CardHeader>
           <CardContent>
             <div className="flex items-baseline gap-2">
-              <span className="text-3xl dark:text-white">48</span>
-              <span className="text-sm text-slate-600 dark:text-slate-300">/ 52 programados</span>
+              <span className="text-3xl">48</span>
+              <span className="text-sm text-slate-600">/ 52 programados</span>
             </div>
-            <p className="text-sm text-slate-600 dark:text-slate-300 mt-1">4 servicios en curso</p>
+            <p className="text-sm text-slate-600 mt-1">4 servicios en curso</p>
           </CardContent>
         </Card>
 
         <Card className="border-l-4 border-l-amber-500">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm text-slate-600 dark:text-slate-300">Costo del Mes</CardTitle>
+            <CardTitle className="text-sm text-slate-600">Costo del Mes</CardTitle>
             <DollarSign className="w-5 h-5 text-amber-500" />
           </CardHeader>
           <CardContent>
             <div className="flex items-baseline gap-2">
-              <span className="text-3xl dark:text-white">$124,580</span>
+              <span className="text-3xl">$124,580</span>
               <span className="flex items-center text-red-600 text-sm">
                 <TrendingDown className="w-4 h-4 mr-1" />
                 -5.2%
               </span>
             </div>
-            <p className="text-sm text-slate-600 dark:text-slate-300 mt-1">Ahorro vs. presupuesto</p>
+            <p className="text-sm text-slate-600 mt-1">Ahorro vs. presupuesto</p>
           </CardContent>
         </Card>
 
         <Card className="border-l-4 border-l-purple-600">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm text-slate-600 dark:text-slate-300">NPS Satisfacción</CardTitle>
+            <CardTitle className="text-sm text-slate-600">NPS Satisfacción</CardTitle>
             <ThumbsUp className="w-5 h-5 text-purple-600" />
           </CardHeader>
           <CardContent>
             <div className="flex items-baseline gap-2">
-              <span className="text-3xl dark:text-white">87</span>
-              <span className="text-sm text-slate-600 dark:text-slate-300">/ 100</span>
+              <span className="text-3xl">87</span>
+              <span className="text-sm text-slate-600">/ 100</span>
             </div>
             <p className="text-sm text-emerald-600 mt-1">Excelente nivel</p>
           </CardContent>
@@ -129,14 +129,14 @@ export function DashboardHome() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <Card>
           <CardHeader>
-            <CardTitle className="dark:text-white">Evolución de Puntualidad</CardTitle>
+            <CardTitle>Evolución de Puntualidad</CardTitle>
           </CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={250}>
               <LineChart data={kpiData}>
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" className="dark:text-slate-300"/>
-                <YAxis domain={[85, 100]} className="dark:text-slate-300"/>
+                <XAxis dataKey="name" />
+                <YAxis domain={[85, 100]} />
                 <Tooltip />
                 <Legend />
                 <Line 
@@ -153,14 +153,14 @@ export function DashboardHome() {
 
         <Card>
           <CardHeader>
-            <CardTitle className="dark:text-white">Servicios por Día</CardTitle>
+            <CardTitle>Servicios por Día</CardTitle>
           </CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={250}>
               <BarChart data={serviceData}>
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" className="dark:text-slate-300"/>
-                <YAxis className="dark:text-slate-300"/>
+                <XAxis dataKey="name" />
+                <YAxis />
                 <Tooltip />
                 <Legend />
                 <Bar dataKey="servicios" fill="#1e3a8a" name="Servicios" />
@@ -174,15 +174,15 @@ export function DashboardHome() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <Card className="lg:col-span-2">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2 dark:text-white">
+            <CardTitle className="flex items-center gap-2">
               <MapPin className="w-5 h-5" />
               Mapa de Operaciones en Tiempo Real
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="bg-slate-100 dark:bg-gray-800 rounded-lg h-[400px] flex items-center justify-center relative overflow-hidden">
+            <div className="bg-slate-100 rounded-lg h-[400px] flex items-center justify-center relative overflow-hidden">
               {/* Simulación de mapa */}
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-emerald-50 dark:from-gray-700 dark:to-gray-800">
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-emerald-50">
                 {activeRoutes.map((route, idx) => (
                   <div
                     key={route.id}
@@ -196,19 +196,19 @@ export function DashboardHome() {
                       <div className={`w-3 h-3 rounded-full ${
                         route.status === 'Retrasado' ? 'bg-red-500' : 'bg-emerald-500'
                       } animate-pulse`}></div>
-                      <div className="absolute left-4 top-0 bg-white dark:bg-gray-700 px-2 py-1 rounded shadow-lg text-xs whitespace-nowrap">
+                      <div className="absolute left-4 top-0 bg-white px-2 py-1 rounded shadow-lg text-xs whitespace-nowrap">
                         <div>{route.name}</div>
-                        <div className="text-slate-600 dark:text-slate-300">{route.vehicle}</div>
-                        <div className="text-slate-500 dark:text-slate-400">{route.passengers} pasajeros</div>
+                        <div className="text-slate-600">{route.vehicle}</div>
+                        <div className="text-slate-500">{route.passengers} pasajeros</div>
                       </div>
                     </div>
                   </div>
                 ))}
               </div>
-              <div className="relative z-10 text-center p-4 bg-white/90 dark:bg-gray-700/90 rounded-lg shadow">
+              <div className="relative z-10 text-center p-4 bg-white/90 rounded-lg shadow">
                 <MapPin className="w-8 h-8 mx-auto mb-2 text-blue-900" />
-                <p className="dark:text-white">Integración con Google Maps/Mapbox</p>
-                <p className="text-sm text-slate-600 dark:text-slate-300 mt-1">{activeRoutes.length} rutas activas en tiempo real</p>
+                <p>Integración con Google Maps/Mapbox</p>
+                <p className="text-sm text-slate-600 mt-1">{activeRoutes.length} rutas activas en tiempo real</p>
               </div>
             </div>
           </CardContent>
@@ -216,7 +216,7 @@ export function DashboardHome() {
 
         <Card>
           <CardHeader>
-            <CardTitle className="flex items-center gap-2 dark:text-white">
+            <CardTitle className="flex items-center gap-2">
               <AlertTriangle className="w-5 h-5 text-amber-500" />
               Alertas e Incidentes
             </CardTitle>
@@ -240,10 +240,10 @@ export function DashboardHome() {
                     ? 'text-amber-600'
                     : 'text-blue-600'
                 }`} />
-                <AlertTitle className="dark:text-white">{incident.type}</AlertTitle>
+                <AlertTitle>{incident.type}</AlertTitle>
                 <AlertDescription>
                   <div className="flex justify-between items-center mt-1">
-                    <span className="dark:text-slate-300">{incident.route}</span>
+                    <span>{incident.route}</span>
                     <Badge variant="outline" className="text-xs">
                       {incident.time}
                     </Badge>
@@ -253,17 +253,17 @@ export function DashboardHome() {
             ))}
 
             <div className="pt-2 border-t">
-              <h4 className="text-sm mb-3 dark:text-white">Rutas Activas</h4>
+              <h4 className="text-sm mb-3">Rutas Activas</h4>
               <div className="space-y-2">
                 {activeRoutes.map((route) => (
-                  <div key={route.id} className="flex items-center justify-between p-2 bg-slate-50 dark:bg-gray-700 rounded">
+                  <div key={route.id} className="flex items-center justify-between p-2 bg-slate-50 rounded">
                     <div className="flex items-center gap-2">
                       <div className={`w-2 h-2 rounded-full ${
                         route.status === 'Retrasado' ? 'bg-red-500' : 'bg-emerald-500'
                       }`}></div>
                       <div>
-                        <div className="text-sm dark:text-white">{route.name}</div>
-                        <div className="text-xs text-slate-600 dark:text-slate-300">{route.vehicle}</div>
+                        <div className="text-sm">{route.name}</div>
+                        <div className="text-xs text-slate-600">{route.vehicle}</div>
                       </div>
                     </div>
                     <Badge variant={route.status === 'Retrasado' ? 'destructive' : 'default'}>

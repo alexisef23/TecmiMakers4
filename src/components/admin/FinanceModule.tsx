@@ -1,10 +1,10 @@
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import { Button } from '../ui/button';
 import { Badge } from '../ui/badge';
-import {
-  DollarSign,
-  Download,
-  FileText,
+import { 
+  DollarSign, 
+  Download, 
+  FileText, 
   TrendingUp,
   TrendingDown,
   Calendar,
@@ -91,7 +91,6 @@ export function FinanceModule() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          {/* Removed OXXO GO logo and name */}
           <h1>Finanzas y Facturación</h1>
           <p className="text-slate-600 mt-1">Gestión financiera y análisis de costos</p>
         </div>
@@ -117,11 +116,11 @@ export function FinanceModule() {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <Card className="border-l-4 border-l-blue-600">
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm text-slate-600 dark:text-slate-300">Costo Total Mes</CardTitle>
+            <CardTitle className="text-sm text-slate-600">Costo Total Mes</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="flex items-baseline gap-2">
-              <span className="text-2xl dark:text-white">$124,580</span>
+              <span className="text-2xl">$124,580</span>
               <span className="flex items-center text-emerald-600 text-sm">
                 <TrendingDown className="w-4 h-4 mr-1" />
                 -4.2%
@@ -132,35 +131,35 @@ export function FinanceModule() {
 
         <Card className="border-l-4 border-l-amber-500">
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm text-slate-600 dark:text-slate-300">Presupuesto Restante</CardTitle>
+            <CardTitle className="text-sm text-slate-600">Presupuesto Restante</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="flex items-baseline gap-2">
-              <span className="text-2xl dark:text-white">$5,420</span>
-              <span className="text-sm text-slate-600 dark:text-slate-300">/ $130,000</span>
+              <span className="text-2xl">$5,420</span>
+              <span className="text-sm text-slate-600">/ $130,000</span>
             </div>
           </CardContent>
         </Card>
 
         <Card className="border-l-4 border-l-emerald-600">
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm text-slate-600 dark:text-slate-300">Ahorro Mensual</CardTitle>
+            <CardTitle className="text-sm text-slate-600">Ahorro Mensual</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="flex items-baseline gap-2">
-              <span className="text-2xl text-emerald-600 dark:text-white">$5,420</span>
-              <span className="text-sm text-slate-600 dark:text-slate-300">4.2%</span>
+              <span className="text-2xl text-emerald-600">$5,420</span>
+              <span className="text-sm text-slate-600">4.2%</span>
             </div>
           </CardContent>
         </Card>
 
         <Card className="border-l-4 border-l-red-600">
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm text-slate-600 dark:text-slate-300">Costo por Retrasos</CardTitle>
+            <CardTitle className="text-sm text-slate-600">Costo por Retrasos</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="flex items-baseline gap-2">
-              <span className="text-2xl text-red-600 dark:text-white">$9,700</span>
+              <span className="text-2xl text-red-600">$9,700</span>
               <span className="flex items-center text-red-600 text-sm">
                 <TrendingUp className="w-4 h-4 mr-1" />
                 +12%
@@ -174,7 +173,7 @@ export function FinanceModule() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <Card>
           <CardHeader>
-            <CardTitle className="dark:text-white">Comparativo Costo vs Presupuesto</CardTitle>
+            <CardTitle>Comparativo Costo vs Presupuesto</CardTitle>
           </CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={300}>
@@ -193,7 +192,7 @@ export function FinanceModule() {
 
         <Card>
           <CardHeader>
-            <CardTitle className="dark:text-white">Distribución de Costos</CardTitle>
+            <CardTitle>Distribución de Costos</CardTitle>
           </CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={300}>
@@ -223,7 +222,7 @@ export function FinanceModule() {
       <Card>
         <CardHeader>
           <div className="flex items-center justify-between">
-            <CardTitle className="flex items-center gap-2 dark:text-white">
+            <CardTitle className="flex items-center gap-2">
               <FileText className="w-5 h-5" />
               Facturas y Pagos
             </CardTitle>
@@ -237,35 +236,35 @@ export function FinanceModule() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className="dark:text-white">ID Factura</TableHead>
-                <TableHead className="dark:text-white">Proveedor</TableHead>
-                <TableHead className="dark:text-white">Concepto</TableHead>
-                <TableHead className="dark:text-white">Fecha</TableHead>
-                <TableHead className="dark:text-white">Monto</TableHead>
-                <TableHead className="dark:text-white">Estado</TableHead>
-                <TableHead className="text-right dark:text-white">Acciones</TableHead>
+                <TableHead>ID Factura</TableHead>
+                <TableHead>Proveedor</TableHead>
+                <TableHead>Concepto</TableHead>
+                <TableHead>Fecha</TableHead>
+                <TableHead>Monto</TableHead>
+                <TableHead>Estado</TableHead>
+                <TableHead className="text-right">Acciones</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {invoices.map((invoice) => (
                 <TableRow key={invoice.id}>
-                  <TableCell className="dark:text-white">{invoice.id}</TableCell>
-                  <TableCell className="dark:text-white">{invoice.provider}</TableCell>
-                  <TableCell className="max-w-xs truncate dark:text-white">{invoice.concept}</TableCell>
-                  <TableCell className="dark:text-white">
+                  <TableCell>{invoice.id}</TableCell>
+                  <TableCell>{invoice.provider}</TableCell>
+                  <TableCell className="max-w-xs truncate">{invoice.concept}</TableCell>
+                  <TableCell>
                     <div className="flex items-center gap-1 text-sm">
                       <Calendar className="w-3 h-3" />
                       {invoice.date}
                     </div>
                   </TableCell>
-                  <TableCell className="dark:text-white">
+                  <TableCell>
                     <div className="flex items-center gap-1">
                       <DollarSign className="w-4 h-4 text-slate-500" />
                       ${invoice.amount.toLocaleString()}
                     </div>
                   </TableCell>
                   <TableCell>
-                    <Badge
+                    <Badge 
                       variant={invoice.status === 'Pagada' ? 'default' : 'secondary'}
                       className={invoice.status === 'Pagada' ? 'bg-emerald-600' : 'bg-amber-500'}
                     >
@@ -287,14 +286,14 @@ export function FinanceModule() {
       {/* Delay Cost Analysis */}
       <Card className="border-l-4 border-l-red-600">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2 dark:text-white">
+          <CardTitle className="flex items-center gap-2">
             <AlertCircle className="w-5 h-5 text-red-600" />
             Análisis de Costo de Oportunidad por Retrasos
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="mb-4">
-            <p className="text-slate-600 dark:text-slate-300 mb-2">
+            <p className="text-slate-600 mb-2">
               Los retrasos impactan directamente en la productividad. Aquí se muestra el costo estimado por tiempo perdido.
             </p>
           </div>
@@ -305,10 +304,10 @@ export function FinanceModule() {
               <YAxis />
               <Tooltip formatter={(value) => `$${value.toLocaleString()}`} />
               <Legend />
-              <Line
-                type="monotone"
-                dataKey="costoOportunidad"
-                stroke="#dc2626"
+              <Line 
+                type="monotone" 
+                dataKey="costoOportunidad" 
+                stroke="#dc2626" 
                 strokeWidth={2}
                 name="Costo de Oportunidad ($)"
               />
@@ -316,16 +315,16 @@ export function FinanceModule() {
           </ResponsiveContainer>
           <div className="grid grid-cols-3 gap-4 mt-6">
             <div className="bg-red-50 p-4 rounded-lg text-center">
-              <p className="text-sm text-slate-600 dark:text-slate-300">Total Semanal</p>
-              <p className="text-2xl text-red-600 dark:text-white">$9,700</p>
+              <p className="text-sm text-slate-600">Total Semanal</p>
+              <p className="text-2xl text-red-600">$9,700</p>
             </div>
-            <div className="bg-slate-50 p-4 rounded-lg text-center dark:bg-gray-800">
-              <p className="text-sm text-slate-600 dark:text-slate-300">Horas Perdidas</p>
-              <p className="text-2xl dark:text-white">32.5 hrs</p>
+            <div className="bg-slate-50 p-4 rounded-lg text-center">
+              <p className="text-sm text-slate-600">Horas Perdidas</p>
+              <p className="text-2xl">32.5 hrs</p>
             </div>
-            <div className="bg-slate-50 p-4 rounded-lg text-center dark:bg-gray-800">
-              <p className="text-sm text-slate-600 dark:text-slate-300">Empleados Afectados</p>
-              <p className="text-2xl dark:text-white">48</p>
+            <div className="bg-slate-50 p-4 rounded-lg text-center">
+              <p className="text-sm text-slate-600">Empleados Afectados</p>
+              <p className="text-2xl">48</p>
             </div>
           </div>
         </CardContent>
