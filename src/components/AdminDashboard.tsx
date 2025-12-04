@@ -15,6 +15,7 @@ import { RouteManagement } from './admin/RouteManagement';
 import { FinanceModule } from './admin/FinanceModule';
 import { ReportsAnalytics } from './admin/ReportsAnalytics';
 import { SettingsModule } from './admin/SettingsModule';
+import { ThemeToggle } from './ThemeToggle';
 import oxxoGoLogo from 'figma:asset/7b84f0311e8c52a14b450647f0813bd5b562c75b.png';
 
 interface AdminDashboardProps {
@@ -36,14 +37,14 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
   ];
 
   return (
-    <div className="flex h-screen bg-slate-50">
+    <div className="flex h-screen bg-slate-50 dark:bg-slate-950">
       {/* Sidebar */}
       <aside 
-        className={`bg-blue-900 text-white transition-all duration-300 ${
+        className={`bg-blue-900 dark:bg-blue-950 text-white transition-all duration-300 ${
           sidebarOpen ? 'w-64' : 'w-0 lg:w-20'
         } flex flex-col`}
       >
-        <div className="p-4 border-b border-blue-800 flex items-center justify-between">
+        <div className="p-4 border-b border-blue-800 dark:border-blue-900 flex items-center justify-between">
           {sidebarOpen ? (
             <div className="flex items-center gap-3">
               <img src={oxxoGoLogo} alt="OXXO GO" className="w-10 h-10" />
@@ -56,7 +57,7 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
             variant="ghost"
             size="icon"
             onClick={() => setSidebarOpen(!sidebarOpen)}
-            className="text-white hover:bg-blue-800 lg:hidden"
+            className="text-white hover:bg-blue-800 dark:hover:bg-blue-900 lg:hidden"
           >
             {sidebarOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </Button>
@@ -80,10 +81,15 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
           ))}
         </nav>
 
-        <div className="p-4 border-t border-blue-800">
+        <div className="p-4 border-t border-blue-800 dark:border-blue-900 space-y-2">
+          {sidebarOpen && (
+            <div className="px-2">
+              <ThemeToggle />
+            </div>
+          )}
           <Button
             variant="ghost"
-            className={`w-full justify-start text-white hover:bg-blue-800 ${
+            className={`w-full justify-start text-white hover:bg-blue-800 dark:hover:bg-blue-900 ${
               !sidebarOpen && 'lg:justify-center'
             }`}
             onClick={onLogout}

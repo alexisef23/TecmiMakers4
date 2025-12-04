@@ -78,7 +78,7 @@ const storeEmployees = [
 
 export function EmployeeApp({ onLogout }: EmployeeAppProps) {
   const [userType, setUserType] = useState<'employee' | 'leader'>('employee');
-  const [activeView, setActiveView] = useState<'home' | 'notifications' | 'history' | 'team' | 'ranking'>('home');
+  const [activeView, setActiveView] = useState<'home' | 'notifications' | 'history' | 'ranking'>('home');
   const [isSurveyOpen, setIsSurveyOpen] = useState(false);
   const [isSuggestionOpen, setIsSuggestionOpen] = useState(false);
   const [rating, setRating] = useState(0);
@@ -129,57 +129,57 @@ export function EmployeeApp({ onLogout }: EmployeeAppProps) {
             {activeView === 'home' && (
               <div className="space-y-4">
                 {/* Today's Transport Card */}
-                <Card className="border-l-4 border-l-blue-600">
-                  <CardHeader className="bg-blue-50">
-                    <CardTitle className="flex items-center gap-2">
-                      <Bus className="w-5 h-5 text-blue-600" />
+                <Card className="border-l-4 border-l-blue-600 dark:bg-slate-900 dark:border-slate-700">
+                  <CardHeader className="bg-blue-50 dark:bg-blue-900/30">
+                    <CardTitle className="flex items-center gap-2 dark:text-white">
+                      <Bus className="w-5 h-5 text-blue-600 dark:text-blue-400" />
                       Mi Transporte de Hoy
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="pt-6 space-y-4">
                     <div className="flex items-start justify-between">
                       <div>
-                        <p className="text-sm text-slate-600">Hora de Recogida</p>
+                        <p className="text-sm text-slate-600 dark:text-slate-400">Hora de Recogida</p>
                         <div className="flex items-center gap-2 mt-1">
-                          <Clock className="w-5 h-5 text-blue-600" />
-                          <span className="text-2xl">{todayTransport.pickupTime}</span>
+                          <Clock className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                          <span className="text-2xl dark:text-white">{todayTransport.pickupTime}</span>
                         </div>
                       </div>
                       <Badge className="bg-emerald-600">Programado</Badge>
                     </div>
 
                     <div>
-                      <p className="text-sm text-slate-600">Punto de Encuentro</p>
+                      <p className="text-sm text-slate-600 dark:text-slate-400">Punto de Encuentro</p>
                       <div className="flex items-start gap-2 mt-1">
-                        <MapPin className="w-5 h-5 text-slate-500 mt-0.5" />
+                        <MapPin className="w-5 h-5 text-slate-500 dark:text-slate-400 mt-0.5" />
                         <div>
-                          <p className="font-medium">{todayTransport.pickupLocation}</p>
-                          <p className="text-sm text-slate-600">{todayTransport.address}</p>
+                          <p className="font-medium dark:text-white">{todayTransport.pickupLocation}</p>
+                          <p className="text-sm text-slate-600 dark:text-slate-400">{todayTransport.address}</p>
                         </div>
                       </div>
                     </div>
 
-                    <div className="bg-slate-50 p-3 rounded-lg space-y-2">
+                    <div className="bg-slate-50 dark:bg-slate-800 p-3 rounded-lg space-y-2">
                       <div className="flex items-center justify-between text-sm">
-                        <span className="text-slate-600">Conductor</span>
-                        <span className="font-medium">{todayTransport.driver}</span>
+                        <span className="text-slate-600 dark:text-slate-400">Conductor</span>
+                        <span className="font-medium dark:text-white">{todayTransport.driver}</span>
                       </div>
                       <div className="flex items-center justify-between text-sm">
-                        <span className="text-slate-600">Vehículo</span>
-                        <span className="font-medium">{todayTransport.vehicle}</span>
+                        <span className="text-slate-600 dark:text-slate-400">Vehículo</span>
+                        <span className="font-medium dark:text-white">{todayTransport.vehicle}</span>
                       </div>
                       <div className="flex items-center justify-between text-sm">
-                        <span className="text-slate-600">Placas</span>
-                        <span className="font-medium">{todayTransport.plate}</span>
+                        <span className="text-slate-600 dark:text-slate-400">Placas</span>
+                        <span className="font-medium dark:text-white">{todayTransport.plate}</span>
                       </div>
                     </div>
 
-                    <div className="bg-emerald-50 border border-emerald-200 p-3 rounded-lg">
+                    <div className="bg-emerald-50 dark:bg-emerald-900/30 border border-emerald-200 dark:border-emerald-800 p-3 rounded-lg">
                       <div className="flex items-center gap-2 mb-2">
-                        <Bus className="w-5 h-5 text-emerald-600" />
-                        <p className="font-medium text-emerald-900">Tu transporte está cerca</p>
+                        <Bus className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+                        <p className="font-medium text-emerald-900 dark:text-emerald-100">Tu transporte está cerca</p>
                       </div>
-                      <p className="text-sm text-emerald-700">
+                      <p className="text-sm text-emerald-700 dark:text-emerald-300">
                         Llegada estimada en <span className="font-semibold">{todayTransport.eta}</span>
                       </p>
                       <div className="mt-2">
@@ -190,15 +190,15 @@ export function EmployeeApp({ onLogout }: EmployeeAppProps) {
                 </Card>
 
                 {/* Employee Code Card */}
-                <Card>
+                <Card className="dark:bg-slate-900 dark:border-slate-700">
                   <CardHeader>
-                    <CardTitle className="flex items-center gap-2 text-lg">
+                    <CardTitle className="flex items-center gap-2 text-lg dark:text-white">
                       <QrCode className="w-5 h-5" />
                       Tu Código Personal
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="bg-gradient-to-br from-blue-600 to-blue-700 p-8 rounded-lg text-center shadow-lg">
+                    <div className="bg-gradient-to-br from-blue-600 to-blue-700 dark:from-blue-700 dark:to-blue-900 p-8 rounded-lg text-center shadow-lg">
                       <p className="text-sm text-blue-100 mb-3">Código de Empleado</p>
                       <div className="text-6xl text-white tracking-wider mb-3" style={{ fontFamily: 'monospace' }}>
                         {todayTransport.employeeCode}
@@ -242,31 +242,33 @@ export function EmployeeApp({ onLogout }: EmployeeAppProps) {
 
             {activeView === 'notifications' && (
               <div className="space-y-4">
-                <Card>
+                <Card className="dark:bg-slate-900 dark:border-slate-700">
                   <CardHeader>
-                    <CardTitle className="text-lg">Notificaciones</CardTitle>
+                    <CardTitle className="text-lg dark:text-white">Notificaciones</CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-3">
                     {notifications.map((notif) => (
                       <div 
                         key={notif.id} 
                         className={`p-3 rounded-lg border ${
-                          notif.read ? 'bg-slate-50' : 'bg-blue-50 border-blue-200'
+                          notif.read 
+                            ? 'bg-slate-50 dark:bg-slate-800 dark:border-slate-700' 
+                            : 'bg-blue-50 dark:bg-blue-900/30 border-blue-200 dark:border-blue-800'
                         }`}
                       >
                         <div className="flex items-start gap-3">
                           <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
-                            notif.type === 'info' ? 'bg-blue-100' :
-                            notif.type === 'warning' ? 'bg-amber-100' :
-                            'bg-emerald-100'
+                            notif.type === 'info' ? 'bg-blue-100 dark:bg-blue-900' :
+                            notif.type === 'warning' ? 'bg-amber-100 dark:bg-amber-900' :
+                            'bg-emerald-100 dark:bg-emerald-900'
                           }`}>
-                            {notif.type === 'info' && <Bell className="w-5 h-5 text-blue-600" />}
-                            {notif.type === 'warning' && <AlertTriangle className="w-5 h-5 text-amber-600" />}
-                            {notif.type === 'success' && <CheckCircle className="w-5 h-5 text-emerald-600" />}
+                            {notif.type === 'info' && <Bell className="w-5 h-5 text-blue-600 dark:text-blue-400" />}
+                            {notif.type === 'warning' && <AlertTriangle className="w-5 h-5 text-amber-600 dark:text-amber-400" />}
+                            {notif.type === 'success' && <CheckCircle className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />}
                           </div>
                           <div className="flex-1">
-                            <p className="text-sm">{notif.message}</p>
-                            <p className="text-xs text-slate-500 mt-1">{notif.time} atrás</p>
+                            <p className="text-sm dark:text-white">{notif.message}</p>
+                            <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">{notif.time} atrás</p>
                           </div>
                         </div>
                       </div>
@@ -278,17 +280,17 @@ export function EmployeeApp({ onLogout }: EmployeeAppProps) {
 
             {activeView === 'history' && (
               <div className="space-y-4">
-                <Card>
+                <Card className="dark:bg-slate-900 dark:border-slate-700">
                   <CardHeader>
-                    <CardTitle className="text-lg">Historial de Viajes</CardTitle>
+                    <CardTitle className="text-lg dark:text-white">Historial de Viajes</CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-3">
                     {tripHistory.map((trip) => (
-                      <div key={trip.id} className="p-3 bg-slate-50 rounded-lg">
+                      <div key={trip.id} className="p-3 bg-slate-50 dark:bg-slate-800 rounded-lg">
                         <div className="flex items-center justify-between mb-2">
                           <div>
-                            <p className="font-medium">{trip.route}</p>
-                            <p className="text-sm text-slate-600">{trip.date}</p>
+                            <p className="font-medium dark:text-white">{trip.route}</p>
+                            <p className="text-sm text-slate-600 dark:text-slate-400">{trip.date}</p>
                           </div>
                           <div className="text-right">
                             <Badge className="bg-emerald-600 mb-1">{trip.status}</Badge>
@@ -434,7 +436,7 @@ export function EmployeeApp({ onLogout }: EmployeeAppProps) {
 
       {/* Bottom Navigation */}
       <div className="fixed bottom-0 left-0 right-0 bg-white dark:bg-slate-900 border-t dark:border-slate-700 shadow-lg">
-        <div className="max-w-lg mx-auto grid grid-cols-5 gap-1 p-2">
+        <div className="max-w-lg mx-auto grid grid-cols-4 gap-1 p-2">
           <Button
             variant={activeView === 'home' ? 'default' : 'ghost'}
             className={`flex-col h-14 ${activeView === 'home' ? 'bg-blue-600 dark:bg-blue-700' : ''}`}
@@ -467,14 +469,6 @@ export function EmployeeApp({ onLogout }: EmployeeAppProps) {
           >
             <History className="w-4 h-4 mb-1" />
             <span className="text-xs">Historial</span>
-          </Button>
-          <Button
-            variant={activeView === 'team' ? 'default' : 'ghost'}
-            className={`flex-col h-14 ${activeView === 'team' ? 'bg-blue-600 dark:bg-blue-700' : ''}`}
-            onClick={() => setActiveView('team')}
-          >
-            <Users className="w-4 h-4 mb-1" />
-            <span className="text-xs">Equipo</span>
           </Button>
         </div>
       </div>

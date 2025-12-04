@@ -1,5 +1,4 @@
 @custom-variant dark (&:is(.dark *));
-@custom-variant colorblind (&:is(.colorblind *));
 
 :root {
   --font-size: 16px;
@@ -86,19 +85,7 @@
   --sidebar-ring: oklch(0.439 0 0);
 }
 
-/* Colorblind Mode - Universal Blue + Orange Palette */
-.colorblind {
-  /* Primary actions and admin: Blue */
-  --color-brand-blue: #2563eb;
-  --color-brand-emerald: #2563eb; /* Use blue instead of green */
-  
-  /* Alerts and warnings: Orange */
-  --color-brand-orange: #f97316;
-  --color-brand-red: #f97316; /* Use orange instead of red */
-  
-  /* Neutral */
-  --color-brand-yellow: #fbbf24;
-}
+
 
 @theme inline {
   --color-background: var(--background);

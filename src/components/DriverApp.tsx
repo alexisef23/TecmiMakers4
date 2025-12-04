@@ -35,6 +35,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from './ui/select';
+import { ThemeToggle } from './ThemeToggle';
 import oxxoGoLogo from 'figma:asset/7b84f0311e8c52a14b450647f0813bd5b562c75b.png';
 
 interface DriverAppProps {
@@ -77,20 +78,23 @@ export function DriverApp({ onLogout }: DriverAppProps) {
   const [tripStarted, setTripStarted] = useState(false);
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950">
       {/* Mobile Header */}
-      <div className="bg-emerald-600 text-white p-4 sticky top-0 z-10 shadow-lg">
+      <div className="bg-emerald-600 dark:bg-emerald-800 text-white p-4 sticky top-0 z-10 shadow-lg">
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center gap-3">
             <img src={oxxoGoLogo} alt="OXXO GO" className="w-10 h-10" />
             <div>
               <h1 className="text-lg">App Conductor</h1>
-              <p className="text-xs text-emerald-100">Juan Pérez - VH-001</p>
+              <p className="text-xs text-emerald-100 dark:text-emerald-200">Juan Pérez - VH-001</p>
             </div>
           </div>
-          <Button variant="ghost" size="icon" onClick={onLogout} className="text-white hover:bg-emerald-700">
-            <LogOut className="w-5 h-5" />
-          </Button>
+          <div className="flex items-center gap-2">
+            <ThemeToggle />
+            <Button variant="ghost" size="icon" onClick={onLogout} className="text-white hover:bg-emerald-700 dark:hover:bg-emerald-900">
+              <LogOut className="w-5 h-5" />
+            </Button>
+          </div>
         </div>
       </div>
 
@@ -379,11 +383,11 @@ export function DriverApp({ onLogout }: DriverAppProps) {
       </div>
 
       {/* Bottom Navigation */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white border-t shadow-lg">
+      <div className="fixed bottom-0 left-0 right-0 bg-white dark:bg-slate-900 border-t dark:border-slate-700 shadow-lg">
         <div className="max-w-lg mx-auto grid grid-cols-4 gap-1 p-2">
           <Button
             variant={activeView === 'dashboard' ? 'default' : 'ghost'}
-            className={`flex-col h-16 ${activeView === 'dashboard' ? 'bg-emerald-600' : ''}`}
+            className={`flex-col h-16 ${activeView === 'dashboard' ? 'bg-emerald-600 dark:bg-emerald-700' : ''}`}
             onClick={() => setActiveView('dashboard')}
           >
             <Menu className="w-5 h-5 mb-1" />
@@ -391,7 +395,7 @@ export function DriverApp({ onLogout }: DriverAppProps) {
           </Button>
           <Button
             variant={activeView === 'navigation' ? 'default' : 'ghost'}
-            className={`flex-col h-16 ${activeView === 'navigation' ? 'bg-emerald-600' : ''}`}
+            className={`flex-col h-16 ${activeView === 'navigation' ? 'bg-emerald-600 dark:bg-emerald-700' : ''}`}
             onClick={() => setActiveView('navigation')}
           >
             <Navigation className="w-5 h-5 mb-1" />
@@ -399,7 +403,7 @@ export function DriverApp({ onLogout }: DriverAppProps) {
           </Button>
           <Button
             variant={activeView === 'passengers' ? 'default' : 'ghost'}
-            className={`flex-col h-16 ${activeView === 'passengers' ? 'bg-emerald-600' : ''}`}
+            className={`flex-col h-16 ${activeView === 'passengers' ? 'bg-emerald-600 dark:bg-emerald-700' : ''}`}
             onClick={() => setActiveView('passengers')}
           >
             <Users className="w-5 h-5 mb-1" />
@@ -407,7 +411,7 @@ export function DriverApp({ onLogout }: DriverAppProps) {
           </Button>
           <Button
             variant={activeView === 'history' ? 'default' : 'ghost'}
-            className={`flex-col h-16 ${activeView === 'history' ? 'bg-emerald-600' : ''}`}
+            className={`flex-col h-16 ${activeView === 'history' ? 'bg-emerald-600 dark:bg-emerald-700' : ''}`}
             onClick={() => setActiveView('history')}
           >
             <History className="w-5 h-5 mb-1" />
