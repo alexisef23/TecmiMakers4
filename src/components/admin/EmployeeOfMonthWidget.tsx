@@ -58,7 +58,7 @@ export function EmployeeOfMonthWidget() {
               <h3 className="text-2xl font-bold text-slate-900 dark:text-white">
                 {employeeOfMonth.name}
               </h3>
-              <p className="text-slate-600 dark:text-slate-400">Código: {employeeOfMonth.code}</p>
+              <p className="text-slate-600 dark:text-slate-400">Empleado del Mes</p>
 
               <div className="grid grid-cols-2 gap-4 mt-4">
                 <div>
@@ -150,7 +150,6 @@ export function EmployeeOfMonthWidget() {
               <TableRow>
                 <TableHead className="dark:text-slate-300">Posición</TableHead>
                 <TableHead className="dark:text-slate-300">Empleado</TableHead>
-                <TableHead className="dark:text-slate-300">Código</TableHead>
                 <TableHead className="dark:text-slate-300">Puntos</TableHead>
                 <TableHead className="dark:text-slate-300">Racha</TableHead>
                 <TableHead className="dark:text-slate-300">Rating</TableHead>
@@ -180,7 +179,6 @@ export function EmployeeOfMonthWidget() {
                       {employee.name}
                     </div>
                   </TableCell>
-                  <TableCell className="dark:text-slate-300">{employee.code}</TableCell>
                   <TableCell>
                     <Badge className="bg-emerald-600 dark:bg-emerald-700">
                       {employee.points}

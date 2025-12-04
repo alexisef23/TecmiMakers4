@@ -126,9 +126,6 @@ export function RankingView({ currentEmployeeId = 1 }: RankingViewProps) {
                         </Badge>
                       )}
                     </div>
-                    <p className="text-sm text-slate-600 dark:text-slate-400">
-                      Código: {employee.code}
-                    </p>
 
                     {/* Stats */}
                     <div className="flex items-center gap-4 mt-2">
