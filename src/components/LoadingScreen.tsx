@@ -32,16 +32,17 @@ export function LoadingScreen({ onLoadingComplete }: { onLoadingComplete: () => 
           repeat: Infinity,
           ease: "easeInOut",
         }}
-        className="mb-8"
       >
         <div className="relative">
           {/* Logo OXXO GO */}
-          <img 
-            src="/src/assets/oxxo-go-logo.png" 
-            alt="OXXO GO Logo" 
-            className="w-32 h-32 drop-shadow-2xl rounded-3xl"
-          />
-          
+          <div className="w-32 h-32 rounded-3xl flex items-center justify-center animate-pulse shadow-2xl" style={{ backgroundColor: 'var(--color-brand-red)' }}>
+            <img
+              src="/src/assets/oxxo-go-logo.png"
+              alt="OXXO GO Logo"
+              className="w-32 h-32 drop-shadow-2xl rounded-3xl"
+            />
+          </div>
+
           {/* Resplandor */}
           <div className="absolute inset-0 -z-10 animate-pulse">
             <div className="h-full w-full rounded-full bg-white/30 blur-xl"></div>
@@ -63,12 +64,12 @@ export function LoadingScreen({ onLoadingComplete }: { onLoadingComplete: () => 
       <div className="w-64 space-y-2">
         <div className="h-2 overflow-hidden rounded-full bg-white/30 backdrop-blur-sm">
           <motion.div
-            className="h-full rounded-full bg-white shadow-lg"
-            style={{ width: `${progress}%` }}
+            className="h-full rounded-full shadow-lg"
+            style={{ width: `${progress}%`, backgroundColor: 'var(--color-brand-red)' }}
             transition={{ duration: 0.3 }}
           />
         </div>
-        
+
         {/* Contador de progreso */}
         <div className="text-center">
           <span className="text-lg font-semibold text-white drop-shadow">
