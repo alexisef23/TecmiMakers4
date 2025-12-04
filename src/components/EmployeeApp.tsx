@@ -89,20 +89,19 @@ export function EmployeeApp({ onLogout }: EmployeeAppProps) {
       <div className="bg-blue-600 dark:bg-blue-800 text-white p-4 sticky top-0 z-10 shadow-lg">
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center gap-3">
-            <OxxoLogo size={40} />
+            <Avatar className="h-10 w-10">
+              <AvatarImage src={happyCatImage} alt="Profile" />
+              <AvatarFallback>
+                <User className="h-6 w-6" />
+              </AvatarFallback>
+            </Avatar>
             <div>
-              <h1 className="text-lg">OXXO GO</h1>
-              <div className="flex items-center gap-2">
-                <Avatar className="h-6 w-6">
-                  <AvatarImage src={happyCatImage} alt="Profile" />
-                  <AvatarFallback>
-                    <User className="h-4 w-4" />
-                  </AvatarFallback>
-                </Avatar>
-                <p className="text-xs text-blue-100">
-                  {userType === 'employee' ? 'Laura Rodríguez - Empleado' : 'Roberto García - Líder de Tienda'}
-                </p>
-              </div>
+              <p className="text-sm font-medium">
+                {userType === 'employee' ? 'Laura Rodríguez' : 'Roberto García'}
+              </p>
+              <p className="text-xs text-blue-100">
+                {userType === 'employee' ? 'Empleado' : 'Líder de Tienda'}
+              </p>
             </div>
           </div>
           <div className="flex items-center gap-2">
