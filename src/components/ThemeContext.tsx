@@ -23,24 +23,6 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     return (saved as ColorBlindMode) || 'normal';
   });
 
-  // Aplicar tema inicial
-  useEffect(() => {
-    if (theme === 'dark') {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  }, []);
-
-  // Aplicar modo daltónico inicial
-  useEffect(() => {
-    if (colorBlindMode === 'colorblind') {
-      document.documentElement.classList.add('colorblind');
-    } else {
-      document.documentElement.classList.remove('colorblind');
-    }
-  }, []);
-
   useEffect(() => {
     localStorage.setItem('oxxo-theme', theme);
     if (theme === 'dark') {

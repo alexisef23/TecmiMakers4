@@ -21,15 +21,6 @@ export function LoginPage({ onLogin }: LoginPageProps) {
     onLogin(type);
   };
 
-  // Mock function for selected type to satisfy the button rendering logic in changes
-  const handleUserTypeSelect = (type: 'admin' | 'driver' | 'employee') => {
-    // This function would typically update a state to control which tab is active or visually selected.
-    // For the purpose of this example, we're focusing on the UI color changes, so we'll leave it as a placeholder.
-    console.log(`Selected type: ${type}`);
-  };
-  // Mock state for selected type to satisfy the button rendering logic in changes
-  const selectedType = 'admin'; // Defaulting to 'admin' for demonstration
-
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-red-600 via-orange-500 to-yellow-400 p-4 relative">
       {/* Theme Toggle - Fixed at top right */}
@@ -40,9 +31,9 @@ export function LoginPage({ onLogin }: LoginPageProps) {
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center mb-4">
-            <img
-              src="/src/assets/oxxo-go-logo.png"
-              alt="OXXO GO Logo"
+            <img 
+              src="/src/assets/oxxo-go-logo.png" 
+              alt="OXXO GO Logo" 
               className="w-32 h-32 drop-shadow-2xl rounded-3xl"
             />
           </div>
