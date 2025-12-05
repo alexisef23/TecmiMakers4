@@ -49,11 +49,11 @@ const currentTrip = {
   eta: '07:45',
   passengers: 12,
   stops: [
-    { id: 1, name: 'Metro Indios Verdes', address: 'Av. Insurgentes Norte', time: '06:15', status: 'completed' },
-    { id: 2, name: 'Plaza Lindavista', address: 'Av. Montevideo 363', time: '06:30', status: 'completed' },
-    { id: 3, name: 'Politécnico', address: 'Av. IPN', time: '06:45', status: 'current' },
-    { id: 4, name: 'Refinería', address: 'Av. 18 de Marzo', time: '07:15', status: 'pending' },
-    { id: 5, name: 'Corporativo Central', address: 'Av. Reforma 500', time: '07:45', status: 'pending' },
+    { id: 1, name: 'Metro Indios Verdes', address: 'Av. Insurgentes Norte', time: '06:15', status: 'completed', position: { lat: 28.6272, lng: -106.1135 } },
+    { id: 2, name: 'Plaza Lindavista', address: 'Av. Montevideo 363', time: '06:30', status: 'completed', position: { lat: 28.7042, lng: -106.1285 } },
+    { id: 3, name: 'Politécnico', address: 'Av. IPN', time: '06:45', status: 'current', position: { lat: 28.6365, lng: -106.0761 } },
+    { id: 4, name: 'Refinería', address: 'Av. 18 de Marzo', time: '07:15', status: 'pending', position: { lat: 28.6460, lng: -106.1025 } },
+    { id: 5, name: 'Corporativo Central', address: 'Av. Reforma 500', time: '07:45', status: 'pending', position: { lat: 28.7185, lng: -106.1088 } },
   ],
 };
 
@@ -249,21 +249,28 @@ export function DriverApp({ onLogout }: DriverAppProps) {
                 <div className="h-80 rounded-t-lg relative overflow-hidden">
                   <GoogleMap
                     center={{ lat: 28.6460, lng: -106.1025 }}
-                    zoom={14}
+                    zoom={13}
                     markers={[
+                      // Vehículo actual (punto verde)
                       {
-                        position: { lat: 28.6460, lng: -106.1025 },
-                        title: 'Oficinas OXXO (Plaza la Sierra)',
+                        position: currentTrip.stops[2].position || { lat: 28.6365, lng: -106.0761 },
+                        title: 'Mi ubicación - VH-001',
                         type: 'vehicle'
-                      }
+                      },
+                      // Paradas restantes (puntos azules)
+                      ...currentTrip.stops.slice(2).map((stop, idx) => ({
+                        position: stop.position || { lat: 28.6460, lng: -106.1025 },
+                        title: `${stop.name} - Parada ${idx + 3}`,
+                        type: 'stop' as const
+                      }))
                     ]}
-                    showRoute={false}
+                    showRoute={true}
                     className="rounded-t-lg"
                   />
                   <div className="absolute top-4 right-4 bg-white dark:bg-slate-800 px-3 py-2 rounded-lg shadow z-10">
-                    <p className="text-sm dark:text-slate-400">Destino</p>
-                    <p className="font-semibold dark:text-white">Oficinas OXXO</p>
-                    <p className="text-xs text-slate-600 dark:text-slate-400">Av. de la Cantera</p>
+                    <p className="text-sm dark:text-slate-400">Próxima parada</p>
+                    <p className="font-semibold dark:text-white">{currentTrip.stops[2].name}</p>
+                    <p className="text-xs text-slate-600 dark:text-slate-400">{currentTrip.stops[2].address}</p>
                   </div>
                 </div>
               </CardContent>
