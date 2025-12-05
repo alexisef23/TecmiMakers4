@@ -17,7 +17,8 @@ import {
   AlertTriangle,
   CheckCircle,
   Trophy,
-  User
+  User,
+  Route
 } from 'lucide-react';
 import {
   Dialog,
@@ -252,7 +253,7 @@ export function EmployeeApp({ onLogout }: EmployeeAppProps) {
                         </div>
                       </div>
                       <div className="flex items-start gap-3 mt-3 pt-3 border-t bg-blue-50 -mx-4 px-4 py-3">
-                        <Navigation className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
+                        <Route className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
                         <div className="flex-1">
                           <p className="text-sm font-semibold text-blue-900">Ruta Activa</p>
                           <p className="text-sm text-blue-700">El vehículo está siguiendo la ruta óptima hacia tu ubicación actual</p>
