@@ -41,7 +41,7 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
       <aside 
         className={`hidden lg:flex bg-blue-900 dark:bg-blue-950 text-white transition-all duration-300 ${
           sidebarOpen ? 'w-64' : 'w-20'
-        } flex-col`}
+        } flex-col shadow-lg border-r-2 border-blue-700 dark:border-blue-800`}
       >
         <div className="p-4 border-b border-blue-800 dark:border-blue-900 flex items-center justify-between">
           {sidebarOpen ? (
@@ -64,9 +64,9 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
               variant="ghost"
               size="icon"
               onClick={() => setSidebarOpen(true)}
-              className="text-white hover:bg-blue-800 h-8 w-8 mx-auto"
+              className="text-white hover:bg-blue-800 h-10 w-10 mx-auto bg-blue-800/50"
             >
-              <Menu className="w-5 h-5" />
+              <Menu className="w-6 h-6" />
             </Button>
           )}
         </div>
@@ -80,7 +80,7 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
                 activeModule === item.id 
                   ? 'bg-white text-blue-900 hover:bg-white' 
                   : 'text-white hover:bg-blue-800'
-              } ${!sidebarOpen && 'justify-center'}`}
+              } ${!sidebarOpen && 'justify-center h-12 w-12 mx-auto'}`}
               onClick={() => setActiveModule(item.id)}
             >
               <item.icon className={`w-5 h-5 ${sidebarOpen ? 'mr-3' : ''}`} />
@@ -93,7 +93,7 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
           <Button
             variant="ghost"
             className={`w-full justify-start text-white hover:bg-blue-800 dark:hover:bg-blue-900 ${
-              !sidebarOpen && 'justify-center'
+              !sidebarOpen && 'justify-center h-12 w-12 mx-auto'
             }`}
             onClick={onLogout}
           >
