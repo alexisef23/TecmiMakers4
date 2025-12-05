@@ -10,6 +10,7 @@ interface GoogleMapProps {
   }>;
   className?: string;
   showRoute?: boolean;
+  useDirections?: boolean; // Nueva prop para usar rutas reales
 }
 
 const GOOGLE_MAPS_API_KEY = 'AIzaSyDs8BKAd6nf2oUtwP6PV31ZjdVIsCXgeYc';
@@ -26,12 +27,14 @@ export function GoogleMap({
   markers = [],
   className = '',
   showRoute = false,
+  useDirections = false,
 }: GoogleMapProps) {
   const mapRef = useRef<HTMLDivElement>(null);
   const googleMapInstanceRef = useRef<google.maps.Map | null>(null);
   const markersRef = useRef<google.maps.Marker[]>([]);
   const userMarkerRef = useRef<google.maps.Marker | null>(null);
   const polylineRef = useRef<google.maps.Polyline | null>(null);
+  const directionsRendererRef = useRef<google.maps.DirectionsRenderer | null>(null);
 
   useEffect(() => {
     const loadScript = () => {
@@ -162,16 +165,77 @@ export function GoogleMap({
 
       // Dibujar ruta si es necesario
       if (showRoute && markers.length > 1) {
-        const path = markers.map(m => m.position);
-        polylineRef.current = new google.maps.Polyline({
-          path: path,
-          geodesic: true,
+        if (useDirections) {
+          // Usar Directions API para rutas reales
+          drawDirectionsRoute();
+        } else {
+          // Usar polyline simple (línea recta)
+          const path = markers.map(m => m.position);
+          polylineRef.current = new google.maps.Polyline({
+            path: path,
+            geodesic: true,
+            strokeColor: '#3b82f6',
+            strokeOpacity: 0.8,
+            strokeWeight: 4,
+            map: googleMapInstanceRef.current,
+          });
+        }
+      }
+    };
+
+    const drawDirectionsRoute = () => {
+      if (!googleMapInstanceRef.current || !window.google || markers.length < 2) return;
+
+      const directionsService = new google.maps.DirectionsService();
+      
+      // Limpiar renderer anterior
+      if (directionsRendererRef.current) {
+        directionsRendererRef.current.setMap(null);
+      }
+
+      // Crear nuevo renderer
+      directionsRendererRef.current = new google.maps.DirectionsRenderer({
+        map: googleMapInstanceRef.current,
+        suppressMarkers: true, // No mostrar marcadores del renderer
+        polylineOptions: {
           strokeColor: '#3b82f6',
           strokeOpacity: 0.8,
-          strokeWeight: 4,
-          map: googleMapInstanceRef.current,
-        });
-      }
+          strokeWeight: 5,
+        },
+      });
+
+      // Preparar waypoints (puntos intermedios)
+      const waypoints = markers.slice(1, -1).map(m => ({
+        location: m.position,
+        stopover: true,
+      }));
+
+      // Calcular ruta
+      const request: google.maps.DirectionsRequest = {
+        origin: markers[0].position,
+        destination: markers[markers.length - 1].position,
+        waypoints: waypoints,
+        travelMode: google.maps.TravelMode.DRIVING,
+        optimizeWaypoints: false, // Mantener el orden de las paradas
+      };
+
+      directionsService.route(request, (result, status) => {
+        if (status === google.maps.DirectionsStatus.OK && result) {
+          directionsRendererRef.current?.setDirections(result);
+        } else {
+          console.error('Error al calcular la ruta:', status);
+          // Fallback a línea recta si falla
+          const path = markers.map(m => m.position);
+          polylineRef.current = new google.maps.Polyline({
+            path: path,
+            geodesic: true,
+            strokeColor: '#3b82f6',
+            strokeOpacity: 0.8,
+            strokeWeight: 4,
+            map: googleMapInstanceRef.current,
+          });
+        }
+      });
     };
 
     const getMarkerColor = (type?: string) => {
@@ -197,6 +261,9 @@ export function GoogleMap({
       markersRef.current.forEach(m => m.setMap(null));
       if (polylineRef.current) {
         polylineRef.current.setMap(null);
+      }
+      if (directionsRendererRef.current) {
+        directionsRendererRef.current.setMap(null);
       }
     };
   }, []);
@@ -246,17 +313,62 @@ export function GoogleMap({
 
     // Dibujar ruta si es necesario
     if (showRoute && markers.length > 1) {
-      const path = markers.map(m => m.position);
-      polylineRef.current = new google.maps.Polyline({
-        path: path,
-        geodesic: true,
-        strokeColor: '#3b82f6',
-        strokeOpacity: 0.8,
-        strokeWeight: 4,
-        map: googleMapInstanceRef.current,
-      });
+      if (useDirections) {
+        // Usar Directions API para rutas reales
+        const directionsService = new google.maps.DirectionsService();
+        
+        // Limpiar renderer anterior
+        if (directionsRendererRef.current) {
+          directionsRendererRef.current.setMap(null);
+        }
+
+        // Crear nuevo renderer
+        directionsRendererRef.current = new google.maps.DirectionsRenderer({
+          map: googleMapInstanceRef.current,
+          suppressMarkers: true,
+          polylineOptions: {
+            strokeColor: '#3b82f6',
+            strokeOpacity: 0.8,
+            strokeWeight: 5,
+          },
+        });
+
+        // Preparar waypoints
+        const waypoints = markers.slice(1, -1).map(m => ({
+          location: m.position,
+          stopover: true,
+        }));
+
+        // Calcular ruta
+        const request: google.maps.DirectionsRequest = {
+          origin: markers[0].position,
+          destination: markers[markers.length - 1].position,
+          waypoints: waypoints,
+          travelMode: google.maps.TravelMode.DRIVING,
+          optimizeWaypoints: false,
+        };
+
+        directionsService.route(request, (result, status) => {
+          if (status === google.maps.DirectionsStatus.OK && result) {
+            directionsRendererRef.current?.setDirections(result);
+          } else {
+            console.error('Error al calcular la ruta:', status);
+          }
+        });
+      } else {
+        // Usar polyline simple
+        const path = markers.map(m => m.position);
+        polylineRef.current = new google.maps.Polyline({
+          path: path,
+          geodesic: true,
+          strokeColor: '#3b82f6',
+          strokeOpacity: 0.8,
+          strokeWeight: 4,
+          map: googleMapInstanceRef.current,
+        });
+      }
     }
-  }, [markers, showRoute]);
+  }, [markers, showRoute, useDirections]);
 
   return (
     <div 
