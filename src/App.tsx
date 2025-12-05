@@ -1,10 +1,10 @@
+
 import { useState } from 'react';
 import { LoginPage } from './components/LoginPage';
 import { AdminDashboard } from './components/AdminDashboard';
 import { DriverApp } from './components/DriverApp';
 import { EmployeeApp } from './components/EmployeeApp';
 import { LoadingScreen } from './components/LoadingScreen';
-import { ThemeProvider } from './components/ThemeContext';
 
 type AppView = 'login' | 'admin' | 'driver' | 'employee';
 
@@ -33,13 +33,11 @@ export default function App() {
   }
 
   return (
-    <ThemeProvider>
-      <div className="min-h-screen bg-slate-50 dark:bg-slate-950">
-        {currentView === 'login' && <LoginPage onLogin={handleLogin} />}
-        {currentView === 'admin' && <AdminDashboard onLogout={handleLogout} />}
-        {currentView === 'driver' && <DriverApp onLogout={handleLogout} />}
-        {currentView === 'employee' && <EmployeeApp onLogout={handleLogout} />}
-      </div>
-    </ThemeProvider>
+    <div className="min-h-screen bg-slate-50">
+      {currentView === 'login' && <LoginPage onLogin={handleLogin} />}
+      {currentView === 'admin' && <AdminDashboard onLogout={handleLogout} />}
+      {currentView === 'driver' && <DriverApp onLogout={handleLogout} />}
+      {currentView === 'employee' && <EmployeeApp onLogout={handleLogout} />}
+    </div>
   );
 }
