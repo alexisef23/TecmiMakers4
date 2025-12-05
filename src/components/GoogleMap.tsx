@@ -79,9 +79,10 @@ export function GoogleMap({
         zoomControl: true,
       });
 
-      // Obtener ubicación del usuario
+      // Obtener ubicación del usuario en tiempo real
       if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
+        // Watchear la posición para actualizaciones en tiempo real
+        const watchId = navigator.geolocation.watchPosition(
           (position) => {
             const userPos = {
               lat: position.coords.latitude,
@@ -90,38 +91,54 @@ export function GoogleMap({
 
             if (!googleMapInstanceRef.current) return;
 
-            // Crear marcador de usuario
+            // Actualizar o crear marcador de usuario
             if (userMarkerRef.current) {
-              userMarkerRef.current.setMap(null);
+              // Actualizar posición existente
+              userMarkerRef.current.setPosition(userPos);
+            } else {
+              // Crear nuevo marcador
+              userMarkerRef.current = new google.maps.Marker({
+                position: userPos,
+                map: googleMapInstanceRef.current,
+                title: 'Mi Ubicación en Tiempo Real',
+                icon: {
+                  path: google.maps.SymbolPath.CIRCLE,
+                  fillColor: '#4285F4',
+                  fillOpacity: 1,
+                  strokeColor: '#ffffff',
+                  strokeWeight: 3,
+                  scale: 10,
+                },
+                zIndex: 1000,
+              });
             }
 
-            userMarkerRef.current = new google.maps.Marker({
-              position: userPos,
-              map: googleMapInstanceRef.current,
-              title: 'Mi Ubicación',
-              icon: {
-                path: google.maps.SymbolPath.CIRCLE,
-                fillColor: '#4285F4',
-                fillOpacity: 1,
-                strokeColor: '#ffffff',
-                strokeWeight: 3,
-                scale: 10,
-              },
-              zIndex: 1000,
-            });
-
-            // Centrar en usuario
-            googleMapInstanceRef.current.setCenter(userPos);
+            // Centrar en usuario solo la primera vez
+            if (!userMarkerRef.current.getPosition()) {
+              googleMapInstanceRef.current.setCenter(userPos);
+            }
             
-            // Dibujar ruta hacia la ubicación del usuario
+            // Actualizar ruta hacia la ubicación del usuario
             if (showRoute && useDirections && markers.length > 0) {
               drawDirectionsRoute();
             }
           },
           (error) => {
             console.log('Error obteniendo ubicación:', error);
+          },
+          {
+            enableHighAccuracy: true,
+            maximumAge: 0,
+            timeout: 5000
           }
         );
+
+        // Guardar el ID del watch para limpiarlo después
+        return () => {
+          if (watchId) {
+            navigator.geolocation.clearWatch(watchId);
+          }
+        };
       }
 
       // Agregar marcadores
