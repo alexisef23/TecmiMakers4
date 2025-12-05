@@ -35,7 +35,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from './ui/select';
-import { ThemeToggle } from './ThemeToggle';
 import oxxoGoLogo from '../assets/oxxo-go-logo.png';
 
 interface DriverAppProps {
@@ -90,8 +89,7 @@ export function DriverApp({ onLogout }: DriverAppProps) {
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <ThemeToggle />
-            <Button variant="ghost" size="icon" onClick={onLogout} className="text-white hover:bg-emerald-700 dark:hover:bg-emerald-900">
+            <Button variant="ghost" size="icon" onClick={onLogout} className="text-white hover:bg-emerald-700">
               <LogOut className="w-5 h-5" />
             </Button>
           </div>

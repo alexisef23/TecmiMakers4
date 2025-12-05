@@ -1,5 +1,4 @@
 import { useEffect, useRef } from 'react';
-import { useTheme } from './ThemeContext';
 
 interface GoogleMapProps {
   center?: { lat: number; lng: number };
@@ -25,7 +24,6 @@ export function GoogleMap({
   const mapRef = useRef<HTMLDivElement>(null);
   const googleMapRef = useRef<google.maps.Map | null>(null);
   const markersRef = useRef<google.maps.Marker[]>([]);
-  const { theme } = useTheme();
 
   useEffect(() => {
     // Load Google Maps script
@@ -46,86 +44,7 @@ export function GoogleMap({
     const initMap = () => {
       if (!mapRef.current) return;
 
-      const darkModeStyles = theme === 'dark' ? [
-        { elementType: 'geometry', stylers: [{ color: '#242f3e' }] },
-        { elementType: 'labels.text.stroke', stylers: [{ color: '#242f3e' }] },
-        { elementType: 'labels.text.fill', stylers: [{ color: '#746855' }] },
-        {
-          featureType: 'administrative.locality',
-          elementType: 'labels.text.fill',
-          stylers: [{ color: '#d59563' }],
-        },
-        {
-          featureType: 'poi',
-          elementType: 'labels.text.fill',
-          stylers: [{ color: '#d59563' }],
-        },
-        {
-          featureType: 'poi.park',
-          elementType: 'geometry',
-          stylers: [{ color: '#263c3f' }],
-        },
-        {
-          featureType: 'poi.park',
-          elementType: 'labels.text.fill',
-          stylers: [{ color: '#6b9a76' }],
-        },
-        {
-          featureType: 'road',
-          elementType: 'geometry',
-          stylers: [{ color: '#38414e' }],
-        },
-        {
-          featureType: 'road',
-          elementType: 'geometry.stroke',
-          stylers: [{ color: '#212a37' }],
-        },
-        {
-          featureType: 'road',
-          elementType: 'labels.text.fill',
-          stylers: [{ color: '#9ca5b3' }],
-        },
-        {
-          featureType: 'road.highway',
-          elementType: 'geometry',
-          stylers: [{ color: '#746855' }],
-        },
-        {
-          featureType: 'road.highway',
-          elementType: 'geometry.stroke',
-          stylers: [{ color: '#1f2835' }],
-        },
-        {
-          featureType: 'road.highway',
-          elementType: 'labels.text.fill',
-          stylers: [{ color: '#f3d19c' }],
-        },
-        {
-          featureType: 'transit',
-          elementType: 'geometry',
-          stylers: [{ color: '#2f3948' }],
-        },
-        {
-          featureType: 'transit.station',
-          elementType: 'labels.text.fill',
-          stylers: [{ color: '#d59563' }],
-        },
-        {
-          featureType: 'water',
-          elementType: 'geometry',
-          stylers: [{ color: '#17263c' }],
-        },
-        {
-          featureType: 'water',
-          elementType: 'labels.text.fill',
-          stylers: [{ color: '#515c6d' }],
-        },
-        {
-          featureType: 'water',
-          elementType: 'labels.text.stroke',
-          stylers: [{ color: '#17263c' }],
-        },
-      ] : [
+      const mapStyles = [
         {
           featureType: 'poi',
           elementType: 'labels',
@@ -137,7 +56,7 @@ export function GoogleMap({
       googleMapRef.current = new window.google.maps.Map(mapRef.current, {
         center,
         zoom,
-        styles: darkModeStyles,
+        styles: mapStyles,
       });
 
       // Add markers
@@ -150,21 +69,6 @@ export function GoogleMap({
   useEffect(() => {
     updateMarkers();
   }, [markers]);
-
-  useEffect(() => {
-    // Update map styles when theme changes
-    if (googleMapRef.current) {
-      const darkModeStyles = theme === 'dark' ? [
-        { elementType: 'geometry', stylers: [{ color: '#242f3e' }] },
-        { elementType: 'labels.text.stroke', stylers: [{ color: '#242f3e' }] },
-        { elementType: 'labels.text.fill', stylers: [{ color: '#746855' }] },
-        { featureType: 'water', elementType: 'geometry', stylers: [{ color: '#17263c' }] },
-      ] : [
-        { featureType: 'poi', elementType: 'labels', stylers: [{ visibility: 'off' }] },
-      ];
-      googleMapRef.current.setOptions({ styles: darkModeStyles });
-    }
-  }, [theme]);
 
   const updateMarkers = () => {
     if (!googleMapRef.current) return;

@@ -15,7 +15,6 @@ import { RouteManagement } from './admin/RouteManagement';
 import { FinanceModule } from './admin/FinanceModule';
 import { ReportsAnalytics } from './admin/ReportsAnalytics';
 import { SettingsModule } from './admin/SettingsModule';
-import { ThemeToggle } from './ThemeToggle';
 import oxxoGoLogo from '../assets/oxxo-go-logo.png';
 
 interface AdminDashboardProps {
@@ -81,12 +80,7 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
           ))}
         </nav>
 
-        <div className="p-4 border-t border-blue-800 dark:border-blue-900 space-y-2">
-          {sidebarOpen && (
-            <div className="px-2">
-              <ThemeToggle />
-            </div>
-          )}
+        <div className="p-4 border-t border-blue-800 space-y-2">
           <Button
             variant="ghost"
             className={`w-full justify-start text-white hover:bg-blue-800 dark:hover:bg-blue-900 ${

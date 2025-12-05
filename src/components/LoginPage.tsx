@@ -6,7 +6,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
 import { Bus, User, Shield } from 'lucide-react';
 import { OxxoLogo } from './OxxoLogo';
-import { ThemeToggle } from './ThemeToggle';
 
 interface LoginPageProps {
   onLogin: (type: 'admin' | 'driver' | 'employee') => void;
@@ -22,12 +21,7 @@ export function LoginPage({ onLogin }: LoginPageProps) {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-red-600 via-orange-500 to-yellow-400 p-4 relative">
-      {/* Theme Toggle - Fixed at top right */}
-      <div className="absolute top-4 right-4 z-10">
-        <ThemeToggle />
-      </div>
-
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-red-600 via-orange-500 to-yellow-400 p-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center mb-4">
