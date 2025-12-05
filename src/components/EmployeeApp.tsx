@@ -233,7 +233,7 @@ export function EmployeeApp({ onLogout }: EmployeeAppProps) {
                           {
                             position: { lat: 28.6365, lng: -106.0761 },
                             title: 'Tu ubicación actual',
-                            type: 'employee'
+                            type: 'stop'
                           }
                         ]}
                         showRoute={true}
