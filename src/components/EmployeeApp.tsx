@@ -45,8 +45,8 @@ import employeeAvatar from '../assets/employee-avatar.png.png';
 
 const todayTransport = {
   pickupTime: '06:45',
-  pickupLocation: 'Metro Politécnico',
-  address: 'Av. IPN 2580',
+  pickupLocation: 'Tu Ubicación Actual',
+  address: 'Rastreando en tiempo real',
   driver: 'Juan Pérez',
   vehicle: 'Mercedes Sprinter',
   plate: 'ABC-1234',
@@ -218,17 +218,15 @@ export function EmployeeApp({ onLogout }: EmployeeAppProps) {
                   <CardContent className="p-0">
                     <div className="rounded-b-lg overflow-hidden">
                       <GoogleMap
-                        center={{ lat: 28.6365, lng: -106.0761 }}
+                        center={{ lat: 28.6272, lng: -106.1135 }}
                         zoom={13}
                         markers={[
-                          // Vehículo viniendo desde Fashion Mall (punto verde)
+                          // Vehículo en Fashion Mall (punto verde)
                           {
                             position: { lat: 28.6272, lng: -106.1135 },
-                            title: 'Tu transporte - Mercedes Sprinter ABC-1234',
+                            title: 'Tu transporte - Mercedes Sprinter ABC-1234 (Fashion Mall)',
                             type: 'vehicle'
                           },
-                          // Tu ubicación en tiempo real (punto azul - se detecta automáticamente)
-                          // El componente GoogleMap ya muestra la ubicación del usuario con geolocalización
                         ]}
                         showRoute={true}
                         useDirections={true}
@@ -247,7 +245,7 @@ export function EmployeeApp({ onLogout }: EmployeeAppProps) {
                         <Bus className="w-5 h-5 text-emerald-600 mt-0.5 flex-shrink-0" />
                         <div className="flex-1">
                           <p className="text-sm font-semibold text-slate-900">Tu Transporte</p>
-                          <p className="text-sm text-slate-600">Viniendo desde Fashion Mall</p>
+                          <p className="text-sm text-slate-600">Ubicado en Fashion Mall</p>
                           <p className="text-xs text-emerald-600 font-medium mt-1">Llegada estimada: {todayTransport.eta}</p>
                         </div>
                       </div>

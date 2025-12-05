@@ -184,7 +184,7 @@ export function GoogleMap({
     };
 
     const drawDirectionsRoute = () => {
-      if (!googleMapInstanceRef.current || !window.google || markers.length < 2) return;
+      if (!googleMapInstanceRef.current || !window.google || markers.length < 1) return;
 
       const directionsService = new google.maps.DirectionsService();
       
@@ -204,38 +204,79 @@ export function GoogleMap({
         },
       });
 
-      // Preparar waypoints (puntos intermedios)
-      const waypoints = markers.slice(1, -1).map(m => ({
-        location: m.position,
-        stopover: true,
-      }));
+      // Obtener ubicación del usuario para usarla como destino
+      if (navigator.geolocation && userMarkerRef.current) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const userPos = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude,
+            };
 
-      // Calcular ruta
-      const request: google.maps.DirectionsRequest = {
-        origin: markers[0].position,
-        destination: markers[markers.length - 1].position,
-        waypoints: waypoints,
-        travelMode: google.maps.TravelMode.DRIVING,
-        optimizeWaypoints: false, // Mantener el orden de las paradas
-      };
+            // Si solo hay un marcador (vehículo), crear ruta desde vehículo hasta usuario
+            if (markers.length === 1) {
+              const request: google.maps.DirectionsRequest = {
+                origin: markers[0].position,
+                destination: userPos,
+                travelMode: google.maps.TravelMode.DRIVING,
+                optimizeWaypoints: false,
+              };
 
-      directionsService.route(request, (result, status) => {
-        if (status === google.maps.DirectionsStatus.OK && result) {
-          directionsRendererRef.current?.setDirections(result);
-        } else {
-          console.error('Error al calcular la ruta:', status);
-          // Fallback a línea recta si falla
-          const path = markers.map(m => m.position);
-          polylineRef.current = new google.maps.Polyline({
-            path: path,
-            geodesic: true,
-            strokeColor: '#3b82f6',
-            strokeOpacity: 0.8,
-            strokeWeight: 4,
-            map: googleMapInstanceRef.current,
-          });
-        }
-      });
+              directionsService.route(request, (result, status) => {
+                if (status === google.maps.DirectionsStatus.OK && result) {
+                  directionsRendererRef.current?.setDirections(result);
+                } else {
+                  console.error('Error al calcular la ruta:', status);
+                  // Fallback a línea recta si falla
+                  const path = [markers[0].position, userPos];
+                  polylineRef.current = new google.maps.Polyline({
+                    path: path,
+                    geodesic: true,
+                    strokeColor: '#3b82f6',
+                    strokeOpacity: 0.8,
+                    strokeWeight: 4,
+                    map: googleMapInstanceRef.current,
+                  });
+                }
+              });
+            } else {
+              // Si hay múltiples marcadores, usar lógica original
+              const waypoints = markers.slice(1, -1).map(m => ({
+                location: m.position,
+                stopover: true,
+              }));
+
+              const request: google.maps.DirectionsRequest = {
+                origin: markers[0].position,
+                destination: markers[markers.length - 1].position,
+                waypoints: waypoints,
+                travelMode: google.maps.TravelMode.DRIVING,
+                optimizeWaypoints: false,
+              };
+
+              directionsService.route(request, (result, status) => {
+                if (status === google.maps.DirectionsStatus.OK && result) {
+                  directionsRendererRef.current?.setDirections(result);
+                } else {
+                  console.error('Error al calcular la ruta:', status);
+                  const path = markers.map(m => m.position);
+                  polylineRef.current = new google.maps.Polyline({
+                    path: path,
+                    geodesic: true,
+                    strokeColor: '#3b82f6',
+                    strokeOpacity: 0.8,
+                    strokeWeight: 4,
+                    map: googleMapInstanceRef.current,
+                  });
+                }
+              });
+            }
+          },
+          (error) => {
+            console.log('Error obteniendo ubicación para ruta:', error);
+          }
+        );
+      }
     };
 
     const getMarkerColor = (type?: string) => {
@@ -312,7 +353,7 @@ export function GoogleMap({
     });
 
     // Dibujar ruta si es necesario
-    if (showRoute && markers.length > 1) {
+    if (showRoute && markers.length >= 1) {
       if (useDirections) {
         // Usar Directions API para rutas reales
         const directionsService = new google.maps.DirectionsService();
@@ -333,28 +374,60 @@ export function GoogleMap({
           },
         });
 
-        // Preparar waypoints
-        const waypoints = markers.slice(1, -1).map(m => ({
-          location: m.position,
-          stopover: true,
-        }));
+        // Obtener ubicación del usuario
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(
+            (position) => {
+              const userPos = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude,
+              };
 
-        // Calcular ruta
-        const request: google.maps.DirectionsRequest = {
-          origin: markers[0].position,
-          destination: markers[markers.length - 1].position,
-          waypoints: waypoints,
-          travelMode: google.maps.TravelMode.DRIVING,
-          optimizeWaypoints: false,
-        };
+              // Si solo hay un marcador (vehículo), crear ruta desde vehículo hasta usuario
+              if (markers.length === 1) {
+                const request: google.maps.DirectionsRequest = {
+                  origin: markers[0].position,
+                  destination: userPos,
+                  travelMode: google.maps.TravelMode.DRIVING,
+                  optimizeWaypoints: false,
+                };
 
-        directionsService.route(request, (result, status) => {
-          if (status === google.maps.DirectionsStatus.OK && result) {
-            directionsRendererRef.current?.setDirections(result);
-          } else {
-            console.error('Error al calcular la ruta:', status);
-          }
-        });
+                directionsService.route(request, (result, status) => {
+                  if (status === google.maps.DirectionsStatus.OK && result) {
+                    directionsRendererRef.current?.setDirections(result);
+                  } else {
+                    console.error('Error al calcular la ruta:', status);
+                  }
+                });
+              } else {
+                // Si hay múltiples marcadores, usar lógica original
+                const waypoints = markers.slice(1, -1).map(m => ({
+                  location: m.position,
+                  stopover: true,
+                }));
+
+                const request: google.maps.DirectionsRequest = {
+                  origin: markers[0].position,
+                  destination: markers[markers.length - 1].position,
+                  waypoints: waypoints,
+                  travelMode: google.maps.TravelMode.DRIVING,
+                  optimizeWaypoints: false,
+                };
+
+                directionsService.route(request, (result, status) => {
+                  if (status === google.maps.DirectionsStatus.OK && result) {
+                    directionsRendererRef.current?.setDirections(result);
+                  } else {
+                    console.error('Error al calcular la ruta:', status);
+                  }
+                });
+              }
+            },
+            (error) => {
+              console.log('Error obteniendo ubicación para ruta:', error);
+            }
+          );
+        }
       } else {
         // Usar polyline simple
         const path = markers.map(m => m.position);
