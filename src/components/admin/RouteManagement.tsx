@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import { Badge } from '../ui/badge';
+import { GoogleMap } from '../GoogleMap';
 import { 
   Plus, 
   Search, 
@@ -50,6 +51,14 @@ const routes = [
     schedule: '06:00 - 08:00',
     passengers: 12,
     distance: '23.5 km',
+    vehiclePosition: { lat: 19.4526, lng: -99.1532 },
+    routeStops: [
+      { lat: 19.4326, lng: -99.1332 },
+      { lat: 19.4426, lng: -99.1432 },
+      { lat: 19.4526, lng: -99.1532 },
+      { lat: 19.4626, lng: -99.1632 },
+      { lat: 19.4726, lng: -99.1732 },
+    ],
   },
   {
     id: 'RT-002',
@@ -61,6 +70,16 @@ const routes = [
     schedule: '06:30 - 08:30',
     passengers: 15,
     distance: '31.2 km',
+    vehiclePosition: { lat: 19.3826, lng: -99.1632 },
+    routeStops: [
+      { lat: 19.3526, lng: -99.1332 },
+      { lat: 19.3626, lng: -99.1432 },
+      { lat: 19.3726, lng: -99.1532 },
+      { lat: 19.3826, lng: -99.1632 },
+      { lat: 19.3926, lng: -99.1732 },
+      { lat: 19.4026, lng: -99.1832 },
+      { lat: 19.4126, lng: -99.1932 },
+    ],
   },
   {
     id: 'RT-003',
@@ -72,6 +91,13 @@ const routes = [
     schedule: '07:00 - 09:00',
     passengers: 10,
     distance: '18.7 km',
+    vehiclePosition: { lat: 19.4326, lng: -99.1332 },
+    routeStops: [
+      { lat: 19.4326, lng: -99.1332 },
+      { lat: 19.4376, lng: -99.1282 },
+      { lat: 19.4426, lng: -99.1232 },
+      { lat: 19.4476, lng: -99.1182 },
+    ],
   },
   {
     id: 'RT-004',
@@ -83,6 +109,15 @@ const routes = [
     schedule: '05:30 - 07:30',
     passengers: 14,
     distance: '28.9 km',
+    vehiclePosition: { lat: 19.4126, lng: -99.2032 },
+    routeStops: [
+      { lat: 19.4126, lng: -99.2032 },
+      { lat: 19.4226, lng: -99.1932 },
+      { lat: 19.4326, lng: -99.1832 },
+      { lat: 19.4426, lng: -99.1732 },
+      { lat: 19.4526, lng: -99.1632 },
+      { lat: 19.4626, lng: -99.1532 },
+    ],
   },
   {
     id: 'RT-005',
@@ -94,12 +129,21 @@ const routes = [
     schedule: '06:15 - 08:15',
     passengers: 11,
     distance: '21.3 km',
+    vehiclePosition: { lat: 19.4426, lng: -99.2032 },
+    routeStops: [
+      { lat: 19.4226, lng: -99.2032 },
+      { lat: 19.4326, lng: -99.2132 },
+      { lat: 19.4426, lng: -99.2232 },
+      { lat: 19.4526, lng: -99.2332 },
+      { lat: 19.4626, lng: -99.2432 },
+    ],
   },
 ];
 
 export function RouteManagement() {
   const [searchTerm, setSearchTerm] = useState('');
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [selectedRoute, setSelectedRoute] = useState<string | null>(null);
 
   const filteredRoutes = routes.filter(route =>
     route.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -286,6 +330,75 @@ export function RouteManagement() {
                 ))}
               </TableBody>
             </Table>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Map Visualization Card */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <MapPin className="w-5 h-5 text-blue-900" />
+            Visualización de Rutas en Tiempo Real
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="mb-4">
+            <Label className="text-sm mb-2 block">Seleccionar Ruta</Label>
+            <Select value={selectedRoute || ''} onValueChange={setSelectedRoute}>
+              <SelectTrigger>
+                <SelectValue placeholder="Ver todas las rutas" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">Todas las rutas</SelectItem>
+                {routes.map((route) => (
+                  <SelectItem key={route.id} value={route.id}>
+                    {route.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="h-[500px] rounded-lg overflow-hidden border">
+            <GoogleMap
+              center={{ lat: 19.4326, lng: -99.1332 }}
+              zoom={12}
+              markers={[
+                // Vehículos
+                ...routes
+                  .filter(r => !selectedRoute || selectedRoute === 'all' || selectedRoute === r.id)
+                  .filter(r => r.status === 'Activa')
+                  .map(r => ({
+                    position: r.vehiclePosition,
+                    title: `${r.vehicle} - ${r.driver}`,
+                    type: 'vehicle' as const,
+                  })),
+                // Paradas
+                ...routes
+                  .filter(r => selectedRoute && selectedRoute !== 'all' && selectedRoute === r.id)
+                  .flatMap(r => r.routeStops.map((stop, idx) => ({
+                    position: stop,
+                    title: `Parada ${idx + 1} - ${r.name}`,
+                    type: 'stop' as const,
+                  }))),
+              ]}
+              showRoute={!!selectedRoute && selectedRoute !== 'all'}
+              className="w-full h-full"
+            />
+          </div>
+          <div className="mt-4 grid grid-cols-3 gap-3">
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-3 rounded-full bg-emerald-600"></div>
+              <span className="text-sm">Vehículos Activos</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-3 rounded-full bg-blue-600"></div>
+              <span className="text-sm">Paradas</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-3 rounded-full bg-blue-500"></div>
+              <span className="text-sm">Ruta</span>
+            </div>
           </div>
         </CardContent>
       </Card>
