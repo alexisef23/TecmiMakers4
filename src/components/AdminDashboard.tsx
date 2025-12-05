@@ -36,12 +36,13 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
   ];
 
   return (
-    <div className="flex h-screen bg-slate-50 dark:bg-slate-950">
+    <div className="flex h-screen bg-slate-50 dark:bg-slate-950 overflow-hidden">
       {/* Sidebar - Solo visible en desktop */}
       <aside 
-        className={`hidden lg:flex bg-blue-900 dark:bg-blue-950 text-white transition-all duration-300 ${
+        className={`hidden lg:flex bg-blue-900 dark:bg-blue-950 text-white transition-all duration-300 flex-col shadow-xl border-r-4 border-blue-600 dark:border-blue-700 ${
           sidebarOpen ? 'w-64' : 'w-24'
-        } flex-col shadow-xl border-r-4 border-blue-600 dark:border-blue-700`}
+        }`}
+        style={{ minWidth: sidebarOpen ? '16rem' : '6rem' }}
       >
         <div className="p-4 border-b border-blue-800 dark:border-blue-900 flex items-center justify-between">
           {sidebarOpen ? (
