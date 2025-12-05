@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'motion/react';
+import oxxoGoLogo from '../assets/oxxo-go-logo.png';
 
 export function LoadingScreen({ onLoadingComplete }: { onLoadingComplete: () => void }) {
   const [progress, setProgress] = useState(0);
@@ -37,7 +38,7 @@ export function LoadingScreen({ onLoadingComplete }: { onLoadingComplete: () => 
         <div className="relative">
           {/* Logo OXXO GO */}
           <img 
-            src="/src/assets/oxxo-go-logo.png" 
+            src={oxxoGoLogo} 
             alt="OXXO GO Logo" 
             className="w-32 h-32 drop-shadow-2xl rounded-3xl"
           />
