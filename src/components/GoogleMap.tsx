@@ -376,7 +376,10 @@ export function GoogleMap({
   }, []);
 
   useEffect(() => {
-    if (!googleMapInstanceRef.current || !window.google || employeeMode) return;
+    if (!googleMapInstanceRef.current || !window.google) return;
+
+    // En employeeMode, no renderizar marcadores adicionales (solo el punto azul y vehículo principal)
+    if (employeeMode) return;
 
     markersRef.current.forEach(m => m.setMap(null));
     markersRef.current = [];
