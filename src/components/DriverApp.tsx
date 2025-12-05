@@ -243,28 +243,47 @@ export function DriverApp({ onLogout }: DriverAppProps) {
               ← Volver
             </Button>
 
-            {/* Map Real */}
+            {/* Map Real - Ruta a Oficinas OXXO */}
             <Card className="dark:bg-slate-900 dark:border-slate-700">
               <CardContent className="p-0">
                 <div className="h-80 rounded-t-lg relative overflow-hidden">
                   <GoogleMap
                     center={{ lat: 28.6460, lng: -106.1025 }}
                     zoom={13}
-                    markers={currentTrip.stops.map((stop, index) => ({
-                      position: { 
-                        lat: 19.4326 + (Math.random() - 0.5) * 0.05, 
-                        lng: -99.1332 + (Math.random() - 0.5) * 0.05 
+                    markers={[
+                      {
+                        position: { lat: 28.6272, lng: -106.1135 },
+                        title: 'Fashion Mall (Plaza del Sol)',
+                        type: 'stop'
                       },
-                      title: stop.name,
-                      type: 'stop'
-                    }))}
+                      {
+                        position: { lat: 28.7042, lng: -106.1285 },
+                        title: 'Distrito 1 (D1)',
+                        type: 'stop'
+                      },
+                      {
+                        position: { lat: 28.6365, lng: -106.0761 },
+                        title: 'Universidad Tecmilenio',
+                        type: 'stop'
+                      },
+                      {
+                        position: { lat: 28.6460, lng: -106.1025 },
+                        title: 'Oficinas OXXO (Plaza la Sierra)',
+                        type: 'vehicle'
+                      },
+                      {
+                        position: { lat: 28.7185, lng: -106.1088 },
+                        title: 'Deportiva Norte (Pistolas Meneses)',
+                        type: 'stop'
+                      }
+                    ]}
                     showRoute={true}
                     className="rounded-t-lg"
                   />
                   <div className="absolute top-4 right-4 bg-white dark:bg-slate-800 px-3 py-2 rounded-lg shadow z-10">
-                    <p className="text-sm dark:text-slate-400">Próxima parada</p>
-                    <p className="font-semibold dark:text-white">Politécnico</p>
-                    <p className="text-xs text-slate-600 dark:text-slate-400">500m - 2 min</p>
+                    <p className="text-sm dark:text-slate-400">Destino Final</p>
+                    <p className="font-semibold dark:text-white">Oficinas OXXO</p>
+                    <p className="text-xs text-slate-600 dark:text-slate-400">Plaza la Sierra</p>
                   </div>
                 </div>
               </CardContent>
