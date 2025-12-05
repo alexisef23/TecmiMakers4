@@ -108,12 +108,6 @@ export function RankingView({ currentEmployeeId = 1 }: RankingViewProps) {
                         className="w-full h-full object-cover"
                       />
                     </div>
-                    {/* Corona para el #1 */}
-                    {isTopEmployee && (
-                      <div className="absolute -top-1 -right-1 text-2xl">
-                        👑
-                      </div>
-                    )}
                   </div>
 
                   {/* Employee Info */}
