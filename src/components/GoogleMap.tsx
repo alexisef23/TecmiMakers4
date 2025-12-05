@@ -171,24 +171,32 @@ export function GoogleMap({
     const updateUserMarker = (userPos: { lat: number; lng: number }) => {
       if (!googleMapInstanceRef.current || !window.google) return;
 
+      console.log('Actualizando punto azul con GPS:', userPos);
+
       // Crear o actualizar marcador azul del usuario
       if (userMarkerRef.current) {
+        // Actualizar posición del marcador existente
         userMarkerRef.current.setPosition(userPos);
+        console.log('Punto azul actualizado a:', userPos);
       } else {
+        // Crear nuevo marcador azul
         userMarkerRef.current = new google.maps.Marker({
           position: userPos,
           map: googleMapInstanceRef.current,
-          title: 'Mi Ubicación en Tiempo Real',
+          title: 'Mi Ubicación GPS en Tiempo Real',
           icon: {
             path: google.maps.SymbolPath.CIRCLE,
             fillColor: '#4285F4',
             fillOpacity: 1,
             strokeColor: '#ffffff',
             strokeWeight: 3,
-            scale: 12,
+            scale: 15,
           },
           zIndex: 1000,
+          optimized: false,
         });
+
+        console.log('Punto azul creado en:', userPos);
 
         // Centrar el mapa entre el usuario y Fashion Mall la primera vez
         const bounds = new google.maps.LatLngBounds();
