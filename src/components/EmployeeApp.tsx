@@ -218,8 +218,8 @@ export function EmployeeApp({ onLogout }: EmployeeAppProps) {
                   <CardContent className="p-0">
                     <div className="rounded-b-lg overflow-hidden" style={{ height: '400px' }}>
                       <GoogleMap
-                        center={{ lat: 28.6765, lng: -106.1155 }}
-                        zoom={13}
+                        center={{ lat: 28.6460, lng: -106.1025 }}
+                        zoom={12}
                         employeeMode={true}
                       />
                     </div>

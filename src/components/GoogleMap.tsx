@@ -15,7 +15,7 @@ interface GoogleMapProps {
 }
 
 const GOOGLE_MAPS_API_KEY = 'AIzaSyDs8BKAd6nf2oUtwP6PV31ZjdVIsCXgeYc';
-const FASHION_MALL_LOCATION = { lat: 28.7042, lng: -106.1285 };
+const FASHION_MALL_LOCATION = { lat: 28.6272, lng: -106.1135 };
 
 declare global {
   interface Window {
