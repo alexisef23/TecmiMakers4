@@ -118,6 +118,7 @@ export function GoogleMap({
     const startEmployeeLocationTracking = () => {
       if (!navigator.geolocation) {
         console.error('Geolocation no está disponible');
+        alert('Tu navegador no soporta geolocalización. Por favor habilita los permisos de ubicación.');
         return;
       }
 
@@ -125,43 +126,36 @@ export function GoogleMap({
         navigator.geolocation.clearWatch(watchIdRef.current);
       }
 
+      // Solicitar ubicación inmediatamente
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const userPos = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          };
+          console.log('Ubicación inicial del empleado:', userPos);
+          updateUserMarker(userPos);
+        },
+        (error) => {
+          console.error('Error obteniendo ubicación inicial:', error);
+          alert('No se pudo obtener tu ubicación. Por favor verifica los permisos de ubicación en tu navegador.');
+        },
+        {
+          enableHighAccuracy: true,
+          timeout: 10000,
+          maximumAge: 0
+        }
+      );
+
+      // Seguir actualizando la ubicación en tiempo real
       watchIdRef.current = navigator.geolocation.watchPosition(
         (position) => {
           const userPos = {
             lat: position.coords.latitude,
             lng: position.coords.longitude,
           };
-
-          if (!googleMapInstanceRef.current || !window.google) return;
-
-          // Crear o actualizar marcador azul del usuario
-          if (userMarkerRef.current) {
-            userMarkerRef.current.setPosition(userPos);
-          } else {
-            userMarkerRef.current = new google.maps.Marker({
-              position: userPos,
-              map: googleMapInstanceRef.current,
-              title: 'Mi Ubicación',
-              icon: {
-                path: google.maps.SymbolPath.CIRCLE,
-                fillColor: '#4285F4',
-                fillOpacity: 1,
-                strokeColor: '#ffffff',
-                strokeWeight: 3,
-                scale: 10,
-              },
-              zIndex: 1000,
-            });
-
-            // Centrar el mapa entre el usuario y Fashion Mall
-            const bounds = new google.maps.LatLngBounds();
-            bounds.extend(userPos);
-            bounds.extend(FASHION_MALL_LOCATION);
-            googleMapInstanceRef.current.fitBounds(bounds);
-          }
-
-          // Actualizar ruta
-          updateEmployeeRoute(userPos);
+          console.log('Ubicación actualizada del empleado:', userPos);
+          updateUserMarker(userPos);
         },
         (error) => {
           console.error('Error obteniendo ubicación:', error);
@@ -172,6 +166,39 @@ export function GoogleMap({
           maximumAge: 0
         }
       );
+    };
+
+    const updateUserMarker = (userPos: { lat: number; lng: number }) => {
+      if (!googleMapInstanceRef.current || !window.google) return;
+
+      // Crear o actualizar marcador azul del usuario
+      if (userMarkerRef.current) {
+        userMarkerRef.current.setPosition(userPos);
+      } else {
+        userMarkerRef.current = new google.maps.Marker({
+          position: userPos,
+          map: googleMapInstanceRef.current,
+          title: 'Mi Ubicación en Tiempo Real',
+          icon: {
+            path: google.maps.SymbolPath.CIRCLE,
+            fillColor: '#4285F4',
+            fillOpacity: 1,
+            strokeColor: '#ffffff',
+            strokeWeight: 3,
+            scale: 12,
+          },
+          zIndex: 1000,
+        });
+
+        // Centrar el mapa entre el usuario y Fashion Mall la primera vez
+        const bounds = new google.maps.LatLngBounds();
+        bounds.extend(userPos);
+        bounds.extend(FASHION_MALL_LOCATION);
+        googleMapInstanceRef.current.fitBounds(bounds);
+      }
+
+      // Actualizar ruta
+      updateEmployeeRoute(userPos);
     };
 
     const updateEmployeeRoute = (userPos: { lat: number; lng: number }) => {
