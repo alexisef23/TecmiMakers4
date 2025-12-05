@@ -43,85 +43,77 @@ import {
 const routes = [
   {
     id: 'RT-001',
-    name: 'Ruta Norte - Corporativo Central',
+    name: 'Ruta Fashion Mall - Oficinas OXXO',
     status: 'Activa',
     stops: 5,
     vehicle: 'VH-001 - Mercedes Sprinter',
     driver: 'Juan Pérez',
     schedule: '06:00 - 08:00',
     passengers: 12,
-    distance: '23.5 km',
-    vehiclePosition: { lat: 19.4526, lng: -99.1532 },
+    distance: '8.5 km',
+    vehiclePosition: { lat: 28.6272, lng: -106.1135 },
     routeStops: [
-      { lat: 19.4326, lng: -99.1332 },
-      { lat: 19.4426, lng: -99.1432 },
-      { lat: 19.4526, lng: -99.1532 },
-      { lat: 19.4626, lng: -99.1632 },
-      { lat: 19.4726, lng: -99.1732 },
+      { lat: 28.6272, lng: -106.1135 }, // Fashion Mall
+      { lat: 28.6365, lng: -106.0761 }, // Universidad Tecmilenio
+      { lat: 28.6460, lng: -106.1025 }, // Oficinas OXXO
+      { lat: 28.7042, lng: -106.1285 }, // Distrito 1
+      { lat: 28.7185, lng: -106.1088 }, // Deportiva Norte
     ],
   },
   {
     id: 'RT-002',
-    name: 'Ruta Sur - Sucursal Periférico',
+    name: 'Ruta Distrito 1 - Centro',
     status: 'Activa',
-    stops: 7,
+    stops: 3,
     vehicle: 'VH-003 - Ford Transit',
     driver: 'María González',
     schedule: '06:30 - 08:30',
     passengers: 15,
-    distance: '31.2 km',
-    vehiclePosition: { lat: 19.3826, lng: -99.1632 },
+    distance: '12.3 km',
+    vehiclePosition: { lat: 28.7042, lng: -106.1285 },
     routeStops: [
-      { lat: 19.3526, lng: -99.1332 },
-      { lat: 19.3626, lng: -99.1432 },
-      { lat: 19.3726, lng: -99.1532 },
-      { lat: 19.3826, lng: -99.1632 },
-      { lat: 19.3926, lng: -99.1732 },
-      { lat: 19.4026, lng: -99.1832 },
-      { lat: 19.4126, lng: -99.1932 },
+      { lat: 28.7042, lng: -106.1285 }, // Distrito 1
+      { lat: 28.6365, lng: -106.0761 }, // Universidad Tecmilenio
+      { lat: 28.6460, lng: -106.1025 }, // Oficinas OXXO
     ],
   },
   {
     id: 'RT-003',
-    name: 'Ruta Centro - Oficinas Centro',
+    name: 'Ruta Centro - Corporativas',
     status: 'En Mantenimiento',
-    stops: 4,
+    stops: 2,
     vehicle: 'VH-005 - Mercedes Sprinter',
     driver: 'Carlos Ramírez',
     schedule: '07:00 - 09:00',
     passengers: 10,
-    distance: '18.7 km',
-    vehiclePosition: { lat: 19.4326, lng: -99.1332 },
+    distance: '5.2 km',
+    vehiclePosition: { lat: 28.6365, lng: -106.0761 },
     routeStops: [
-      { lat: 19.4326, lng: -99.1332 },
-      { lat: 19.4376, lng: -99.1282 },
-      { lat: 19.4426, lng: -99.1232 },
-      { lat: 19.4476, lng: -99.1182 },
+      { lat: 28.6365, lng: -106.0761 }, // Universidad Tecmilenio
+      { lat: 28.6460, lng: -106.1025 }, // Oficinas OXXO
     ],
   },
   {
     id: 'RT-004',
-    name: 'Ruta Oeste - Zona Industrial',
+    name: 'Ruta Deportiva Norte - Fashion Mall',
     status: 'Activa',
-    stops: 6,
+    stops: 4,
     vehicle: 'VH-007 - Chevrolet Express',
     driver: 'Ana Martínez',
     schedule: '05:30 - 07:30',
     passengers: 14,
-    distance: '28.9 km',
-    vehiclePosition: { lat: 19.4126, lng: -99.2032 },
+    distance: '15.8 km',
+    vehiclePosition: { lat: 28.7185, lng: -106.1088 },
     routeStops: [
-      { lat: 19.4126, lng: -99.2032 },
-      { lat: 19.4226, lng: -99.1932 },
-      { lat: 19.4326, lng: -99.1832 },
-      { lat: 19.4426, lng: -99.1732 },
-      { lat: 19.4526, lng: -99.1632 },
-      { lat: 19.4626, lng: -99.1532 },
+      { lat: 28.7185, lng: -106.1088 }, // Deportiva Norte
+      { lat: 28.7042, lng: -106.1285 }, // Distrito 1
+      { lat: 28.6460, lng: -106.1025 }, // Oficinas OXXO
+      { lat: 28.6272, lng: -106.1135 }, // Fashion Mall
     ],
   },
   {
     id: 'RT-005',
-    name: 'Ruta Este - Polanco',
+    name: 'Ruta Completa Chihuahua',
     status: 'Activa',
     stops: 5,
     vehicle: 'VH-009 - Ford Transit',
@@ -129,13 +121,13 @@ const routes = [
     schedule: '06:15 - 08:15',
     passengers: 11,
     distance: '21.3 km',
-    vehiclePosition: { lat: 19.4426, lng: -99.2032 },
+    vehiclePosition: { lat: 28.6460, lng: -106.1025 },
     routeStops: [
-      { lat: 19.4226, lng: -99.2032 },
-      { lat: 19.4326, lng: -99.2132 },
-      { lat: 19.4426, lng: -99.2232 },
-      { lat: 19.4526, lng: -99.2332 },
-      { lat: 19.4626, lng: -99.2432 },
+      { lat: 28.6272, lng: -106.1135 }, // Fashion Mall (Plaza del Sol)
+      { lat: 28.7042, lng: -106.1285 }, // Distrito 1 (D1)
+      { lat: 28.6365, lng: -106.0761 }, // Universidad Tecmilenio
+      { lat: 28.6460, lng: -106.1025 }, // Oficinas OXXO (Plaza la Sierra)
+      { lat: 28.7185, lng: -106.1088 }, // Deportiva Norte (Pistolas Meneses)
     ],
   },
 ];
@@ -361,7 +353,7 @@ export function RouteManagement() {
           </div>
           <div className="h-[500px] rounded-lg overflow-hidden border">
             <GoogleMap
-              center={{ lat: 19.4326, lng: -99.1332 }}
+              center={{ lat: 28.6460, lng: -106.1025 }}
               zoom={12}
               markers={[
                 // Vehículos

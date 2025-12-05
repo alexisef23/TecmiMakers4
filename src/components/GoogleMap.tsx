@@ -21,7 +21,7 @@ declare global {
 }
 
 export function GoogleMap({
-  center = { lat: 19.4326, lng: -99.1332 }, // Ciudad de México
+  center = { lat: 28.6460, lng: -106.1025 }, // Chihuahua - Oficinas OXXO
   zoom = 12,
   markers = [],
   className = '',

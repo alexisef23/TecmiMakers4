@@ -35,10 +35,10 @@ const serviceData = [
 ];
 
 const activeRoutes = [
-  { id: 1, name: 'Ruta Norte', vehicle: 'VH-001', status: 'En ruta', passengers: 12, lat: 19.432, lng: -99.133 },
-  { id: 2, name: 'Ruta Sur', vehicle: 'VH-003', status: 'En ruta', passengers: 15, lat: 19.390, lng: -99.145 },
-  { id: 3, name: 'Ruta Centro', vehicle: 'VH-005', status: 'Retrasado', passengers: 10, lat: 19.426, lng: -99.165 },
-  { id: 4, name: 'Ruta Oeste', vehicle: 'VH-007', status: 'En ruta', passengers: 8, lat: 19.441, lng: -99.201 },
+  { id: 1, name: 'Ruta Fashion Mall', vehicle: 'VH-001', status: 'En ruta', passengers: 12, lat: 28.6272, lng: -106.1135 },
+  { id: 2, name: 'Ruta Distrito 1', vehicle: 'VH-003', status: 'En ruta', passengers: 15, lat: 28.7042, lng: -106.1285 },
+  { id: 3, name: 'Ruta Centro', vehicle: 'VH-005', status: 'Retrasado', passengers: 10, lat: 28.6365, lng: -106.0761 },
+  { id: 4, name: 'Ruta Deportiva Norte', vehicle: 'VH-007', status: 'En ruta', passengers: 8, lat: 28.7185, lng: -106.1088 },
 ];
 
 const recentIncidents = [
@@ -183,7 +183,7 @@ export function DashboardHome() {
           <CardContent>
             <div className="rounded-lg h-[400px] relative overflow-hidden">
               <GoogleMap
-                center={{ lat: 19.4326, lng: -99.1332 }}
+                center={{ lat: 28.6460, lng: -106.1025 }}
                 zoom={12}
                 markers={activeRoutes.map((route) => ({
                   position: { lat: route.lat, lng: route.lng },

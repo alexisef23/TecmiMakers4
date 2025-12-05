@@ -248,7 +248,7 @@ export function DriverApp({ onLogout }: DriverAppProps) {
               <CardContent className="p-0">
                 <div className="h-80 rounded-t-lg relative overflow-hidden">
                   <GoogleMap
-                    center={{ lat: 19.4326, lng: -99.1332 }}
+                    center={{ lat: 28.6460, lng: -106.1025 }}
                     zoom={13}
                     markers={currentTrip.stops.map((stop, index) => ({
                       position: { 
