@@ -220,16 +220,7 @@ export function EmployeeApp({ onLogout }: EmployeeAppProps) {
                       <GoogleMap
                         center={{ lat: 28.6360, lng: -106.0900 }}
                         zoom={14}
-                        markers={[
-                          // Vehículo en Fashion Mall
-                          {
-                            position: { lat: 28.6360, lng: -106.0900 },
-                            title: 'Carrito de Transporte - Fashion Mall',
-                            type: 'vehicle'
-                          },
-                        ]}
-                        showRoute={true}
-                        useDirections={true}
+                        employeeMode={true}
                       />
                     </div>
                     <div className="p-4 bg-slate-50 border-t">
