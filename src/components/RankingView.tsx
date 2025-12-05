@@ -4,7 +4,7 @@ import { Trophy, TrendingUp, Star, Flame } from 'lucide-react';
 import { rankingData, RankingEmployee } from './RankingData';
 
 // Importar imagen del avatar
-import employeeAvatar from '../assets/employee-avatar.png';
+import employeeAvatar from '../assets/employee-avatar.png.png';
 
 interface RankingViewProps {
   currentEmployeeId?: number;

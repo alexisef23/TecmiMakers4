@@ -41,7 +41,7 @@ interface EmployeeAppProps {
 }
 
 // Importar imagen del avatar
-import employeeAvatar from '../assets/employee-avatar.png';
+import employeeAvatar from '../assets/employee-avatar.png.png';
 
 const todayTransport = {
   pickupTime: '06:45',

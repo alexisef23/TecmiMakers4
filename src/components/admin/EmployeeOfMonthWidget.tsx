@@ -13,7 +13,7 @@ import {
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 // Importar imagen del avatar
-import employeeAvatar from '../../assets/employee-avatar.png';
+import employeeAvatar from '../../assets/employee-avatar.png.png';
 
 // Datos simulados de puntos históricos
 const pointsHistory = [
