@@ -12,7 +12,9 @@ import {
 } from '../ui/table';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
-const happyCatImage = 'https://images.unsplash.com/photo-1761249257124-ab02fc22c5b5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxoYXBweSUyMG9yYW5nZSUyMGNhdCUyMHBvcnRyYWl0fGVufDF8fHx8MTc2NDgwNzA1Mnww&ixlib=rb-4.1.0&q=80&w=400';
+import employeeAvatar from '../../assets/employee-avatar.png';
+
+const happyCatImage = employeeAvatar;
 
 // Datos simulados de puntos históricos
 const pointsHistory = [
