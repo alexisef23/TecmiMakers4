@@ -88,15 +88,15 @@ const delayImpact = [
 
 export function FinanceModule() {
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
+    <div className="space-y-3">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
         <div>
-          <h1>Finanzas y Facturación</h1>
-          <p className="text-slate-600 mt-1">Gestión financiera y análisis de costos</p>
+          <h1 className="text-xl">Finanzas y Facturación</h1>
+          <p className="text-slate-600 text-sm">Gestión financiera y análisis de costos</p>
         </div>
         <div className="flex gap-2">
           <Select defaultValue="noviembre">
-            <SelectTrigger className="w-40">
+            <SelectTrigger className="w-36 h-9">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -105,7 +105,7 @@ export function FinanceModule() {
               <SelectItem value="septiembre">Septiembre 2025</SelectItem>
             </SelectContent>
           </Select>
-          <Button variant="outline">
+          <Button variant="outline" size="sm">
             <Download className="w-4 h-4 mr-2" />
             Exportar
           </Button>
@@ -113,16 +113,16 @@ export function FinanceModule() {
       </div>
 
       {/* KPIs Financieros */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
         <Card className="border-l-4 border-l-blue-600">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm text-slate-600">Costo Total Mes</CardTitle>
+          <CardHeader className="pb-1 pt-3 px-3">
+            <CardTitle className="text-xs text-slate-600">Costo Total Mes</CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="px-3 pb-3">
             <div className="flex items-baseline gap-2">
-              <span className="text-2xl">$124,580</span>
-              <span className="flex items-center text-emerald-600 text-sm">
-                <TrendingDown className="w-4 h-4 mr-1" />
+              <span className="text-xl font-bold">$124,580</span>
+              <span className="flex items-center text-emerald-600 text-xs">
+                <TrendingDown className="w-3 h-3 mr-1" />
                 -4.2%
               </span>
             </div>
@@ -130,38 +130,38 @@ export function FinanceModule() {
         </Card>
 
         <Card className="border-l-4 border-l-amber-500">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm text-slate-600">Presupuesto Restante</CardTitle>
+          <CardHeader className="pb-1 pt-3 px-3">
+            <CardTitle className="text-xs text-slate-600">Presupuesto Restante</CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="px-3 pb-3">
             <div className="flex items-baseline gap-2">
-              <span className="text-2xl">$5,420</span>
-              <span className="text-sm text-slate-600">/ $130,000</span>
+              <span className="text-xl font-bold">$5,420</span>
+              <span className="text-xs text-slate-600">/ $130,000</span>
             </div>
           </CardContent>
         </Card>
 
         <Card className="border-l-4 border-l-emerald-600">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm text-slate-600">Ahorro Mensual</CardTitle>
+          <CardHeader className="pb-1 pt-3 px-3">
+            <CardTitle className="text-xs text-slate-600">Ahorro Mensual</CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="px-3 pb-3">
             <div className="flex items-baseline gap-2">
-              <span className="text-2xl text-emerald-600">$5,420</span>
-              <span className="text-sm text-slate-600">4.2%</span>
+              <span className="text-xl font-bold text-emerald-600">$5,420</span>
+              <span className="text-xs text-slate-600">4.2%</span>
             </div>
           </CardContent>
         </Card>
 
         <Card className="border-l-4 border-l-red-600">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm text-slate-600">Costo por Retrasos</CardTitle>
+          <CardHeader className="pb-1 pt-3 px-3">
+            <CardTitle className="text-xs text-slate-600">Costo por Retrasos</CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="px-3 pb-3">
             <div className="flex items-baseline gap-2">
-              <span className="text-2xl text-red-600">$9,700</span>
-              <span className="flex items-center text-red-600 text-sm">
-                <TrendingUp className="w-4 h-4 mr-1" />
+              <span className="text-xl font-bold text-red-600">$9,700</span>
+              <span className="flex items-center text-red-600 text-xs">
+                <TrendingUp className="w-3 h-3 mr-1" />
                 +12%
               </span>
             </div>
@@ -170,13 +170,13 @@ export function FinanceModule() {
       </div>
 
       {/* Charts */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
         <Card>
-          <CardHeader>
-            <CardTitle>Comparativo Costo vs Presupuesto</CardTitle>
+          <CardHeader className="pb-2 pt-3 px-3">
+            <CardTitle className="text-base">Comparativo Costo vs Presupuesto</CardTitle>
           </CardHeader>
-          <CardContent>
-            <ResponsiveContainer width="100%" height={300}>
+          <CardContent className="px-3 pb-3">
+            <ResponsiveContainer width="100%" height={220}>
               <BarChart data={monthlyData}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="month" />
@@ -191,11 +191,11 @@ export function FinanceModule() {
         </Card>
 
         <Card>
-          <CardHeader>
-            <CardTitle>Distribución de Costos</CardTitle>
+          <CardHeader className="pb-2 pt-3 px-3">
+            <CardTitle className="text-base">Distribución de Costos</CardTitle>
           </CardHeader>
-          <CardContent>
-            <ResponsiveContainer width="100%" height={300}>
+          <CardContent className="px-3 pb-3">
+            <ResponsiveContainer width="100%" height={220}>
               <PieChart>
                 <Pie
                   data={costByCategory}
@@ -220,84 +220,86 @@ export function FinanceModule() {
 
       {/* Invoices Table */}
       <Card>
-        <CardHeader>
+        <CardHeader className="pb-2 pt-3 px-3">
           <div className="flex items-center justify-between">
-            <CardTitle className="flex items-center gap-2">
-              <FileText className="w-5 h-5" />
+            <CardTitle className="flex items-center gap-2 text-base">
+              <FileText className="w-4 h-4" />
               Facturas y Pagos
             </CardTitle>
-            <Button className="bg-blue-900 hover:bg-blue-800">
-              <FileText className="w-4 h-4 mr-2" />
+            <Button className="bg-blue-900 hover:bg-blue-800 h-8 text-sm">
+              <FileText className="w-3 h-3 mr-2" />
               Nueva Factura
             </Button>
           </div>
         </CardHeader>
-        <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>ID Factura</TableHead>
-                <TableHead>Proveedor</TableHead>
-                <TableHead>Concepto</TableHead>
-                <TableHead>Fecha</TableHead>
-                <TableHead>Monto</TableHead>
-                <TableHead>Estado</TableHead>
-                <TableHead className="text-right">Acciones</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {invoices.map((invoice) => (
-                <TableRow key={invoice.id}>
-                  <TableCell>{invoice.id}</TableCell>
-                  <TableCell>{invoice.provider}</TableCell>
-                  <TableCell className="max-w-xs truncate">{invoice.concept}</TableCell>
-                  <TableCell>
-                    <div className="flex items-center gap-1 text-sm">
-                      <Calendar className="w-3 h-3" />
-                      {invoice.date}
-                    </div>
-                  </TableCell>
-                  <TableCell>
-                    <div className="flex items-center gap-1">
-                      <DollarSign className="w-4 h-4 text-slate-500" />
-                      ${invoice.amount.toLocaleString()}
-                    </div>
-                  </TableCell>
-                  <TableCell>
-                    <Badge 
-                      variant={invoice.status === 'Pagada' ? 'default' : 'secondary'}
-                      className={invoice.status === 'Pagada' ? 'bg-emerald-600' : 'bg-amber-500'}
-                    >
-                      {invoice.status}
-                    </Badge>
-                  </TableCell>
-                  <TableCell className="text-right">
-                    <Button variant="ghost" size="sm">
-                      <Download className="w-4 h-4" />
-                    </Button>
-                  </TableCell>
+        <CardContent className="px-3 pb-3">
+          <div className="max-h-48 overflow-y-auto">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="text-xs py-2">ID</TableHead>
+                  <TableHead className="text-xs py-2">Proveedor</TableHead>
+                  <TableHead className="text-xs py-2">Concepto</TableHead>
+                  <TableHead className="text-xs py-2">Fecha</TableHead>
+                  <TableHead className="text-xs py-2">Monto</TableHead>
+                  <TableHead className="text-xs py-2">Estado</TableHead>
+                  <TableHead className="text-xs py-2 text-right">Acción</TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+              </TableHeader>
+              <TableBody>
+                {invoices.map((invoice) => (
+                  <TableRow key={invoice.id}>
+                    <TableCell className="text-xs py-2">{invoice.id}</TableCell>
+                    <TableCell className="text-xs py-2">{invoice.provider}</TableCell>
+                    <TableCell className="text-xs py-2 max-w-[150px] truncate">{invoice.concept}</TableCell>
+                    <TableCell className="text-xs py-2">
+                      <div className="flex items-center gap-1">
+                        <Calendar className="w-3 h-3" />
+                        {invoice.date}
+                      </div>
+                    </TableCell>
+                    <TableCell className="text-xs py-2">
+                      <div className="flex items-center gap-1">
+                        <DollarSign className="w-3 h-3 text-slate-500" />
+                        ${invoice.amount.toLocaleString()}
+                      </div>
+                    </TableCell>
+                    <TableCell className="py-2">
+                      <Badge 
+                        variant={invoice.status === 'Pagada' ? 'default' : 'secondary'}
+                        className={`text-xs ${invoice.status === 'Pagada' ? 'bg-emerald-600' : 'bg-amber-500'}`}
+                      >
+                        {invoice.status}
+                      </Badge>
+                    </TableCell>
+                    <TableCell className="text-right py-2">
+                      <Button variant="ghost" size="sm" className="h-7 w-7 p-0">
+                        <Download className="w-3 h-3" />
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
         </CardContent>
       </Card>
 
       {/* Delay Cost Analysis */}
       <Card className="border-l-4 border-l-red-600">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <AlertCircle className="w-5 h-5 text-red-600" />
-            Análisis de Costo de Oportunidad por Retrasos
+        <CardHeader className="pb-2 pt-3 px-3">
+          <CardTitle className="flex items-center gap-2 text-base">
+            <AlertCircle className="w-4 h-4 text-red-600" />
+            Análisis de Costo por Retrasos
           </CardTitle>
         </CardHeader>
-        <CardContent>
-          <div className="mb-4">
-            <p className="text-slate-600 mb-2">
-              Los retrasos impactan directamente en la productividad. Aquí se muestra el costo estimado por tiempo perdido.
+        <CardContent className="px-3 pb-3">
+          <div className="mb-2">
+            <p className="text-slate-600 text-xs">
+              Costo estimado por tiempo perdido debido a retrasos.
             </p>
           </div>
-          <ResponsiveContainer width="100%" height={250}>
+          <ResponsiveContainer width="100%" height={180}>
             <LineChart data={delayImpact}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="day" />
@@ -313,18 +315,18 @@ export function FinanceModule() {
               />
             </LineChart>
           </ResponsiveContainer>
-          <div className="grid grid-cols-3 gap-4 mt-6">
-            <div className="bg-red-50 p-4 rounded-lg text-center">
-              <p className="text-sm text-slate-600">Total Semanal</p>
-              <p className="text-2xl text-red-600">$9,700</p>
+          <div className="grid grid-cols-3 gap-2 mt-3">
+            <div className="bg-red-50 p-2 rounded-lg text-center">
+              <p className="text-xs text-slate-600">Total Semanal</p>
+              <p className="text-lg font-bold text-red-600">$9,700</p>
             </div>
-            <div className="bg-slate-50 p-4 rounded-lg text-center">
-              <p className="text-sm text-slate-600">Horas Perdidas</p>
-              <p className="text-2xl">32.5 hrs</p>
+            <div className="bg-slate-50 p-2 rounded-lg text-center">
+              <p className="text-xs text-slate-600">Horas Perdidas</p>
+              <p className="text-lg font-bold">32.5 hrs</p>
             </div>
-            <div className="bg-slate-50 p-4 rounded-lg text-center">
-              <p className="text-sm text-slate-600">Empleados Afectados</p>
-              <p className="text-2xl">48</p>
+            <div className="bg-slate-50 p-2 rounded-lg text-center">
+              <p className="text-xs text-slate-600">Empleados Afectados</p>
+              <p className="text-lg font-bold">48</p>
             </div>
           </div>
         </CardContent>
