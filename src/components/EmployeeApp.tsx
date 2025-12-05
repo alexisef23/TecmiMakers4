@@ -213,11 +213,52 @@ export function EmployeeApp({ onLogout }: EmployeeAppProps) {
                 {/* Live Map */}
                 <Card>
                   <CardHeader>
-                    <CardTitle className="text-lg">Ubicación en Tiempo Real</CardTitle>
+                    <CardTitle className="text-lg">Mapa de Transporte en Tiempo Real</CardTitle>
                   </CardHeader>
                   <CardContent className="p-0">
                     <div className="rounded-b-lg overflow-hidden">
-                      <GoogleMap />
+                      <GoogleMap
+                        center={{ lat: 28.6365, lng: -106.0761 }}
+                        zoom={13}
+                        markers={[
+                          // Vehículo viniendo desde Fashion Mall (punto verde)
+                          {
+                            position: { lat: 28.6272, lng: -106.1135 },
+                            title: 'Tu transporte - Mercedes Sprinter ABC-1234',
+                            type: 'vehicle'
+                          },
+                          // Tu ubicación en tiempo real (punto azul - se detecta automáticamente)
+                          // El componente GoogleMap ya muestra la ubicación del usuario con geolocalización
+                        ]}
+                        showRoute={true}
+                        useDirections={true}
+                      />
+                    </div>
+                    <div className="p-4 bg-slate-50 border-t">
+                      <div className="flex items-start gap-3">
+                        <MapPin className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
+                        <div className="flex-1">
+                          <p className="text-sm font-semibold text-slate-900">Tu Ubicación Actual</p>
+                          <p className="text-sm text-slate-600">Rastreando en tiempo real</p>
+                          <p className="text-xs text-slate-500 mt-1">El punto azul muestra dónde estás ahora</p>
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-3 mt-3 pt-3 border-t">
+                        <Bus className="w-5 h-5 text-emerald-600 mt-0.5 flex-shrink-0" />
+                        <div className="flex-1">
+                          <p className="text-sm font-semibold text-slate-900">Tu Transporte</p>
+                          <p className="text-sm text-slate-600">Viniendo desde Fashion Mall</p>
+                          <p className="text-xs text-emerald-600 font-medium mt-1">Llegada estimada: {todayTransport.eta}</p>
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-3 mt-3 pt-3 border-t">
+                        <Clock className="w-5 h-5 text-slate-600 mt-0.5 flex-shrink-0" />
+                        <div className="flex-1">
+                          <p className="text-sm font-semibold text-slate-900">Punto de Encuentro</p>
+                          <p className="text-sm text-slate-600">{todayTransport.pickupLocation}</p>
+                          <p className="text-xs text-slate-500 mt-1">{todayTransport.address} - {todayTransport.pickupTime}</p>
+                        </div>
+                      </div>
                     </div>
                   </CardContent>
                 </Card>
