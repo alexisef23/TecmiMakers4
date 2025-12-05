@@ -113,15 +113,15 @@ export function FinanceModule() {
       </div>
 
       {/* KPIs Financieros */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-2">
         <Card className="border-l-4 border-l-blue-600">
-          <CardHeader className="pb-1 pt-3 px-3">
-            <CardTitle className="text-xs text-slate-600">Costo Total Mes</CardTitle>
+          <CardHeader className="pb-1 pt-2 px-3">
+            <CardTitle className="text-[10px] font-medium text-slate-600">Costo Total Mes</CardTitle>
           </CardHeader>
-          <CardContent className="px-3 pb-3">
+          <CardContent className="px-3 pb-2">
             <div className="flex items-baseline gap-2">
-              <span className="text-xl font-bold">$124,580</span>
-              <span className="flex items-center text-emerald-600 text-xs">
+              <span className="text-lg font-bold">$124,580</span>
+              <span className="flex items-center text-emerald-600 text-[10px]">
                 <TrendingDown className="w-3 h-3 mr-1" />
                 -4.2%
               </span>
@@ -130,37 +130,37 @@ export function FinanceModule() {
         </Card>
 
         <Card className="border-l-4 border-l-amber-500">
-          <CardHeader className="pb-1 pt-3 px-3">
-            <CardTitle className="text-xs text-slate-600">Presupuesto Restante</CardTitle>
+          <CardHeader className="pb-1 pt-2 px-3">
+            <CardTitle className="text-[10px] font-medium text-slate-600">Presupuesto Restante</CardTitle>
           </CardHeader>
-          <CardContent className="px-3 pb-3">
+          <CardContent className="px-3 pb-2">
             <div className="flex items-baseline gap-2">
-              <span className="text-xl font-bold">$5,420</span>
-              <span className="text-xs text-slate-600">/ $130,000</span>
+              <span className="text-lg font-bold">$5,420</span>
+              <span className="text-[10px] text-slate-600">/ $130,000</span>
             </div>
           </CardContent>
         </Card>
 
         <Card className="border-l-4 border-l-emerald-600">
-          <CardHeader className="pb-1 pt-3 px-3">
-            <CardTitle className="text-xs text-slate-600">Ahorro Mensual</CardTitle>
+          <CardHeader className="pb-1 pt-2 px-3">
+            <CardTitle className="text-[10px] font-medium text-slate-600">Ahorro Mensual</CardTitle>
           </CardHeader>
-          <CardContent className="px-3 pb-3">
+          <CardContent className="px-3 pb-2">
             <div className="flex items-baseline gap-2">
-              <span className="text-xl font-bold text-emerald-600">$5,420</span>
-              <span className="text-xs text-slate-600">4.2%</span>
+              <span className="text-lg font-bold text-emerald-600">$5,420</span>
+              <span className="text-[10px] text-slate-600">4.2%</span>
             </div>
           </CardContent>
         </Card>
 
         <Card className="border-l-4 border-l-red-600">
-          <CardHeader className="pb-1 pt-3 px-3">
-            <CardTitle className="text-xs text-slate-600">Costo por Retrasos</CardTitle>
+          <CardHeader className="pb-1 pt-2 px-3">
+            <CardTitle className="text-[10px] font-medium text-slate-600">Costo por Retrasos</CardTitle>
           </CardHeader>
-          <CardContent className="px-3 pb-3">
+          <CardContent className="px-3 pb-2">
             <div className="flex items-baseline gap-2">
-              <span className="text-xl font-bold text-red-600">$9,700</span>
-              <span className="flex items-center text-red-600 text-xs">
+              <span className="text-lg font-bold text-red-600">$9,700</span>
+              <span className="flex items-center text-red-600 text-[10px]">
                 <TrendingUp className="w-3 h-3 mr-1" />
                 +12%
               </span>
@@ -170,19 +170,19 @@ export function FinanceModule() {
       </div>
 
       {/* Charts */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
         <Card>
-          <CardHeader className="pb-2 pt-3 px-3">
-            <CardTitle className="text-base">Comparativo Costo vs Presupuesto</CardTitle>
+          <CardHeader className="pb-1 pt-2 px-3">
+            <CardTitle className="text-sm font-medium">Comparativo Costo vs Presupuesto</CardTitle>
           </CardHeader>
-          <CardContent className="px-3 pb-3">
-            <ResponsiveContainer width="100%" height={220}>
+          <CardContent className="px-3 pb-2">
+            <ResponsiveContainer width="100%" height={180}>
               <BarChart data={monthlyData}>
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="month" />
-                <YAxis />
+                <XAxis dataKey="month" style={{ fontSize: '11px' }} />
+                <YAxis style={{ fontSize: '11px' }} />
                 <Tooltip formatter={(value) => `$${value.toLocaleString()}`} />
-                <Legend />
+                <Legend wrapperStyle={{ fontSize: '11px' }} />
                 <Bar dataKey="costo" fill="#1e3a8a" name="Costo Real" />
                 <Bar dataKey="presupuesto" fill="#94a3b8" name="Presupuesto" />
               </BarChart>
@@ -191,21 +191,22 @@ export function FinanceModule() {
         </Card>
 
         <Card>
-          <CardHeader className="pb-2 pt-3 px-3">
-            <CardTitle className="text-base">Distribución de Costos</CardTitle>
+          <CardHeader className="pb-1 pt-2 px-3">
+            <CardTitle className="text-sm font-medium">Distribución de Costos</CardTitle>
           </CardHeader>
-          <CardContent className="px-3 pb-3">
-            <ResponsiveContainer width="100%" height={220}>
+          <CardContent className="px-3 pb-2">
+            <ResponsiveContainer width="100%" height={180}>
               <PieChart>
                 <Pie
                   data={costByCategory}
                   cx="50%"
                   cy="50%"
-                  labelLine={false}
-                  label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
-                  outerRadius={100}
+                  labelLine={true}
+                  label={({ name, percent }) => `${name.split(' ')[0]}: ${(percent * 100).toFixed(0)}%`}
+                  outerRadius={65}
                   fill="#8884d8"
                   dataKey="value"
+                  style={{ fontSize: '10px' }}
                 >
                   {costByCategory.map((entry, index) => (
                     <Cell key={`cell-${index}`} fill={entry.color} />
@@ -220,20 +221,20 @@ export function FinanceModule() {
 
       {/* Invoices Table */}
       <Card>
-        <CardHeader className="pb-2 pt-3 px-3">
-          <div className="flex items-center justify-between">
-            <CardTitle className="flex items-center gap-2 text-base">
+        <CardHeader className="pb-1 pt-2 px-3">
+          <div className="flex items-center justify-between gap-2">
+            <CardTitle className="flex items-center gap-2 text-sm font-medium">
               <FileText className="w-4 h-4" />
               Facturas y Pagos
             </CardTitle>
-            <Button className="bg-blue-900 hover:bg-blue-800 h-8 text-sm">
-              <FileText className="w-3 h-3 mr-2" />
+            <Button className="bg-blue-900 hover:bg-blue-800 h-7 text-xs px-3">
+              <FileText className="w-3 h-3 mr-1" />
               Nueva Factura
             </Button>
           </div>
         </CardHeader>
-        <CardContent className="px-3 pb-3">
-          <div className="max-h-48 overflow-y-auto">
+        <CardContent className="px-3 pb-2">
+          <div className="max-h-40 overflow-y-auto">
             <Table>
               <TableHeader>
                 <TableRow>
@@ -287,25 +288,25 @@ export function FinanceModule() {
 
       {/* Delay Cost Analysis */}
       <Card className="border-l-4 border-l-red-600">
-        <CardHeader className="pb-2 pt-3 px-3">
-          <CardTitle className="flex items-center gap-2 text-base">
+        <CardHeader className="pb-1 pt-2 px-3">
+          <CardTitle className="flex items-center gap-2 text-sm font-medium">
             <AlertCircle className="w-4 h-4 text-red-600" />
             Análisis de Costo por Retrasos
           </CardTitle>
         </CardHeader>
-        <CardContent className="px-3 pb-3">
-          <div className="mb-2">
-            <p className="text-slate-600 text-xs">
+        <CardContent className="px-3 pb-2">
+          <div className="mb-1">
+            <p className="text-slate-600 text-[10px]">
               Costo estimado por tiempo perdido debido a retrasos.
             </p>
           </div>
-          <ResponsiveContainer width="100%" height={180}>
+          <ResponsiveContainer width="100%" height={150}>
             <LineChart data={delayImpact}>
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="day" />
-              <YAxis />
+              <XAxis dataKey="day" style={{ fontSize: '11px' }} />
+              <YAxis style={{ fontSize: '11px' }} />
               <Tooltip formatter={(value) => `$${value.toLocaleString()}`} />
-              <Legend />
+              <Legend wrapperStyle={{ fontSize: '11px' }} />
               <Line 
                 type="monotone" 
                 dataKey="costoOportunidad" 
@@ -315,18 +316,18 @@ export function FinanceModule() {
               />
             </LineChart>
           </ResponsiveContainer>
-          <div className="grid grid-cols-3 gap-2 mt-3">
+          <div className="grid grid-cols-3 gap-2 mt-2">
             <div className="bg-red-50 p-2 rounded-lg text-center">
-              <p className="text-xs text-slate-600">Total Semanal</p>
-              <p className="text-lg font-bold text-red-600">$9,700</p>
+              <p className="text-[10px] text-slate-600">Total Semanal</p>
+              <p className="text-base font-bold text-red-600">$9,700</p>
             </div>
             <div className="bg-slate-50 p-2 rounded-lg text-center">
-              <p className="text-xs text-slate-600">Horas Perdidas</p>
-              <p className="text-lg font-bold">32.5 hrs</p>
+              <p className="text-[10px] text-slate-600">Horas Perdidas</p>
+              <p className="text-base font-bold">32.5 hrs</p>
             </div>
             <div className="bg-slate-50 p-2 rounded-lg text-center">
-              <p className="text-xs text-slate-600">Empleados Afectados</p>
-              <p className="text-lg font-bold">48</p>
+              <p className="text-[10px] text-slate-600">Empleados Afectados</p>
+              <p className="text-base font-bold">48</p>
             </div>
           </div>
         </CardContent>
