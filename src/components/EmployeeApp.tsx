@@ -222,19 +222,13 @@ export function EmployeeApp({ onLogout }: EmployeeAppProps) {
                         center={{ lat: 28.6365, lng: -106.0761 }}
                         zoom={13}
                         markers={[
-                          // Vehículo viniendo desde Fashion Mall (con ícono de carrito) - ORIGEN
+                          // Vehículo viniendo desde Fashion Mall (con ícono de carrito)
                           {
                             position: { lat: 28.6272, lng: -106.1135 },
                             title: 'Tu transporte - Mercedes Sprinter ABC-1234',
                             type: 'vehicle'
                           },
-                          // Tu ubicación en tiempo real (punto azul) - DESTINO
-                          // El mapa trazará la ruta del vehículo hacia esta ubicación
-                          {
-                            position: { lat: 28.6365, lng: -106.0761 },
-                            title: 'Tu ubicación actual',
-                            type: 'employee'
-                          }
+                          // Tu ubicación en tiempo real (punto azul - se detecta automáticamente por geolocalización)
                         ]}
                         showRoute={true}
                         useDirections={true}
