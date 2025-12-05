@@ -7,6 +7,7 @@ import { rankingData, RankingEmployee } from './RankingData';
 import gatoGanador from '../../Recursos2/gatoGanador.png';
 import gatoEnojado from '../../Recursos2/gatoEnojado.png';
 import gatoTriste from '../../Recursos2/gatoTriste.png';
+import gatoFeliz from '../../attached_assets/gatoFeliz_1764894849786.png';
 
 interface RankingViewProps {
   currentEmployeeId?: number;
@@ -21,8 +22,11 @@ export function RankingView({ currentEmployeeId = 1 }: RankingViewProps) {
         return gatoEnojado;
       case 3:
         return gatoTriste;
+      case 4:
+      case 5:
+        return gatoFeliz;
       default:
-        return gatoGanador; // imagen por defecto
+        return gatoFeliz; // imagen por defecto
     }
   };
 
