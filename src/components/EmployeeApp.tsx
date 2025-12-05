@@ -216,7 +216,7 @@ export function EmployeeApp({ onLogout }: EmployeeAppProps) {
                     <CardTitle className="text-lg">Mapa de Transporte en Tiempo Real</CardTitle>
                   </CardHeader>
                   <CardContent className="p-0">
-                    <div className="rounded-b-lg overflow-hidden">
+                    <div className="rounded-b-lg overflow-hidden" style={{ height: '400px' }}>
                       <GoogleMap
                         center={{ lat: 28.6272, lng: -106.1135 }}
                         zoom={13}

@@ -77,44 +77,58 @@ export function GoogleMap({
         zoomControl: true,
       });
 
-      // Obtener ubicación del usuario
+      // Obtener ubicación del usuario y actualizarla continuamente
       if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          (position) => {
-            const userPos = {
-              lat: position.coords.latitude,
-              lng: position.coords.longitude,
-            };
+        // Actualizar ubicación cada 5 segundos
+        const updateUserLocation = () => {
+          navigator.geolocation.getCurrentPosition(
+            (position) => {
+              const userPos = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude,
+              };
 
-            if (!googleMapInstanceRef.current) return;
+              if (!googleMapInstanceRef.current) return;
 
-            // Crear marcador de usuario
-            if (userMarkerRef.current) {
-              userMarkerRef.current.setMap(null);
+              // Crear o actualizar marcador de usuario
+              if (userMarkerRef.current) {
+                userMarkerRef.current.setPosition(userPos);
+              } else {
+                userMarkerRef.current = new google.maps.Marker({
+                  position: userPos,
+                  map: googleMapInstanceRef.current,
+                  title: 'Mi Ubicación',
+                  icon: {
+                    path: google.maps.SymbolPath.CIRCLE,
+                    fillColor: '#4285F4',
+                    fillOpacity: 1,
+                    strokeColor: '#ffffff',
+                    strokeWeight: 3,
+                    scale: 10,
+                  },
+                  zIndex: 1000,
+                });
+              }
+            },
+            (error) => {
+              console.log('Error obteniendo ubicación:', error);
+            },
+            {
+              enableHighAccuracy: true,
+              timeout: 5000,
+              maximumAge: 0
             }
+          );
+        };
 
-            userMarkerRef.current = new google.maps.Marker({
-              position: userPos,
-              map: googleMapInstanceRef.current,
-              title: 'Mi Ubicación',
-              icon: {
-                path: google.maps.SymbolPath.CIRCLE,
-                fillColor: '#4285F4',
-                fillOpacity: 1,
-                strokeColor: '#ffffff',
-                strokeWeight: 3,
-                scale: 10,
-              },
-              zIndex: 1000,
-            });
-
-            // Centrar en usuario
-            googleMapInstanceRef.current.setCenter(userPos);
-          },
-          (error) => {
-            console.log('Error obteniendo ubicación:', error);
-          }
-        );
+        // Actualizar inmediatamente
+        updateUserLocation();
+        
+        // Continuar actualizando cada 5 segundos
+        const locationInterval = setInterval(updateUserLocation, 5000);
+        
+        // Limpiar intervalo al desmontar
+        return () => clearInterval(locationInterval);
       }
 
       // Agregar marcadores
@@ -374,60 +388,76 @@ export function GoogleMap({
           },
         });
 
-        // Obtener ubicación del usuario
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(
-            (position) => {
-              const userPos = {
-                lat: position.coords.latitude,
-                lng: position.coords.longitude,
-              };
-
-              // Si solo hay un marcador (vehículo), crear ruta desde vehículo hasta usuario
-              if (markers.length === 1) {
-                const request: google.maps.DirectionsRequest = {
-                  origin: markers[0].position,
-                  destination: userPos,
-                  travelMode: google.maps.TravelMode.DRIVING,
-                  optimizeWaypoints: false,
+        // Función para calcular ruta
+        const calculateRoute = () => {
+          if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+              (position) => {
+                const userPos = {
+                  lat: position.coords.latitude,
+                  lng: position.coords.longitude,
                 };
 
-                directionsService.route(request, (result, status) => {
-                  if (status === google.maps.DirectionsStatus.OK && result) {
-                    directionsRendererRef.current?.setDirections(result);
-                  } else {
-                    console.error('Error al calcular la ruta:', status);
-                  }
-                });
-              } else {
-                // Si hay múltiples marcadores, usar lógica original
-                const waypoints = markers.slice(1, -1).map(m => ({
-                  location: m.position,
-                  stopover: true,
-                }));
+                // Si solo hay un marcador (vehículo), crear ruta desde vehículo hasta usuario
+                if (markers.length === 1) {
+                  const request: google.maps.DirectionsRequest = {
+                    origin: markers[0].position,
+                    destination: userPos,
+                    travelMode: google.maps.TravelMode.DRIVING,
+                    optimizeWaypoints: false,
+                  };
 
-                const request: google.maps.DirectionsRequest = {
-                  origin: markers[0].position,
-                  destination: markers[markers.length - 1].position,
-                  waypoints: waypoints,
-                  travelMode: google.maps.TravelMode.DRIVING,
-                  optimizeWaypoints: false,
-                };
+                  directionsService.route(request, (result, status) => {
+                    if (status === google.maps.DirectionsStatus.OK && result) {
+                      directionsRendererRef.current?.setDirections(result);
+                    } else {
+                      console.error('Error al calcular la ruta:', status);
+                    }
+                  });
+                } else {
+                  // Si hay múltiples marcadores, usar lógica original
+                  const waypoints = markers.slice(1, -1).map(m => ({
+                    location: m.position,
+                    stopover: true,
+                  }));
 
-                directionsService.route(request, (result, status) => {
-                  if (status === google.maps.DirectionsStatus.OK && result) {
-                    directionsRendererRef.current?.setDirections(result);
-                  } else {
-                    console.error('Error al calcular la ruta:', status);
-                  }
-                });
+                  const request: google.maps.DirectionsRequest = {
+                    origin: markers[0].position,
+                    destination: markers[markers.length - 1].position,
+                    waypoints: waypoints,
+                    travelMode: google.maps.TravelMode.DRIVING,
+                    optimizeWaypoints: false,
+                  };
+
+                  directionsService.route(request, (result, status) => {
+                    if (status === google.maps.DirectionsStatus.OK && result) {
+                      directionsRendererRef.current?.setDirections(result);
+                    } else {
+                      console.error('Error al calcular la ruta:', status);
+                    }
+                  });
+                }
+              },
+              (error) => {
+                console.log('Error obteniendo ubicación para ruta:', error);
+              },
+              {
+                enableHighAccuracy: true,
+                timeout: 5000,
+                maximumAge: 0
               }
-            },
-            (error) => {
-              console.log('Error obteniendo ubicación para ruta:', error);
-            }
-          );
-        }
+            );
+          }
+        };
+
+        // Calcular ruta inmediatamente
+        calculateRoute();
+        
+        // Recalcular ruta cada 10 segundos
+        const routeInterval = setInterval(calculateRoute, 10000);
+        
+        // Limpiar intervalo
+        return () => clearInterval(routeInterval);
       } else {
         // Usar polyline simple
         const path = markers.map(m => m.position);
