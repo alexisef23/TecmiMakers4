@@ -36,6 +36,7 @@ import {
   SelectValue,
 } from './ui/select';
 import oxxoGoLogo from '../assets/oxxo-go-logo.png';
+import { GoogleMap } from './GoogleMap';
 
 interface DriverAppProps {
   onLogout: () => void;
@@ -242,16 +243,25 @@ export function DriverApp({ onLogout }: DriverAppProps) {
               ← Volver
             </Button>
 
-            {/* Map Simulation */}
+            {/* Map Real */}
             <Card className="dark:bg-slate-900 dark:border-slate-700">
               <CardContent className="p-0">
-                <div className="bg-gradient-to-br from-blue-100 to-emerald-100 dark:from-blue-900/30 dark:to-emerald-900/30 h-80 flex items-center justify-center rounded-t-lg relative dark:border dark:border-slate-700">
-                  <div className="text-center p-4 bg-white/90 dark:bg-slate-800/90 rounded-lg shadow-lg">
-                    <MapPin className="w-12 h-12 mx-auto mb-2 text-blue-600 dark:text-blue-400" />
-                    <p className="dark:text-white">Mapa en Tiempo Real</p>
-                    <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">Google Maps / Waze</p>
-                  </div>
-                  <div className="absolute top-4 right-4 bg-white dark:bg-slate-800 px-3 py-2 rounded-lg shadow">
+                <div className="h-80 rounded-t-lg relative overflow-hidden">
+                  <GoogleMap
+                    center={{ lat: 19.4326, lng: -99.1332 }}
+                    zoom={13}
+                    markers={currentTrip.stops.map((stop, index) => ({
+                      position: { 
+                        lat: 19.4326 + (Math.random() - 0.5) * 0.05, 
+                        lng: -99.1332 + (Math.random() - 0.5) * 0.05 
+                      },
+                      title: stop.name,
+                      type: 'stop'
+                    }))}
+                    showRoute={true}
+                    className="rounded-t-lg"
+                  />
+                  <div className="absolute top-4 right-4 bg-white dark:bg-slate-800 px-3 py-2 rounded-lg shadow z-10">
                     <p className="text-sm dark:text-slate-400">Próxima parada</p>
                     <p className="font-semibold dark:text-white">Politécnico</p>
                     <p className="text-xs text-slate-600 dark:text-slate-400">500m - 2 min</p>
