@@ -170,14 +170,14 @@ export function SettingsModule() {
             </h3>
             <div className="flex items-center justify-between">
               <div className="space-y-0.5">
-                <Label htmlFor="auto-backup" className="dark:text-white">Respaldo Automático</Label>
+                <Label htmlFor="auto-backup" className="text-slate-900 dark:text-white font-medium">Respaldo Automático</Label>
                 <p className="text-xs text-slate-500 dark:text-slate-400">Realizar respaldos diarios de la base de datos</p>
               </div>
               <Switch id="auto-backup" defaultChecked />
             </div>
             <div className="flex items-center justify-between">
               <div className="space-y-0.5">
-                <Label htmlFor="data-retention" className="dark:text-white">Retención de Datos Históricos</Label>
+                <Label htmlFor="data-retention" className="text-slate-900 dark:text-white font-medium">Retención de Datos Históricos</Label>
                 <p className="text-xs text-slate-500 dark:text-slate-400">Mantener datos por 12 meses</p>
               </div>
               <Switch id="data-retention" defaultChecked />
@@ -207,7 +207,7 @@ export function SettingsModule() {
         <CardContent className="space-y-4">
           <div className="flex items-center justify-between">
             <div className="space-y-0.5">
-              <Label htmlFor="notify-delays" className="dark:text-white">Notificar Retrasos</Label>
+              <Label htmlFor="notify-delays" className="text-slate-900 dark:text-white font-medium">Notificar Retrasos</Label>
               <p className="text-xs text-slate-500 dark:text-slate-400">Alertas cuando un vehículo se retrase más de 10 minutos</p>
             </div>
             <Switch id="notify-delays" defaultChecked />
@@ -217,7 +217,7 @@ export function SettingsModule() {
 
           <div className="flex items-center justify-between">
             <div className="space-y-0.5">
-              <Label htmlFor="notify-incidents" className="dark:text-white">Notificar Incidentes</Label>
+              <Label htmlFor="notify-incidents" className="text-slate-900 dark:text-white font-medium">Notificar Incidentes</Label>
               <p className="text-xs text-slate-500 dark:text-slate-400">Alertas inmediatas ante cualquier incidente reportado</p>
             </div>
             <Switch id="notify-incidents" defaultChecked />
@@ -227,7 +227,7 @@ export function SettingsModule() {
 
           <div className="flex items-center justify-between">
             <div className="space-y-0.5">
-              <Label htmlFor="notify-maintenance" className="dark:text-white">Recordatorios de Mantenimiento</Label>
+              <Label htmlFor="notify-maintenance" className="text-slate-900 dark:text-white font-medium">Recordatorios de Mantenimiento</Label>
               <p className="text-xs text-slate-500 dark:text-slate-400">Alertas 7 días antes del mantenimiento programado</p>
             </div>
             <Switch id="notify-maintenance" defaultChecked />
@@ -237,7 +237,7 @@ export function SettingsModule() {
 
           <div className="flex items-center justify-between">
             <div className="space-y-0.5">
-              <Label htmlFor="notify-insurance" className="dark:text-white">Vencimiento de Seguros</Label>
+              <Label htmlFor="notify-insurance" className="text-slate-900 dark:text-white font-medium">Vencimiento de Seguros</Label>
               <p className="text-xs text-slate-500 dark:text-slate-400">Alertas 30 días antes del vencimiento de pólizas</p>
             </div>
             <Switch id="notify-insurance" defaultChecked />
@@ -247,7 +247,7 @@ export function SettingsModule() {
 
           <div className="flex items-center justify-between">
             <div className="space-y-0.5">
-              <Label htmlFor="notify-email" className="dark:text-white">Notificaciones por Email</Label>
+              <Label htmlFor="notify-email" className="text-slate-900 dark:text-white font-medium">Notificaciones por Email</Label>
               <p className="text-xs text-slate-500 dark:text-slate-400">Enviar resumen diario por correo electrónico</p>
             </div>
             <Switch id="notify-email" />
@@ -269,7 +269,7 @@ export function SettingsModule() {
         <CardContent className="space-y-4">
           <div className="flex items-center justify-between">
             <div className="space-y-0.5">
-              <Label htmlFor="2fa" className="dark:text-white">Autenticación de Dos Factores</Label>
+              <Label htmlFor="2fa" className="text-slate-900 dark:text-white font-medium">Autenticación de Dos Factores</Label>
               <p className="text-xs text-slate-500 dark:text-slate-400">Requiere verificación adicional al iniciar sesión</p>
             </div>
             <Switch id="2fa" />
@@ -279,7 +279,7 @@ export function SettingsModule() {
 
           <div className="flex items-center justify-between">
             <div className="space-y-0.5">
-              <Label htmlFor="session-timeout" className="dark:text-white">Tiempo de Sesión (minutos)</Label>
+              <Label htmlFor="session-timeout" className="text-slate-900 dark:text-white font-medium">Tiempo de Sesión (minutos)</Label>
               <Input id="session-timeout" type="number" defaultValue="60" className="w-32 dark:bg-slate-800 dark:text-white dark:border-slate-600" />
             </div>
           </div>
@@ -288,7 +288,7 @@ export function SettingsModule() {
 
           <div className="flex items-center justify-between">
             <div className="space-y-0.5">
-              <Label htmlFor="password-policy" className="dark:text-white">Política de Contraseñas Estricta</Label>
+              <Label htmlFor="password-policy" className="text-slate-900 dark:text-white font-medium">Política de Contraseñas Estricta</Label>
               <p className="text-xs text-slate-500 dark:text-slate-400">Requiere mayúsculas, números y caracteres especiales</p>
             </div>
             <Switch id="password-policy" defaultChecked />
