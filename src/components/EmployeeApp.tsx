@@ -227,14 +227,9 @@ export function EmployeeApp({ onLogout }: EmployeeAppProps) {
                             position: { lat: 28.6272, lng: -106.1135 },
                             title: 'Tu transporte - Mercedes Sprinter ABC-1234',
                             type: 'vehicle'
-                          },
-                          // Tu ubicación en tiempo real (DESTINO - punto azul)
-                          // La ruta de Google Maps se trazará del carrito hacia aquí
-                          {
-                            position: { lat: 28.6365, lng: -106.0761 },
-                            title: 'Tu ubicación actual',
-                            type: 'stop'
                           }
+                          // Tu ubicación en tiempo real se detecta automáticamente (punto azul)
+                          // La ruta irá del carrito verde hacia tu ubicación azul
                         ]}
                         showRoute={true}
                         useDirections={true}
