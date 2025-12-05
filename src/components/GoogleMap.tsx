@@ -353,6 +353,12 @@ export function GoogleMap({
       polylineRef.current = null;
     }
 
+    // Limpiar renderer anterior
+    if (directionsRendererRef.current) {
+      directionsRendererRef.current.setMap(null);
+      directionsRendererRef.current = null;
+    }
+
     // Agregar nuevos marcadores
     markers.forEach((markerData) => {
       if (!googleMapInstanceRef.current) return;
@@ -399,109 +405,78 @@ export function GoogleMap({
     });
 
     // Dibujar ruta si es necesario
-    if (showRoute && markers.length >= 1) {
-      if (useDirections) {
-        // Usar Directions API para rutas reales
-        const directionsService = new google.maps.DirectionsService();
-        
-        // Limpiar renderer anterior
-        if (directionsRendererRef.current) {
-          directionsRendererRef.current.setMap(null);
-        }
-
-        // Crear nuevo renderer
-        directionsRendererRef.current = new google.maps.DirectionsRenderer({
-          map: googleMapInstanceRef.current,
-          suppressMarkers: true,
-          polylineOptions: {
-            strokeColor: '#3b82f6',
-            strokeOpacity: 0.8,
-            strokeWeight: 5,
-          },
-        });
-
-        // Función para calcular ruta
-        const calculateRoute = () => {
-          if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-              (position) => {
-                const userPos = {
-                  lat: position.coords.latitude,
-                  lng: position.coords.longitude,
-                };
-
-                // Si solo hay un marcador (vehículo), crear ruta desde vehículo hasta usuario
-                if (markers.length === 1) {
-                  const request: google.maps.DirectionsRequest = {
-                    origin: markers[0].position,
-                    destination: userPos,
-                    travelMode: google.maps.TravelMode.DRIVING,
-                    optimizeWaypoints: false,
-                  };
-
-                  directionsService.route(request, (result, status) => {
-                    if (status === google.maps.DirectionsStatus.OK && result) {
-                      directionsRendererRef.current?.setDirections(result);
-                    } else {
-                      console.error('Error al calcular la ruta:', status);
-                    }
-                  });
-                } else {
-                  // Si hay múltiples marcadores, usar lógica original
-                  const waypoints = markers.slice(1, -1).map(m => ({
-                    location: m.position,
-                    stopover: true,
-                  }));
-
-                  const request: google.maps.DirectionsRequest = {
-                    origin: markers[0].position,
-                    destination: markers[markers.length - 1].position,
-                    waypoints: waypoints,
-                    travelMode: google.maps.TravelMode.DRIVING,
-                    optimizeWaypoints: false,
-                  };
-
-                  directionsService.route(request, (result, status) => {
-                    if (status === google.maps.DirectionsStatus.OK && result) {
-                      directionsRendererRef.current?.setDirections(result);
-                    } else {
-                      console.error('Error al calcular la ruta:', status);
-                    }
-                  });
-                }
-              },
-              (error) => {
-                console.log('Error obteniendo ubicación para ruta:', error);
-              },
-              {
-                enableHighAccuracy: true,
-                timeout: 5000,
-                maximumAge: 0
-              }
-            );
-          }
-        };
-
-        // Calcular ruta inmediatamente
-        calculateRoute();
-        
-        // Recalcular ruta cada 10 segundos
-        const routeInterval = setInterval(calculateRoute, 10000);
-        
-        // Limpiar intervalo
-        return () => clearInterval(routeInterval);
-      } else {
-        // Usar polyline simple
-        const path = markers.map(m => m.position);
-        polylineRef.current = new google.maps.Polyline({
-          path: path,
-          geodesic: true,
+    if (showRoute && markers.length >= 1 && useDirections) {
+      // Usar Directions API para rutas reales
+      const directionsService = new google.maps.DirectionsService();
+      
+      // Crear nuevo renderer
+      directionsRendererRef.current = new google.maps.DirectionsRenderer({
+        map: googleMapInstanceRef.current,
+        suppressMarkers: true,
+        polylineOptions: {
           strokeColor: '#3b82f6',
           strokeOpacity: 0.8,
-          strokeWeight: 4,
-          map: googleMapInstanceRef.current,
-        });
-      }
+          strokeWeight: 5,
+        },
+      });
+
+      // Función para calcular ruta
+      const calculateRoute = () => {
+        if (navigator.geolocation && userMarkerRef.current) {
+          navigator.geolocation.getCurrentPosition(
+            (position) => {
+              const userPos = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude,
+              };
+
+              // Si solo hay un marcador (vehículo), crear ruta desde vehículo hasta usuario
+              if (markers.length === 1) {
+                const request: google.maps.DirectionsRequest = {
+                  origin: markers[0].position,
+                  destination: userPos,
+                  travelMode: google.maps.TravelMode.DRIVING,
+                  optimizeWaypoints: false,
+                };
+
+                directionsService.route(request, (result, status) => {
+                  if (status === google.maps.DirectionsStatus.OK && result && directionsRendererRef.current) {
+                    directionsRendererRef.current.setDirections(result);
+                  }
+                });
+              }
+            },
+            (error) => {
+              console.log('Error obteniendo ubicación para ruta:', error);
+            },
+            {
+              enableHighAccuracy: true,
+              timeout: 5000,
+              maximumAge: 0
+            }
+          );
+        }
+      };
+
+      // Calcular ruta inmediatamente
+      setTimeout(calculateRoute, 500);
+      
+      // Recalcular ruta cada 10 segundos
+      const routeInterval = setInterval(calculateRoute, 10000);
+      
+      // Limpiar intervalo
+      return () => clearInterval(routeInterval);
+    } else if (showRoute && markers.length > 1) {
+      // Usar polyline simple para múltiples marcadores
+      const path = markers.map(m => m.position);
+      polylineRef.current = new google.maps.Polyline({
+        path: path,
+        geodesic: true,
+        strokeColor: '#3b82f6',
+        strokeOpacity: 0.8,
+        strokeWeight: 4,
+        map: googleMapInstanceRef.current,
+      });
     }
   }, [markers, showRoute, useDirections]);
 
