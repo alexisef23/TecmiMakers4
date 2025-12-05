@@ -45,12 +45,29 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
       >
         <div className="p-4 border-b border-blue-800 dark:border-blue-900 flex items-center justify-between">
           {sidebarOpen ? (
-            <div className="flex items-center gap-3">
-              <img src={oxxoGoLogo} alt="OXXO GO" className="w-10 h-10" />
-              <span className="font-semibold">OXXO GO</span>
-            </div>
+            <>
+              <div className="flex items-center gap-3">
+                <img src={oxxoGoLogo} alt="OXXO GO" className="w-10 h-10" />
+                <span className="font-semibold">OXXO GO</span>
+              </div>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setSidebarOpen(false)}
+                className="text-white hover:bg-blue-800 h-8 w-8"
+              >
+                <X className="w-5 h-5" />
+              </Button>
+            </>
           ) : (
-            <img src={oxxoGoLogo} alt="OXXO GO" className="w-8 h-8 mx-auto" />
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setSidebarOpen(true)}
+              className="text-white hover:bg-blue-800 h-8 w-8 mx-auto"
+            >
+              <Menu className="w-5 h-5" />
+            </Button>
           )}
         </div>
 
