@@ -15,7 +15,7 @@ interface GoogleMapProps {
 }
 
 const GOOGLE_MAPS_API_KEY = 'AIzaSyDs8BKAd6nf2oUtwP6PV31ZjdVIsCXgeYc';
-const FASHION_MALL_LOCATION = { lat: 28.6360, lng: -106.0900 };
+const FASHION_MALL_LOCATION = { lat: 28.7042, lng: -106.1285 };
 
 declare global {
   interface Window {
@@ -86,26 +86,26 @@ export function GoogleMap({
     const initEmployeeMode = () => {
       if (!googleMapInstanceRef.current || !window.google) return;
 
-      // Crear marcador del carrito en Fashion Mall
+      // Crear marcador del automóvil en Fashion Mall
       vehicleMarkerRef.current = new google.maps.Marker({
         position: FASHION_MALL_LOCATION,
         map: googleMapInstanceRef.current,
-        title: 'Carrito de Transporte - Fashion Mall',
+        title: 'Vehículo de Transporte - Fashion Mall',
         icon: {
-          path: 'M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H6.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z',
+          path: 'M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z',
           fillColor: '#10b981',
           fillOpacity: 1,
           strokeColor: '#ffffff',
           strokeWeight: 2,
-          scale: 1.8,
+          scale: 1.5,
           anchor: new google.maps.Point(12, 12),
         },
         zIndex: 900,
       });
 
-      // Info window para el carrito
+      // Info window para el vehículo
       const vehicleInfoWindow = new google.maps.InfoWindow({
-        content: `<div style="padding: 8px;"><strong>Carrito de Transporte</strong><br/>Fashion Mall</div>`,
+        content: `<div style="padding: 8px;"><strong>Vehículo de Transporte</strong><br/>Fashion Mall</div>`,
       });
 
       vehicleMarkerRef.current.addListener('click', () => {
@@ -329,12 +329,12 @@ export function GoogleMap({
       let markerIcon;
       if (markerData.type === 'vehicle') {
         markerIcon = {
-          path: 'M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H6.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z',
+          path: 'M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z',
           fillColor: '#10b981',
           fillOpacity: 1,
           strokeColor: '#ffffff',
           strokeWeight: 2,
-          scale: 1.8,
+          scale: 1.5,
           anchor: new google.maps.Point(12, 12),
         };
       } else {
