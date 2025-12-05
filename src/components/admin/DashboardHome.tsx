@@ -39,6 +39,10 @@ const activeRoutes = [
   { id: 2, name: 'Ruta Distrito 1', vehicle: 'VH-003', status: 'En ruta', passengers: 15, lat: 28.7042, lng: -106.1285 },
   { id: 3, name: 'Ruta Centro', vehicle: 'VH-005', status: 'Retrasado', passengers: 10, lat: 28.6365, lng: -106.0761 },
   { id: 4, name: 'Ruta Deportiva Norte', vehicle: 'VH-007', status: 'En ruta', passengers: 8, lat: 28.7185, lng: -106.1088 },
+  { id: 5, name: 'Ruta Plaza Sendero', vehicle: 'VH-002', status: 'En ruta', passengers: 14, lat: 28.6290, lng: -106.1150 },
+  { id: 6, name: 'Ruta Galerías', vehicle: 'VH-004', status: 'En ruta', passengers: 11, lat: 28.6380, lng: -106.0780 },
+  { id: 7, name: 'Ruta Altabrisa', vehicle: 'VH-006', status: 'En ruta', passengers: 13, lat: 28.7055, lng: -106.1300 },
+  { id: 8, name: 'Ruta Parque Central', vehicle: 'VH-008', status: 'En ruta', passengers: 9, lat: 28.7200, lng: -106.1100 },
 ];
 
 const recentIncidents = [
