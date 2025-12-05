@@ -126,44 +126,33 @@ export function GoogleMap({
         navigator.geolocation.clearWatch(watchIdRef.current);
       }
 
-      // Solicitar ubicación inmediatamente
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const userPos = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
-          };
-          console.log('Ubicación inicial del empleado:', userPos);
-          updateUserMarker(userPos);
-        },
-        (error) => {
-          console.error('Error obteniendo ubicación inicial:', error);
-          alert('No se pudo obtener tu ubicación. Por favor verifica los permisos de ubicación en tu navegador.');
-        },
-        {
-          enableHighAccuracy: true,
-          timeout: 10000,
-          maximumAge: 0
-        }
-      );
-
+      // IMPORTANTE: Solo usar GPS, sin ubicaciones predefinidas
       // Seguir actualizando la ubicación en tiempo real
       watchIdRef.current = navigator.geolocation.watchPosition(
         (position) => {
+          // Esta es la ÚNICA fuente de ubicación - directamente del GPS
           const userPos = {
             lat: position.coords.latitude,
             lng: position.coords.longitude,
           };
-          console.log('Ubicación actualizada del empleado:', userPos);
+          console.log('🔵 GPS REAL - Latitud:', position.coords.latitude, 'Longitud:', position.coords.longitude);
+          console.log('🔵 Precisión del GPS:', position.coords.accuracy, 'metros');
           updateUserMarker(userPos);
         },
         (error) => {
-          console.error('Error obteniendo ubicación:', error);
+          console.error('❌ Error GPS:', error.message);
+          if (error.code === 1) {
+            alert('Permiso de ubicación denegado. Por favor permite el acceso a tu ubicación.');
+          } else if (error.code === 2) {
+            alert('No se puede obtener tu ubicación. Verifica que tengas GPS activado.');
+          } else {
+            alert('Error obteniendo ubicación: ' + error.message);
+          }
         },
         {
-          enableHighAccuracy: true,
-          timeout: 5000,
-          maximumAge: 0
+          enableHighAccuracy: true,  // Forzar uso de GPS
+          timeout: 10000,
+          maximumAge: 0  // No usar caché, siempre datos nuevos
         }
       );
     };
@@ -171,36 +160,37 @@ export function GoogleMap({
     const updateUserMarker = (userPos: { lat: number; lng: number }) => {
       if (!googleMapInstanceRef.current || !window.google) return;
 
-      console.log('Actualizando punto azul con GPS:', userPos);
+      console.log('🔵 ACTUALIZANDO MARCADOR AZUL:', userPos);
 
       // Crear o actualizar marcador azul del usuario
       if (userMarkerRef.current) {
-        // Actualizar posición del marcador existente
-        userMarkerRef.current.setPosition(userPos);
-        console.log('Punto azul actualizado a:', userPos);
+        // Actualizar posición del marcador existente CON DATOS GPS REALES
+        userMarkerRef.current.setPosition(new google.maps.LatLng(userPos.lat, userPos.lng));
+        console.log('✅ Marcador azul movido a LAT:', userPos.lat, 'LNG:', userPos.lng);
       } else {
-        // Crear nuevo marcador azul
+        // Crear nuevo marcador azul POR PRIMERA VEZ
         userMarkerRef.current = new google.maps.Marker({
-          position: userPos,
+          position: new google.maps.LatLng(userPos.lat, userPos.lng),
           map: googleMapInstanceRef.current,
-          title: 'Mi Ubicación GPS en Tiempo Real',
+          title: 'GPS EN TIEMPO REAL',
           icon: {
             path: google.maps.SymbolPath.CIRCLE,
             fillColor: '#4285F4',
             fillOpacity: 1,
             strokeColor: '#ffffff',
-            strokeWeight: 3,
-            scale: 15,
+            strokeWeight: 4,
+            scale: 18,
           },
           zIndex: 1000,
           optimized: false,
+          animation: google.maps.Animation.DROP,
         });
 
-        console.log('Punto azul creado en:', userPos);
+        console.log('✅ Marcador azul CREADO en LAT:', userPos.lat, 'LNG:', userPos.lng);
 
         // Centrar el mapa entre el usuario y Fashion Mall la primera vez
         const bounds = new google.maps.LatLngBounds();
-        bounds.extend(userPos);
+        bounds.extend(new google.maps.LatLng(userPos.lat, userPos.lng));
         bounds.extend(FASHION_MALL_LOCATION);
         googleMapInstanceRef.current.fitBounds(bounds);
       }
