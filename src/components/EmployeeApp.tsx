@@ -221,7 +221,7 @@ export function EmployeeApp({ onLogout }: EmployeeAppProps) {
                         center={{ lat: 28.6365, lng: -106.0761 }}
                         zoom={13}
                         markers={[
-                          // Vehículo viniendo desde Fashion Mall (punto verde)
+                          // Vehículo viniendo desde Fashion Mall (punto verde - ahora con ícono de carro)
                           {
                             position: { lat: 28.6272, lng: -106.1135 },
                             title: 'Tu transporte - Mercedes Sprinter ABC-1234',
@@ -232,6 +232,7 @@ export function EmployeeApp({ onLogout }: EmployeeAppProps) {
                         ]}
                         showRoute={true}
                         useDirections={true}
+                        useVehicleIcon={true}
                       />
                     </div>
                     <div className="p-4 bg-slate-50 border-t">
