@@ -110,7 +110,7 @@ export function EmployeeApp({ onLogout }: EmployeeAppProps) {
               variant="ghost" 
               size="sm" 
               onClick={() => setUserType(userType === 'employee' ? 'leader' : 'employee')}
-              className="text-white hover:bg-blue-700 dark:hover:bg-blue-600/70 text-xs border border-white/20 dark:border-white/30"
+              className="text-white bg-white/10 dark:bg-slate-700 hover:bg-white/20 dark:hover:bg-slate-600 text-xs border border-white/30 dark:border-slate-500"
             >
               {userType === 'employee' ? 'Ver como Líder' : 'Ver como Empleado'}
             </Button>

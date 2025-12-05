@@ -15,7 +15,7 @@ export function ThemeToggle({ className = '' }: ThemeToggleProps) {
         variant="ghost"
         size="icon"
         onClick={toggleTheme}
-        className="relative h-9 w-9 hover:bg-blue-700 dark:hover:bg-blue-600/50"
+        className="relative h-9 w-9 bg-white/10 dark:bg-slate-700 hover:bg-white/20 dark:hover:bg-slate-600 border border-white/20 dark:border-slate-600"
         title={theme === 'light' ? 'Activar modo oscuro' : 'Activar modo claro'}
       >
         {theme === 'light' ? (
