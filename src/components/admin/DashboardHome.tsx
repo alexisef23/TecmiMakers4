@@ -185,7 +185,7 @@ export function DashboardHome() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="rounded-lg h-[500px] relative overflow-hidden">
+            <div className="rounded-lg h-[600px] relative overflow-hidden">
               <GoogleMap
                 center={{ lat: 28.6460, lng: -106.1025 }}
                 zoom={12}
