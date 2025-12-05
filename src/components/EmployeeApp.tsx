@@ -152,12 +152,12 @@ export function EmployeeApp({ onLogout }: EmployeeAppProps) {
                     </div>
 
                     <div>
-                      <p className="text-sm text-slate-600">Punto de Encuentro</p>
+                      <p className="text-sm text-slate-600">Tu Ubicación</p>
                       <div className="flex items-start gap-2 mt-1">
-                        <MapPin className="w-5 h-5 text-slate-500 mt-0.5" />
+                        <MapPin className="w-5 h-5 text-blue-500 mt-0.5" />
                         <div>
-                          <p className="font-medium">{todayTransport.pickupLocation}</p>
-                          <p className="text-sm text-slate-600">{todayTransport.address}</p>
+                          <p className="font-medium">Ubicación en Tiempo Real</p>
+                          <p className="text-sm text-slate-600">El transporte se dirige hacia ti</p>
                         </div>
                       </div>
                     </div>
@@ -222,13 +222,19 @@ export function EmployeeApp({ onLogout }: EmployeeAppProps) {
                         center={{ lat: 28.6365, lng: -106.0761 }}
                         zoom={13}
                         markers={[
-                          // Vehículo viniendo desde Fashion Mall (con ícono de carrito)
+                          // Vehículo viniendo desde Fashion Mall (ORIGEN - punto verde con ícono de carrito)
                           {
                             position: { lat: 28.6272, lng: -106.1135 },
                             title: 'Tu transporte - Mercedes Sprinter ABC-1234',
                             type: 'vehicle'
                           },
-                          // Tu ubicación en tiempo real (punto azul - se detecta automáticamente por geolocalización)
+                          // Tu ubicación en tiempo real (DESTINO - punto azul)
+                          // La ruta de Google Maps se trazará del carrito hacia aquí
+                          {
+                            position: { lat: 28.6365, lng: -106.0761 },
+                            title: 'Tu ubicación actual',
+                            type: 'employee'
+                          }
                         ]}
                         showRoute={true}
                         useDirections={true}
