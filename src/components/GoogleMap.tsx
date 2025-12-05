@@ -1,4 +1,3 @@
-
 import { useEffect, useRef } from 'react';
 
 interface GoogleMapProps {
@@ -15,9 +14,11 @@ interface GoogleMapProps {
 
 const GOOGLE_MAPS_API_KEY = 'AIzaSyDs8BKAd6nf2oUtwP6PV31ZjdVIsCXgeYc';
 
-// Variable global para rastrear si el script ya se cargó
-let isGoogleMapsLoaded = false;
-let loadingPromise: Promise<void> | null = null;
+declare global {
+  interface Window {
+    initMap?: () => void;
+  }
+}
 
 export function GoogleMap({
   center = { lat: 19.4326, lng: -99.1332 }, // Ciudad de México
@@ -27,294 +28,120 @@ export function GoogleMap({
   showRoute = false,
 }: GoogleMapProps) {
   const mapRef = useRef<HTMLDivElement>(null);
-  const googleMapRef = useRef<google.maps.Map | null>(null);
+  const googleMapInstanceRef = useRef<google.maps.Map | null>(null);
   const markersRef = useRef<google.maps.Marker[]>([]);
-  const userLocationMarkerRef = useRef<google.maps.Marker | null>(null);
-  const watchIdRef = useRef<number | null>(null);
+  const userMarkerRef = useRef<google.maps.Marker | null>(null);
+  const polylineRef = useRef<google.maps.Polyline | null>(null);
 
   useEffect(() => {
-    const loadGoogleMapsScript = (): Promise<void> => {
-      // Si ya está cargado, retornar promesa resuelta
-      if (isGoogleMapsLoaded && window.google && window.google.maps) {
-        return Promise.resolve();
+    const loadScript = () => {
+      // Verificar si ya existe el script
+      if (document.querySelector('script[src*="maps.googleapis.com"]')) {
+        // Si ya existe, esperar a que window.google esté disponible
+        const checkGoogle = setInterval(() => {
+          if (window.google && window.google.maps) {
+            clearInterval(checkGoogle);
+            initializeMap();
+          }
+        }, 100);
+        return;
       }
 
-      // Si ya hay una carga en progreso, retornar esa promesa
-      if (loadingPromise) {
-        return loadingPromise;
-      }
+      // Crear nuevo script
+      const script = document.createElement('script');
+      script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&callback=initMap`;
+      script.async = true;
+      script.defer = true;
 
-      // Crear nueva promesa de carga
-      loadingPromise = new Promise((resolve, reject) => {
-        // Verificar si el script ya existe
-        const existingScript = document.querySelector(
-          'script[src*="maps.googleapis.com"]'
-        );
-        
-        if (existingScript) {
-          existingScript.addEventListener('load', () => {
-            isGoogleMapsLoaded = true;
-            resolve();
-          });
-          existingScript.addEventListener('error', reject);
-          return;
-        }
+      window.initMap = () => {
+        initializeMap();
+      };
 
-        // Crear nuevo script
-        const script = document.createElement('script');
-        script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&libraries=geometry,places`;
-        script.async = true;
-        script.defer = true;
-        
-        script.onload = () => {
-          isGoogleMapsLoaded = true;
-          resolve();
-        };
-        
-        script.onerror = () => {
-          loadingPromise = null;
-          reject(new Error('Error al cargar Google Maps API'));
-        };
-        
-        document.head.appendChild(script);
-      });
-
-      return loadingPromise;
+      document.head.appendChild(script);
     };
 
-    const initializeMap = async () => {
-      try {
-        // Cargar el script de Google Maps
-        await loadGoogleMapsScript();
+    const initializeMap = () => {
+      if (!mapRef.current) return;
+      if (!window.google || !window.google.maps) return;
 
-        // Verificar que el contenedor del mapa existe
-        if (!mapRef.current) {
-          console.error('El contenedor del mapa no existe');
-          return;
-        }
+      // Crear el mapa
+      googleMapInstanceRef.current = new google.maps.Map(mapRef.current, {
+        center: center,
+        zoom: zoom,
+        mapTypeControl: true,
+        streetViewControl: true,
+        fullscreenControl: true,
+        zoomControl: true,
+      });
 
-        // Verificar que Google Maps está disponible
-        if (!window.google || !window.google.maps) {
-          console.error('Google Maps no está disponible');
-          return;
-        }
+      // Obtener ubicación del usuario
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const userPos = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude,
+            };
 
-        // Estilos personalizados del mapa
-        const mapStyles = [
-          {
-            featureType: 'poi',
-            elementType: 'labels',
-            stylers: [{ visibility: 'off' }],
+            if (!googleMapInstanceRef.current) return;
+
+            // Crear marcador de usuario
+            if (userMarkerRef.current) {
+              userMarkerRef.current.setMap(null);
+            }
+
+            userMarkerRef.current = new google.maps.Marker({
+              position: userPos,
+              map: googleMapInstanceRef.current,
+              title: 'Mi Ubicación',
+              icon: {
+                path: google.maps.SymbolPath.CIRCLE,
+                fillColor: '#4285F4',
+                fillOpacity: 1,
+                strokeColor: '#ffffff',
+                strokeWeight: 3,
+                scale: 10,
+              },
+              zIndex: 1000,
+            });
+
+            // Centrar en usuario
+            googleMapInstanceRef.current.setCenter(userPos);
           },
-        ];
-
-        // Crear el mapa
-        googleMapRef.current = new window.google.maps.Map(mapRef.current, {
-          center,
-          zoom,
-          styles: mapStyles,
-          mapTypeControl: true,
-          streetViewControl: true,
-          fullscreenControl: true,
-          zoomControl: true,
-        });
-
-        // Agregar marcadores
-        updateMarkers();
-
-        // Obtener ubicación del usuario
-        getUserLocation();
-      } catch (error) {
-        console.error('Error al inicializar el mapa:', error);
+          (error) => {
+            console.log('Error obteniendo ubicación:', error);
+          }
+        );
       }
+
+      // Agregar marcadores
+      updateMapMarkers();
     };
 
-    const getUserLocation = () => {
-      if (!navigator.geolocation) {
-        console.warn('Geolocalización no disponible');
-        return;
-      }
+    const updateMapMarkers = () => {
+      if (!googleMapInstanceRef.current || !window.google) return;
 
-      // Obtener ubicación actual
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const userLocation = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
-          };
-
-          if (!googleMapRef.current || !window.google) return;
-
-          // Eliminar marcador anterior si existe
-          if (userLocationMarkerRef.current) {
-            userLocationMarkerRef.current.setMap(null);
-          }
-
-          // Crear marcador de ubicación del usuario
-          userLocationMarkerRef.current = new window.google.maps.Marker({
-            position: userLocation,
-            map: googleMapRef.current,
-            title: 'Mi Ubicación',
-            icon: {
-              path: window.google.maps.SymbolPath.CIRCLE,
-              fillColor: '#4285F4',
-              fillOpacity: 1,
-              strokeColor: '#ffffff',
-              strokeWeight: 3,
-              scale: 10,
-            },
-            zIndex: 1000,
-          });
-
-          // Centrar mapa en ubicación del usuario
-          googleMapRef.current.panTo(userLocation);
-        },
-        (error) => {
-          console.warn('Error al obtener ubicación:', error.message);
-        },
-        {
-          enableHighAccuracy: true,
-          timeout: 10000,
-          maximumAge: 0,
-        }
-      );
-
-      // Seguir ubicación del usuario en tiempo real
-      watchIdRef.current = navigator.geolocation.watchPosition(
-        (position) => {
-          const userLocation = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
-          };
-
-          if (userLocationMarkerRef.current) {
-            userLocationMarkerRef.current.setPosition(userLocation);
-          }
-        },
-        (error) => {
-          console.warn('Error al seguir ubicación:', error.message);
-        },
-        {
-          enableHighAccuracy: true,
-          maximumAge: 10000,
-          timeout: 5000,
-        }
-      );
-    };
-
-    const updateMarkers = () => {
-      if (!googleMapRef.current || !window.google || !window.google.maps) {
-        return;
-      }
-
-      // Limpiar marcadores existentes
-      markersRef.current.forEach((marker) => marker.setMap(null));
+      // Limpiar marcadores previos
+      markersRef.current.forEach(m => m.setMap(null));
       markersRef.current = [];
+
+      // Limpiar polyline previa
+      if (polylineRef.current) {
+        polylineRef.current.setMap(null);
+        polylineRef.current = null;
+      }
 
       // Agregar nuevos marcadores
       markers.forEach((markerData) => {
-        if (!googleMapRef.current) return;
+        if (!googleMapInstanceRef.current) return;
 
-        const marker = new window.google.maps.Marker({
+        const marker = new google.maps.Marker({
           position: markerData.position,
-          map: googleMapRef.current,
-          title: markerData.title,
-          icon: getMarkerIcon(markerData.type),
-        });
-
-        markersRef.current.push(marker);
-
-        // Agregar ventana de información
-        const infoWindow = new window.google.maps.InfoWindow({
-          content: `<div style="padding: 8px;"><strong>${markerData.title}</strong></div>`,
-        });
-
-        marker.addListener('click', () => {
-          infoWindow.open(googleMapRef.current, marker);
-        });
-      });
-
-      // Dibujar ruta si está habilitado
-      if (showRoute && markers.length > 1) {
-        drawRoute();
-      }
-    };
-
-    const getMarkerIcon = (type?: string) => {
-      if (!window.google || !window.google.maps) return undefined;
-
-      const iconColors: Record<string, string> = {
-        vehicle: '#10b981',
-        stop: '#3b82f6',
-        employee: '#f59e0b',
-      };
-
-      const color = iconColors[type || 'stop'] || '#6366f1';
-
-      return {
-        path: window.google.maps.SymbolPath.CIRCLE,
-        fillColor: color,
-        fillOpacity: 1,
-        strokeColor: '#ffffff',
-        strokeWeight: 2,
-        scale: 8,
-      };
-    };
-
-    const drawRoute = () => {
-      if (!googleMapRef.current || !window.google || markers.length < 2) {
-        return;
-      }
-
-      const path = markers.map((m) => m.position);
-
-      new window.google.maps.Polyline({
-        path,
-        geodesic: true,
-        strokeColor: '#3b82f6',
-        strokeOpacity: 0.8,
-        strokeWeight: 4,
-        map: googleMapRef.current,
-      });
-    };
-
-    // Inicializar el mapa
-    initializeMap();
-
-    // Cleanup al desmontar
-    return () => {
-      if (userLocationMarkerRef.current) {
-        userLocationMarkerRef.current.setMap(null);
-        userLocationMarkerRef.current = null;
-      }
-      markersRef.current.forEach((marker) => marker.setMap(null));
-      markersRef.current = [];
-      if (watchIdRef.current !== null) {
-        navigator.geolocation.clearWatch(watchIdRef.current);
-        watchIdRef.current = null;
-      }
-      googleMapRef.current = null;
-    };
-  }, [center.lat, center.lng, zoom]);
-
-  // Actualizar marcadores cuando cambien
-  useEffect(() => {
-    if (googleMapRef.current && window.google && window.google.maps) {
-      // Limpiar marcadores existentes
-      markersRef.current.forEach((marker) => marker.setMap(null));
-      markersRef.current = [];
-
-      // Agregar nuevos marcadores
-      markers.forEach((markerData) => {
-        if (!googleMapRef.current || !window.google) return;
-
-        const marker = new window.google.maps.Marker({
-          position: markerData.position,
-          map: googleMapRef.current,
+          map: googleMapInstanceRef.current,
           title: markerData.title,
           icon: {
-            path: window.google.maps.SymbolPath.CIRCLE,
-            fillColor: markerData.type === 'vehicle' ? '#10b981' : markerData.type === 'employee' ? '#f59e0b' : '#3b82f6',
+            path: google.maps.SymbolPath.CIRCLE,
+            fillColor: getMarkerColor(markerData.type),
             fillOpacity: 1,
             strokeColor: '#ffffff',
             strokeWeight: 2,
@@ -322,29 +149,112 @@ export function GoogleMap({
           },
         });
 
-        markersRef.current.push(marker);
-
-        const infoWindow = new window.google.maps.InfoWindow({
+        const infoWindow = new google.maps.InfoWindow({
           content: `<div style="padding: 8px;"><strong>${markerData.title}</strong></div>`,
         });
 
         marker.addListener('click', () => {
-          infoWindow.open(googleMapRef.current, marker);
+          infoWindow.open(googleMapInstanceRef.current, marker);
         });
+
+        markersRef.current.push(marker);
       });
 
-      // Dibujar ruta si está habilitado
+      // Dibujar ruta si es necesario
       if (showRoute && markers.length > 1) {
-        const path = markers.map((m) => m.position);
-        new window.google.maps.Polyline({
-          path,
+        const path = markers.map(m => m.position);
+        polylineRef.current = new google.maps.Polyline({
+          path: path,
           geodesic: true,
           strokeColor: '#3b82f6',
           strokeOpacity: 0.8,
           strokeWeight: 4,
-          map: googleMapRef.current,
+          map: googleMapInstanceRef.current,
         });
       }
+    };
+
+    const getMarkerColor = (type?: string) => {
+      switch (type) {
+        case 'vehicle':
+          return '#10b981';
+        case 'employee':
+          return '#f59e0b';
+        case 'stop':
+          return '#3b82f6';
+        default:
+          return '#6366f1';
+      }
+    };
+
+    loadScript();
+
+    return () => {
+      // Cleanup
+      if (userMarkerRef.current) {
+        userMarkerRef.current.setMap(null);
+      }
+      markersRef.current.forEach(m => m.setMap(null));
+      if (polylineRef.current) {
+        polylineRef.current.setMap(null);
+      }
+    };
+  }, []);
+
+  // Actualizar marcadores cuando cambien
+  useEffect(() => {
+    if (!googleMapInstanceRef.current || !window.google) return;
+
+    // Limpiar marcadores previos (excepto el de usuario)
+    markersRef.current.forEach(m => m.setMap(null));
+    markersRef.current = [];
+
+    // Limpiar polyline previa
+    if (polylineRef.current) {
+      polylineRef.current.setMap(null);
+      polylineRef.current = null;
+    }
+
+    // Agregar nuevos marcadores
+    markers.forEach((markerData) => {
+      if (!googleMapInstanceRef.current) return;
+
+      const marker = new google.maps.Marker({
+        position: markerData.position,
+        map: googleMapInstanceRef.current,
+        title: markerData.title,
+        icon: {
+          path: google.maps.SymbolPath.CIRCLE,
+          fillColor: markerData.type === 'vehicle' ? '#10b981' : markerData.type === 'employee' ? '#f59e0b' : '#3b82f6',
+          fillOpacity: 1,
+          strokeColor: '#ffffff',
+          strokeWeight: 2,
+          scale: 8,
+        },
+      });
+
+      const infoWindow = new google.maps.InfoWindow({
+        content: `<div style="padding: 8px;"><strong>${markerData.title}</strong></div>`,
+      });
+
+      marker.addListener('click', () => {
+        infoWindow.open(googleMapInstanceRef.current, marker);
+      });
+
+      markersRef.current.push(marker);
+    });
+
+    // Dibujar ruta si es necesario
+    if (showRoute && markers.length > 1) {
+      const path = markers.map(m => m.position);
+      polylineRef.current = new google.maps.Polyline({
+        path: path,
+        geodesic: true,
+        strokeColor: '#3b82f6',
+        strokeOpacity: 0.8,
+        strokeWeight: 4,
+        map: googleMapInstanceRef.current,
+      });
     }
   }, [markers, showRoute]);
 
