@@ -117,82 +117,112 @@ export function GoogleMap({
 
     const startEmployeeLocationTracking = () => {
       if (!navigator.geolocation) {
-        console.error('Geolocation no está disponible');
-        alert('Tu navegador no soporta geolocalización. Por favor habilita los permisos de ubicación.');
+        console.error('❌ Geolocation NO disponible en este navegador');
+        alert('Tu navegador no soporta geolocalización. Usa Chrome, Firefox o Safari.');
         return;
       }
 
+      console.log('🌍 Iniciando rastreo GPS...');
+
       if (watchIdRef.current !== null) {
         navigator.geolocation.clearWatch(watchIdRef.current);
+        watchIdRef.current = null;
       }
 
-      // IMPORTANTE: Solo usar GPS, sin ubicaciones predefinidas
-      // Seguir actualizando la ubicación en tiempo real
+      // Usar watchPosition para actualización continua en tiempo real
       watchIdRef.current = navigator.geolocation.watchPosition(
         (position) => {
-          // Esta es la ÚNICA fuente de ubicación - directamente del GPS
-          const userPos = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
-          };
-          console.log('🔵 GPS REAL - Latitud:', position.coords.latitude, 'Longitud:', position.coords.longitude);
-          console.log('🔵 Precisión del GPS:', position.coords.accuracy, 'metros');
-          updateUserMarker(userPos);
+          // ✅ DATOS DIRECTOS DEL GPS - SIN MODIFICAR
+          const gpsLat = position.coords.latitude;
+          const gpsLng = position.coords.longitude;
+          const gpsAccuracy = position.coords.accuracy;
+
+          console.log('✅ GPS ACTUALIZADO:');
+          console.log('   📍 Latitud:', gpsLat);
+          console.log('   📍 Longitud:', gpsLng);
+          console.log('   📏 Precisión:', gpsAccuracy, 'metros');
+          console.log('   🕐 Timestamp:', new Date(position.timestamp).toLocaleTimeString());
+
+          // Pasar coordenadas GPS puras
+          updateUserMarker({
+            lat: gpsLat,
+            lng: gpsLng
+          });
         },
         (error) => {
-          console.error('❌ Error GPS:', error.message);
-          if (error.code === 1) {
-            alert('Permiso de ubicación denegado. Por favor permite el acceso a tu ubicación.');
-          } else if (error.code === 2) {
-            alert('No se puede obtener tu ubicación. Verifica que tengas GPS activado.');
-          } else {
-            alert('Error obteniendo ubicación: ' + error.message);
+          console.error('❌ ERROR DE GPS:', error);
+          let errorMessage = '';
+          
+          switch (error.code) {
+            case error.PERMISSION_DENIED:
+              errorMessage = '🚫 Permiso de ubicación DENEGADO. Por favor permite el acceso en la configuración de tu navegador.';
+              break;
+            case error.POSITION_UNAVAILABLE:
+              errorMessage = '📡 Señal GPS no disponible. Intenta salir al exterior o acércate a una ventana.';
+              break;
+            case error.TIMEOUT:
+              errorMessage = '⏱️ Tiempo de espera agotado. Verifica tu conexión GPS.';
+              break;
+            default:
+              errorMessage = '❓ Error desconocido: ' + error.message;
           }
+          
+          console.error(errorMessage);
+          alert(errorMessage);
         },
         {
-          enableHighAccuracy: true,  // Forzar uso de GPS
-          timeout: 10000,
-          maximumAge: 0  // No usar caché, siempre datos nuevos
+          enableHighAccuracy: true,    // ✅ Usar GPS de alta precisión
+          timeout: 15000,               // ✅ Esperar hasta 15 segundos
+          maximumAge: 0                 // ✅ NO usar datos en caché
         }
       );
     };
 
     const updateUserMarker = (userPos: { lat: number; lng: number }) => {
-      if (!googleMapInstanceRef.current || !window.google) return;
+      if (!googleMapInstanceRef.current || !window.google) {
+        console.error('❌ Mapa o Google Maps no inicializado');
+        return;
+      }
 
-      console.log('🔵 ACTUALIZANDO MARCADOR AZUL:', userPos);
+      console.log('🔵 ACTUALIZANDO MARCADOR AZUL CON GPS:');
+      console.log('   📍 Latitud recibida:', userPos.lat);
+      console.log('   📍 Longitud recibida:', userPos.lng);
 
-      // Crear o actualizar marcador azul del usuario
+      // Crear posición exacta del GPS
+      const gpsPosition = new google.maps.LatLng(userPos.lat, userPos.lng);
+
       if (userMarkerRef.current) {
-        // Actualizar posición del marcador existente CON DATOS GPS REALES
-        userMarkerRef.current.setPosition(new google.maps.LatLng(userPos.lat, userPos.lng));
-        console.log('✅ Marcador azul movido a LAT:', userPos.lat, 'LNG:', userPos.lng);
+        // ✅ ACTUALIZAR posición del marcador existente
+        userMarkerRef.current.setPosition(gpsPosition);
+        console.log('✅ Marcador MOVIDO a GPS:', userPos.lat, ',', userPos.lng);
       } else {
-        // Crear nuevo marcador azul POR PRIMERA VEZ
+        // ✅ CREAR nuevo marcador azul
         userMarkerRef.current = new google.maps.Marker({
-          position: new google.maps.LatLng(userPos.lat, userPos.lng),
+          position: gpsPosition,
           map: googleMapInstanceRef.current,
-          title: 'GPS EN TIEMPO REAL',
+          title: '📍 Tu Ubicación GPS en Tiempo Real',
           icon: {
             path: google.maps.SymbolPath.CIRCLE,
             fillColor: '#4285F4',
             fillOpacity: 1,
             strokeColor: '#ffffff',
             strokeWeight: 4,
-            scale: 18,
+            scale: 20,
           },
           zIndex: 1000,
           optimized: false,
           animation: google.maps.Animation.DROP,
         });
 
-        console.log('✅ Marcador azul CREADO en LAT:', userPos.lat, 'LNG:', userPos.lng);
+        console.log('✅ Marcador CREADO en GPS:', userPos.lat, ',', userPos.lng);
 
-        // Centrar el mapa entre el usuario y Fashion Mall la primera vez
+        // Centrar mapa entre usuario y Fashion Mall solo la primera vez
         const bounds = new google.maps.LatLngBounds();
-        bounds.extend(new google.maps.LatLng(userPos.lat, userPos.lng));
+        bounds.extend(gpsPosition);
         bounds.extend(FASHION_MALL_LOCATION);
         googleMapInstanceRef.current.fitBounds(bounds);
+        
+        console.log('🗺️ Mapa ajustado para mostrar ambos puntos');
       }
 
       // Actualizar ruta
