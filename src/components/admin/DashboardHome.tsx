@@ -12,6 +12,7 @@ import {
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { Alert, AlertDescription, AlertTitle } from '../ui/alert';
 import { Badge } from '../ui/badge';
+import { GoogleMap } from '../GoogleMap';
 
 const kpiData = [
   { name: 'Lun', puntualidad: 94 },
@@ -180,35 +181,21 @@ export function DashboardHome() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="bg-slate-100 rounded-lg h-[400px] flex items-center justify-center relative overflow-hidden">
-              {/* Simulación de mapa */}
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-emerald-50">
-                {activeRoutes.map((route, idx) => (
-                  <div
-                    key={route.id}
-                    className="absolute"
-                    style={{
-                      left: `${20 + idx * 20}%`,
-                      top: `${30 + (idx % 2) * 30}%`,
-                    }}
-                  >
-                    <div className="relative">
-                      <div className={`w-3 h-3 rounded-full ${
-                        route.status === 'Retrasado' ? 'bg-red-500' : 'bg-emerald-500'
-                      } animate-pulse`}></div>
-                      <div className="absolute left-4 top-0 bg-white px-2 py-1 rounded shadow-lg text-xs whitespace-nowrap">
-                        <div>{route.name}</div>
-                        <div className="text-slate-600">{route.vehicle}</div>
-                        <div className="text-slate-500">{route.passengers} pasajeros</div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <div className="relative z-10 text-center p-4 bg-white/90 rounded-lg shadow">
-                <MapPin className="w-8 h-8 mx-auto mb-2 text-blue-900" />
-                <p>Integración con Google Maps/Mapbox</p>
-                <p className="text-sm text-slate-600 mt-1">{activeRoutes.length} rutas activas en tiempo real</p>
+            <div className="rounded-lg h-[400px] relative overflow-hidden">
+              <GoogleMap
+                center={{ lat: 19.4326, lng: -99.1332 }}
+                zoom={12}
+                markers={activeRoutes.map((route) => ({
+                  position: { lat: route.lat, lng: route.lng },
+                  title: `${route.name} - ${route.vehicle}`,
+                  type: 'vehicle'
+                }))}
+                showRoute={true}
+                className="rounded-lg"
+              />
+              <div className="absolute top-4 right-4 bg-white/95 dark:bg-slate-800/95 px-3 py-2 rounded-lg shadow-lg z-10">
+                <p className="text-sm font-semibold dark:text-slate-200">{activeRoutes.length} rutas activas</p>
+                <p className="text-xs text-slate-600 dark:text-slate-400">En tiempo real</p>
               </div>
             </div>
           </CardContent>
