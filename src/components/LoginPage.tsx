@@ -6,6 +6,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
 import { Bus, User, Shield } from 'lucide-react';
 import { OxxoLogo } from './OxxoLogo';
+import oxxoGoLogo from '../assets/oxxo-go-logo.png';
 
 interface LoginPageProps {
   onLogin: (type: 'admin' | 'driver' | 'employee') => void;
@@ -26,7 +27,7 @@ export function LoginPage({ onLogin }: LoginPageProps) {
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center mb-4">
             <img 
-              src="/src/assets/oxxo-go-logo.png" 
+              src={oxxoGoLogo} 
               alt="OXXO GO Logo" 
               className="w-32 h-32 drop-shadow-2xl rounded-3xl"
             />
