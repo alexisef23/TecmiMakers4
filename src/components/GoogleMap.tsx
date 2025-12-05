@@ -29,21 +29,38 @@ export function GoogleMap({
   useEffect(() => {
     // Load Google Maps script
     const loadGoogleMaps = () => {
-      if (typeof window.google !== 'undefined') {
+      if (typeof window.google !== 'undefined' && window.google.maps) {
         initMap();
         return;
       }
 
+      // Evitar cargar el script múltiples veces
+      const existingScript = document.querySelector(`script[src*="maps.googleapis.com"]`);
+      if (existingScript) {
+        existingScript.addEventListener('load', initMap);
+        return;
+      }
+
       const script = document.createElement('script');
-      script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&libraries=geometry,places`;
+      script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&libraries=geometry,places&loading=async`;
       script.async = true;
       script.defer = true;
-      script.onload = () => initMap();
+      script.onload = () => {
+        if (window.google && window.google.maps) {
+          initMap();
+        }
+      };
+      script.onerror = () => {
+        console.error('Error al cargar Google Maps API');
+      };
       document.head.appendChild(script);
     };
 
     const initMap = () => {
-      if (!mapRef.current) return;
+      if (!mapRef.current || !window.google || !window.google.maps) {
+        console.error('Google Maps no está disponible');
+        return;
+      }
 
       const mapStyles = [
         {
@@ -53,8 +70,9 @@ export function GoogleMap({
         },
       ];
 
-      // Create map
-      googleMapRef.current = new window.google.maps.Map(mapRef.current, {
+      try {
+        // Create map
+        googleMapRef.current = new window.google.maps.Map(mapRef.current, {
         center,
         zoom,
         styles: mapStyles,
@@ -125,9 +143,20 @@ export function GoogleMap({
           }
         );
       }
+      } catch (error) {
+        console.error('Error al inicializar el mapa:', error);
+      }
     };
 
     loadGoogleMaps();
+
+    return () => {
+      // Cleanup
+      if (userLocationMarkerRef.current) {
+        userLocationMarkerRef.current.setMap(null);
+      }
+      markersRef.current.forEach(marker => marker.setMap(null));
+    };
   }, [center.lat, center.lng, zoom]);
 
   useEffect(() => {
@@ -135,7 +164,7 @@ export function GoogleMap({
   }, [markers]);
 
   const updateMarkers = () => {
-    if (!googleMapRef.current) return;
+    if (!googleMapRef.current || !window.google || !window.google.maps) return;
 
     // Clear existing markers
     markersRef.current.forEach((marker) => marker.setMap(null));
