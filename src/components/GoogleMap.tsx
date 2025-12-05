@@ -381,11 +381,16 @@ export function GoogleMap({
     // En employeeMode, no renderizar marcadores adicionales (solo el punto azul y vehículo principal)
     if (employeeMode) return;
 
+    // Limpiar marcadores anteriores
     markersRef.current.forEach(m => m.setMap(null));
     markersRef.current = [];
 
+    // Si no hay marcadores, salir
+    if (!markers || markers.length === 0) return;
+
+    // Renderizar cada marcador
     markers.forEach((markerData) => {
-      if (!googleMapInstanceRef.current) return;
+      if (!googleMapInstanceRef.current || !window.google) return;
 
       let markerIcon;
       if (markerData.type === 'vehicle') {
@@ -427,6 +432,8 @@ export function GoogleMap({
 
       markersRef.current.push(marker);
     });
+
+    console.log(`✅ ${markers.length} marcadores de vehículos renderizados en el mapa admin`);
   }, [markers, showRoute, useDirections, employeeMode]);
 
   return (
