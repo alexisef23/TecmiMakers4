@@ -182,7 +182,7 @@ export function EmployeeApp({ onLogout }: EmployeeAppProps) {
                         Llegada estimada en <span className="font-semibold">{todayTransport.eta}</span>
                       </p>
                       <div className="mt-2">
-                        <Progress value={80} className="h-2 bg-emerald-200 dark:bg-emerald-800" />
+                        <Progress value={80} className="h-2 bg-emerald-200 dark:bg-emerald-950 [&>div]:bg-emerald-600 dark:[&>div]:bg-emerald-500" />
                       </div>
                     </div>
                   </CardContent>
@@ -254,21 +254,21 @@ export function EmployeeApp({ onLogout }: EmployeeAppProps) {
                         className={`p-3 rounded-lg border ${
                           notif.read 
                             ? 'bg-slate-50 dark:bg-slate-800 dark:border-slate-700' 
-                            : 'bg-blue-50 dark:bg-blue-900/50 border-blue-200 dark:border-blue-700'
+                            : 'bg-blue-50 dark:bg-blue-900/40 border-blue-200 dark:border-blue-600'
                         }`}
                       >
                         <div className="flex items-start gap-3">
                           <div className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${
-                            notif.type === 'info' ? 'bg-blue-100 dark:bg-blue-800' :
-                            notif.type === 'warning' ? 'bg-amber-100 dark:bg-amber-800' :
-                            'bg-emerald-100 dark:bg-emerald-800'
+                            notif.type === 'info' ? 'bg-blue-100 dark:bg-blue-800/80' :
+                            notif.type === 'warning' ? 'bg-amber-100 dark:bg-amber-800/80' :
+                            'bg-emerald-100 dark:bg-emerald-800/80'
                           }`}>
-                            {notif.type === 'info' && <Bell className="w-5 h-5 text-blue-600 dark:text-blue-300" />}
-                            {notif.type === 'warning' && <AlertTriangle className="w-5 h-5 text-amber-600 dark:text-amber-300" />}
-                            {notif.type === 'success' && <CheckCircle className="w-5 h-5 text-emerald-600 dark:text-emerald-300" />}
+                            {notif.type === 'info' && <Bell className="w-5 h-5 text-blue-600 dark:text-blue-200" />}
+                            {notif.type === 'warning' && <AlertTriangle className="w-5 h-5 text-amber-600 dark:text-amber-200" />}
+                            {notif.type === 'success' && <CheckCircle className="w-5 h-5 text-emerald-600 dark:text-emerald-200" />}
                           </div>
                           <div className="flex-1">
-                            <p className="text-sm dark:text-slate-100">{notif.message}</p>
+                            <p className="text-sm text-slate-900 dark:text-slate-100">{notif.message}</p>
                             <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">{notif.time} atrás</p>
                           </div>
                         </div>
