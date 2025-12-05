@@ -3,14 +3,29 @@ import { Badge } from './ui/badge';
 import { Trophy, TrendingUp, Star, Flame } from 'lucide-react';
 import { rankingData, RankingEmployee } from './RankingData';
 
-// Importar imagen del avatar
-import employeeAvatar from '../assets/employee-avatar.png.png';
+// Importar imágenes de gatos según posición
+import gatoGanador from '../../Recursos2/gatoGanador.png';
+import gatoEnojado from '../../Recursos2/gatoEnojado.png';
+import gatoTriste from '../../Recursos2/gatoTriste.png';
 
 interface RankingViewProps {
   currentEmployeeId?: number;
 }
 
 export function RankingView({ currentEmployeeId = 1 }: RankingViewProps) {
+  const getAvatarImage = (position: number) => {
+    switch (position) {
+      case 1:
+        return gatoGanador;
+      case 2:
+        return gatoEnojado;
+      case 3:
+        return gatoTriste;
+      default:
+        return gatoGanador; // imagen por defecto
+    }
+  };
+
   const getMedalIcon = (position: number) => {
     switch (position) {
       case 1:
@@ -103,7 +118,7 @@ export function RankingView({ currentEmployeeId = 1 }: RankingViewProps) {
                   <div className="relative">
                     <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-slate-200 dark:border-slate-700">
                       <img
-                        src={employeeAvatar}
+                        src={getAvatarImage(employee.position)}
                         alt={employee.name}
                         className="w-full h-full object-cover"
                       />
