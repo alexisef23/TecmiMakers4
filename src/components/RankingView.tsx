@@ -3,10 +3,8 @@ import { Badge } from './ui/badge';
 import { Trophy, TrendingUp, Star, Flame } from 'lucide-react';
 import { rankingData, RankingEmployee } from './RankingData';
 
-// Importar imágenes de gatitos
+// Importar imagen del avatar
 import employeeAvatar from '../assets/employee-avatar.png';
-
-const happyCatImage = employeeAvatar;;
 
 interface RankingViewProps {
   currentEmployeeId?: number;
@@ -105,7 +103,7 @@ export function RankingView({ currentEmployeeId = 1 }: RankingViewProps) {
                   <div className="relative">
                     <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-slate-200 dark:border-slate-700">
                       <img
-                        src={happyCatImage}
+                        src={employeeAvatar}
                         alt={employee.name}
                         className="w-full h-full object-cover"
                       />

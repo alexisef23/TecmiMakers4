@@ -40,9 +40,8 @@ interface EmployeeAppProps {
   onLogout: () => void;
 }
 
+// Importar imagen del avatar
 import employeeAvatar from '../assets/employee-avatar.png';
-
-const happyCatImage = employeeAvatar;
 
 const todayTransport = {
   pickupTime: '06:45',
@@ -91,7 +90,7 @@ export function EmployeeApp({ onLogout }: EmployeeAppProps) {
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center gap-3">
             <Avatar className="h-10 w-10">
-              <AvatarImage src={happyCatImage} alt="Profile" />
+              <AvatarImage src={employeeAvatar} alt="Profile" />
               <AvatarFallback>
                 <User className="h-6 w-6" />
               </AvatarFallback>

@@ -12,9 +12,8 @@ import {
 } from '../ui/table';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
+// Importar imagen del avatar
 import employeeAvatar from '../../assets/employee-avatar.png';
-
-const happyCatImage = employeeAvatar;
 
 // Datos simulados de puntos históricos
 const pointsHistory = [
@@ -45,7 +44,7 @@ export function EmployeeOfMonthWidget() {
             <div className="relative">
               <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-yellow-400 shadow-lg">
                 <img
-                  src={happyCatImage}
+                  src={employeeAvatar}
                   alt={employeeOfMonth.name}
                   className="w-full h-full object-cover"
                 />
@@ -173,7 +172,7 @@ export function EmployeeOfMonthWidget() {
                     <div className="flex items-center gap-2">
                       <div className="w-8 h-8 rounded-full overflow-hidden border-2 border-slate-200 dark:border-slate-700">
                         <img
-                          src={happyCatImage}
+                          src={employeeAvatar}
                           alt={employee.name}
                           className="w-full h-full object-cover"
                         />
