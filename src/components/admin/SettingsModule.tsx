@@ -170,15 +170,15 @@ export function SettingsModule() {
             </h3>
             <div className="flex items-center justify-between">
               <div className="space-y-0.5">
-                <Label htmlFor="auto-backup">Respaldo Automático</Label>
-                <p className="text-xs text-slate-500">Realizar respaldos diarios de la base de datos</p>
+                <Label htmlFor="auto-backup" className="dark:text-white">Respaldo Automático</Label>
+                <p className="text-xs text-slate-500 dark:text-slate-400">Realizar respaldos diarios de la base de datos</p>
               </div>
               <Switch id="auto-backup" defaultChecked />
             </div>
             <div className="flex items-center justify-between">
               <div className="space-y-0.5">
-                <Label htmlFor="data-retention">Retención de Datos Históricos</Label>
-                <p className="text-xs text-slate-500">Mantener datos por 12 meses</p>
+                <Label htmlFor="data-retention" className="dark:text-white">Retención de Datos Históricos</Label>
+                <p className="text-xs text-slate-500 dark:text-slate-400">Mantener datos por 12 meses</p>
               </div>
               <Switch id="data-retention" defaultChecked />
             </div>
@@ -207,8 +207,8 @@ export function SettingsModule() {
         <CardContent className="space-y-4">
           <div className="flex items-center justify-between">
             <div className="space-y-0.5">
-              <Label htmlFor="notify-delays">Notificar Retrasos</Label>
-              <p className="text-xs text-slate-500">Alertas cuando un vehículo se retrase más de 10 minutos</p>
+              <Label htmlFor="notify-delays" className="dark:text-white">Notificar Retrasos</Label>
+              <p className="text-xs text-slate-500 dark:text-slate-400">Alertas cuando un vehículo se retrase más de 10 minutos</p>
             </div>
             <Switch id="notify-delays" defaultChecked />
           </div>
@@ -217,8 +217,8 @@ export function SettingsModule() {
 
           <div className="flex items-center justify-between">
             <div className="space-y-0.5">
-              <Label htmlFor="notify-incidents">Notificar Incidentes</Label>
-              <p className="text-xs text-slate-500">Alertas inmediatas ante cualquier incidente reportado</p>
+              <Label htmlFor="notify-incidents" className="dark:text-white">Notificar Incidentes</Label>
+              <p className="text-xs text-slate-500 dark:text-slate-400">Alertas inmediatas ante cualquier incidente reportado</p>
             </div>
             <Switch id="notify-incidents" defaultChecked />
           </div>
@@ -227,8 +227,8 @@ export function SettingsModule() {
 
           <div className="flex items-center justify-between">
             <div className="space-y-0.5">
-              <Label htmlFor="notify-maintenance">Recordatorios de Mantenimiento</Label>
-              <p className="text-xs text-slate-500">Alertas 7 días antes del mantenimiento programado</p>
+              <Label htmlFor="notify-maintenance" className="dark:text-white">Recordatorios de Mantenimiento</Label>
+              <p className="text-xs text-slate-500 dark:text-slate-400">Alertas 7 días antes del mantenimiento programado</p>
             </div>
             <Switch id="notify-maintenance" defaultChecked />
           </div>
@@ -237,8 +237,8 @@ export function SettingsModule() {
 
           <div className="flex items-center justify-between">
             <div className="space-y-0.5">
-              <Label htmlFor="notify-insurance">Vencimiento de Seguros</Label>
-              <p className="text-xs text-slate-500">Alertas 30 días antes del vencimiento de pólizas</p>
+              <Label htmlFor="notify-insurance" className="dark:text-white">Vencimiento de Seguros</Label>
+              <p className="text-xs text-slate-500 dark:text-slate-400">Alertas 30 días antes del vencimiento de pólizas</p>
             </div>
             <Switch id="notify-insurance" defaultChecked />
           </div>
@@ -247,8 +247,8 @@ export function SettingsModule() {
 
           <div className="flex items-center justify-between">
             <div className="space-y-0.5">
-              <Label htmlFor="notify-email">Notificaciones por Email</Label>
-              <p className="text-xs text-slate-500">Enviar resumen diario por correo electrónico</p>
+              <Label htmlFor="notify-email" className="dark:text-white">Notificaciones por Email</Label>
+              <p className="text-xs text-slate-500 dark:text-slate-400">Enviar resumen diario por correo electrónico</p>
             </div>
             <Switch id="notify-email" />
           </div>
@@ -269,8 +269,8 @@ export function SettingsModule() {
         <CardContent className="space-y-4">
           <div className="flex items-center justify-between">
             <div className="space-y-0.5">
-              <Label htmlFor="2fa">Autenticación de Dos Factores</Label>
-              <p className="text-xs text-slate-500">Requiere verificación adicional al iniciar sesión</p>
+              <Label htmlFor="2fa" className="dark:text-white">Autenticación de Dos Factores</Label>
+              <p className="text-xs text-slate-500 dark:text-slate-400">Requiere verificación adicional al iniciar sesión</p>
             </div>
             <Switch id="2fa" />
           </div>
@@ -279,8 +279,8 @@ export function SettingsModule() {
 
           <div className="flex items-center justify-between">
             <div className="space-y-0.5">
-              <Label htmlFor="session-timeout">Tiempo de Sesión (minutos)</Label>
-              <Input id="session-timeout" type="number" defaultValue="60" className="w-32" />
+              <Label htmlFor="session-timeout" className="dark:text-white">Tiempo de Sesión (minutos)</Label>
+              <Input id="session-timeout" type="number" defaultValue="60" className="w-32 dark:bg-slate-800 dark:text-white dark:border-slate-600" />
             </div>
           </div>
 
@@ -288,8 +288,8 @@ export function SettingsModule() {
 
           <div className="flex items-center justify-between">
             <div className="space-y-0.5">
-              <Label htmlFor="password-policy">Política de Contraseñas Estricta</Label>
-              <p className="text-xs text-slate-500">Requiere mayúsculas, números y caracteres especiales</p>
+              <Label htmlFor="password-policy" className="dark:text-white">Política de Contraseñas Estricta</Label>
+              <p className="text-xs text-slate-500 dark:text-slate-400">Requiere mayúsculas, números y caracteres especiales</p>
             </div>
             <Switch id="password-policy" defaultChecked />
           </div>
