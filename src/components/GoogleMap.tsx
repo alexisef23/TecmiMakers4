@@ -376,20 +376,25 @@ export function GoogleMap({
   }, []);
 
   useEffect(() => {
-    if (!googleMapInstanceRef.current || !window.google) return;
-
     // En employeeMode, no renderizar marcadores adicionales (solo el punto azul y vehículo principal)
     if (employeeMode) return;
+
+    if (!googleMapInstanceRef.current || !window.google) return;
 
     // Limpiar marcadores anteriores
     markersRef.current.forEach(m => m.setMap(null));
     markersRef.current = [];
 
     // Si no hay marcadores, salir
-    if (!markers || markers.length === 0) return;
+    if (!markers || markers.length === 0) {
+      console.log('⚠️ No hay marcadores para renderizar');
+      return;
+    }
+
+    console.log(`🚗 Renderizando ${markers.length} marcadores de vehículos...`);
 
     // Renderizar cada marcador
-    markers.forEach((markerData) => {
+    markers.forEach((markerData, index) => {
       if (!googleMapInstanceRef.current || !window.google) return;
 
       let markerIcon;
@@ -421,6 +426,8 @@ export function GoogleMap({
         icon: markerIcon,
         zIndex: markerData.type === 'vehicle' ? 900 : 800,
       });
+
+      console.log(`✅ Marcador ${index + 1} creado:`, markerData.title, markerData.position);
 
       const infoWindow = new google.maps.InfoWindow({
         content: `<div style="padding: 8px;"><strong>${markerData.title}</strong></div>`,
