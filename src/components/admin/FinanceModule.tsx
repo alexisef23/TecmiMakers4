@@ -115,7 +115,7 @@ export function FinanceModule() {
       {/* KPIs Financieros */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-2">
         <Card className="border-l-4 border-l-blue-600">
-          <CardHeader className="pb-1 pt-2 px-3">
+          <CardHeader className="pb-1 pt-1 px-3">
             <CardTitle className="text-[10px] font-medium text-slate-600">Costo Total Mes</CardTitle>
           </CardHeader>
           <CardContent className="px-3 pb-2">
@@ -130,7 +130,7 @@ export function FinanceModule() {
         </Card>
 
         <Card className="border-l-4 border-l-amber-500">
-          <CardHeader className="pb-1 pt-2 px-3">
+          <CardHeader className="pb-1 pt-1 px-3">
             <CardTitle className="text-[10px] font-medium text-slate-600">Presupuesto Restante</CardTitle>
           </CardHeader>
           <CardContent className="px-3 pb-2">
@@ -142,7 +142,7 @@ export function FinanceModule() {
         </Card>
 
         <Card className="border-l-4 border-l-emerald-600">
-          <CardHeader className="pb-1 pt-2 px-3">
+          <CardHeader className="pb-1 pt-1 px-3">
             <CardTitle className="text-[10px] font-medium text-slate-600">Ahorro Mensual</CardTitle>
           </CardHeader>
           <CardContent className="px-3 pb-2">
@@ -154,7 +154,7 @@ export function FinanceModule() {
         </Card>
 
         <Card className="border-l-4 border-l-red-600">
-          <CardHeader className="pb-1 pt-2 px-3">
+          <CardHeader className="pb-1 pt-1 px-3">
             <CardTitle className="text-[10px] font-medium text-slate-600">Costo por Retrasos</CardTitle>
           </CardHeader>
           <CardContent className="px-3 pb-2">
@@ -172,7 +172,7 @@ export function FinanceModule() {
       {/* Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
         <Card>
-          <CardHeader className="pb-1 pt-2 px-3">
+          <CardHeader className="pb-1 pt-1 px-3">
             <CardTitle className="text-sm font-medium">Comparativo Costo vs Presupuesto</CardTitle>
           </CardHeader>
           <CardContent className="px-3 pb-2">
@@ -191,7 +191,7 @@ export function FinanceModule() {
         </Card>
 
         <Card>
-          <CardHeader className="pb-1 pt-2 px-3">
+          <CardHeader className="pb-1 pt-1 px-3">
             <CardTitle className="text-sm font-medium">Distribución de Costos</CardTitle>
           </CardHeader>
           <CardContent className="px-3 pb-2">
@@ -221,7 +221,7 @@ export function FinanceModule() {
 
       {/* Invoices Table */}
       <Card>
-        <CardHeader className="pb-1 pt-2 px-3">
+        <CardHeader className="pb-1 pt-1 px-3">
           <div className="flex items-center justify-between gap-2">
             <CardTitle className="flex items-center gap-2 text-sm font-medium">
               <FileText className="w-4 h-4" />
@@ -288,7 +288,7 @@ export function FinanceModule() {
 
       {/* Delay Cost Analysis */}
       <Card className="border-l-4 border-l-red-600">
-        <CardHeader className="pb-1 pt-2 px-3">
+        <CardHeader className="pb-1 pt-1 px-3">
           <CardTitle className="flex items-center gap-2 text-sm font-medium">
             <AlertCircle className="w-4 h-4 text-red-600" />
             Análisis de Costo por Retrasos
