@@ -218,13 +218,13 @@ export function EmployeeApp({ onLogout }: EmployeeAppProps) {
                   <CardContent className="p-0">
                     <div className="rounded-b-lg overflow-hidden" style={{ height: '400px' }}>
                       <GoogleMap
-                        center={{ lat: 28.6272, lng: -106.1135 }}
-                        zoom={13}
+                        center={{ lat: 28.6360, lng: -106.0900 }}
+                        zoom={14}
                         markers={[
-                          // Vehículo en Fashion Mall (punto verde)
+                          // Vehículo en Fashion Mall
                           {
-                            position: { lat: 28.6272, lng: -106.1135 },
-                            title: 'Tu transporte - Mercedes Sprinter ABC-1234 (Fashion Mall)',
+                            position: { lat: 28.6360, lng: -106.0900 },
+                            title: 'Carrito de Transporte - Fashion Mall',
                             type: 'vehicle'
                           },
                         ]}
