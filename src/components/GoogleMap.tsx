@@ -24,6 +24,7 @@ export function GoogleMap({
   const mapRef = useRef<HTMLDivElement>(null);
   const googleMapRef = useRef<google.maps.Map | null>(null);
   const markersRef = useRef<google.maps.Marker[]>([]);
+  const userLocationMarkerRef = useRef<google.maps.Marker | null>(null);
 
   useEffect(() => {
     // Load Google Maps script
@@ -57,10 +58,73 @@ export function GoogleMap({
         center,
         zoom,
         styles: mapStyles,
+        mapTypeControl: true,
+        streetViewControl: true,
+        fullscreenControl: true,
       });
 
       // Add markers
       updateMarkers();
+
+      // Get and show user's current location
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const userLocation = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude,
+            };
+
+            // Add user location marker
+            if (userLocationMarkerRef.current) {
+              userLocationMarkerRef.current.setMap(null);
+            }
+
+            userLocationMarkerRef.current = new window.google.maps.Marker({
+              position: userLocation,
+              map: googleMapRef.current,
+              title: 'Mi Ubicación',
+              icon: {
+                path: window.google.maps.SymbolPath.CIRCLE,
+                fillColor: '#4285F4',
+                fillOpacity: 1,
+                strokeColor: '#ffffff',
+                strokeWeight: 3,
+                scale: 10,
+              },
+              zIndex: 1000,
+            });
+
+            // Center map on user location
+            googleMapRef.current?.panTo(userLocation);
+          },
+          (error) => {
+            console.warn('Error getting user location:', error);
+          }
+        );
+
+        // Watch user position for real-time updates
+        navigator.geolocation.watchPosition(
+          (position) => {
+            const userLocation = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude,
+            };
+
+            if (userLocationMarkerRef.current) {
+              userLocationMarkerRef.current.setPosition(userLocation);
+            }
+          },
+          (error) => {
+            console.warn('Error watching user location:', error);
+          },
+          {
+            enableHighAccuracy: true,
+            maximumAge: 10000,
+            timeout: 5000,
+          }
+        );
+      }
     };
 
     loadGoogleMaps();
