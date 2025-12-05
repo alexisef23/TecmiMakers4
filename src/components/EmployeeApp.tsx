@@ -437,7 +437,7 @@ export function EmployeeApp({ onLogout }: EmployeeAppProps) {
 
       {/* Bottom Navigation */}
       <div className="fixed bottom-0 left-0 right-0 bg-white dark:bg-slate-900 border-t dark:border-slate-700 shadow-lg">
-        <div className="max-w-lg mx-auto grid grid-cols-4 gap-1 p-2">
+        <div className={`max-w-lg mx-auto ${userType === 'leader' ? 'flex justify-center' : 'grid grid-cols-4 gap-1'} p-2`}>
           <Button
             variant={activeView === 'home' ? 'default' : 'ghost'}
             className={`flex-col h-14 ${activeView === 'home' ? 'bg-blue-600 dark:bg-blue-700' : ''}`}
@@ -446,31 +446,35 @@ export function EmployeeApp({ onLogout }: EmployeeAppProps) {
             <Menu className="w-4 h-4 mb-1" />
             <span className="text-xs">Inicio</span>
           </Button>
-          <Button
-            variant={activeView === 'notifications' ? 'default' : 'ghost'}
-            className={`flex-col h-14 relative ${activeView === 'notifications' ? 'bg-blue-600 dark:bg-blue-700' : ''}`}
-            onClick={() => setActiveView('notifications')}
-          >
-            <Bell className="w-4 h-4 mb-1" />
-            <span className="text-xs">Alertas</span>
-            <div className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></div>
-          </Button>
-          <Button
-            variant={activeView === 'ranking' ? 'default' : 'ghost'}
-            className={`flex-col h-14 ${activeView === 'ranking' ? 'bg-blue-600 dark:bg-blue-700' : ''}`}
-            onClick={() => setActiveView('ranking')}
-          >
-            <Trophy className="w-4 h-4 mb-1" />
-            <span className="text-xs">Ranking</span>
-          </Button>
-          <Button
-            variant={activeView === 'history' ? 'default' : 'ghost'}
-            className={`flex-col h-14 ${activeView === 'history' ? 'bg-blue-600 dark:bg-blue-700' : ''}`}
-            onClick={() => setActiveView('history')}
-          >
-            <History className="w-4 h-4 mb-1" />
-            <span className="text-xs">Historial</span>
-          </Button>
+          {userType === 'employee' && (
+            <>
+              <Button
+                variant={activeView === 'notifications' ? 'default' : 'ghost'}
+                className={`flex-col h-14 relative ${activeView === 'notifications' ? 'bg-blue-600 dark:bg-blue-700' : ''}`}
+                onClick={() => setActiveView('notifications')}
+              >
+                <Bell className="w-4 h-4 mb-1" />
+                <span className="text-xs">Alertas</span>
+                <div className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></div>
+              </Button>
+              <Button
+                variant={activeView === 'ranking' ? 'default' : 'ghost'}
+                className={`flex-col h-14 ${activeView === 'ranking' ? 'bg-blue-600 dark:bg-blue-700' : ''}`}
+                onClick={() => setActiveView('ranking')}
+              >
+                <Trophy className="w-4 h-4 mb-1" />
+                <span className="text-xs">Ranking</span>
+              </Button>
+              <Button
+                variant={activeView === 'history' ? 'default' : 'ghost'}
+                className={`flex-col h-14 ${activeView === 'history' ? 'bg-blue-600 dark:bg-blue-700' : ''}`}
+                onClick={() => setActiveView('history')}
+              >
+                <History className="w-4 h-4 mb-1" />
+                <span className="text-xs">Historial</span>
+              </Button>
+            </>
+          )}
         </div>
       </div>
 
