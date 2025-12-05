@@ -243,35 +243,24 @@ export function DriverApp({ onLogout }: DriverAppProps) {
               ← Volver
             </Button>
 
-            {/* Map Real - Ubicación en Tiempo Real a Oficinas OXXO */}
+            {/* Map Real - GPS del Conductor a Próxima Parada */}
             <Card className="dark:bg-slate-900 dark:border-slate-700">
               <CardContent className="p-0">
                 <div className="h-80 rounded-t-lg relative overflow-hidden">
                   <GoogleMap
                     center={{ lat: 28.6765, lng: -106.1025 }}
-                    zoom={12}
-                    markers={[
-                      // Parada actual (punto verde - vehículo)
-                      {
-                        position: currentTrip.stops[2].position,
-                        title: `${currentTrip.stops[2].name} - Ubicación Actual`,
-                        type: 'vehicle'
-                      },
-                      // Paradas restantes (puntos azules)
-                      ...currentTrip.stops.slice(3).map((stop) => ({
-                        position: stop.position,
-                        title: `${stop.name} - ${stop.time}`,
-                        type: 'stop' as const
-                      }))
-                    ]}
-                    showRoute={true}
-                    useDirections={true}
+                    zoom={13}
+                    employeeMode={true}
                     className="rounded-t-lg"
                   />
                   <div className="absolute top-4 right-4 bg-white dark:bg-slate-800 px-3 py-2 rounded-lg shadow z-10">
                     <p className="text-sm dark:text-slate-400">Próxima parada</p>
                     <p className="font-semibold dark:text-white">{currentTrip.stops[3].name}</p>
                     <p className="text-xs text-slate-600 dark:text-slate-400">{currentTrip.stops[3].address}</p>
+                  </div>
+                  <div className="absolute bottom-4 left-4 bg-blue-600 dark:bg-blue-700 text-white px-3 py-2 rounded-lg shadow z-10">
+                    <p className="text-xs">Tu ubicación GPS</p>
+                    <p className="text-sm font-semibold">En tiempo real</p>
                   </div>
                 </div>
               </CardContent>

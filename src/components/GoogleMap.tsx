@@ -220,16 +220,19 @@ export function GoogleMap({
         },
       });
 
-      // Calcular ruta desde el carrito (Fashion Mall) hasta el usuario
+      // Calcular ruta desde la ubicación GPS del conductor hasta Fashion Mall (próxima parada)
       const request: google.maps.DirectionsRequest = {
-        origin: FASHION_MALL_LOCATION,
-        destination: userPos,
+        origin: userPos,
+        destination: FASHION_MALL_LOCATION,
         travelMode: google.maps.TravelMode.DRIVING,
       };
 
       directionsService.route(request, (result, status) => {
         if (status === google.maps.DirectionsStatus.OK && result && directionsRendererRef.current) {
           directionsRendererRef.current.setDirections(result);
+          console.log('🚗 Ruta calculada desde GPS del conductor hacia Fashion Mall');
+        } else {
+          console.error('❌ Error calculando ruta:', status);
         }
       });
     };
