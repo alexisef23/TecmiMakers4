@@ -89,10 +89,14 @@ export function EmployeeApp({ onLogout }: EmployeeAppProps) {
       <div className="bg-blue-600 text-white p-4 sticky top-0 z-10 shadow-lg">
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center gap-3">
-            <Avatar className="h-10 w-10">
-              <AvatarImage src={employeeAvatar} alt="Profile" />
-              <AvatarFallback>
-                <User className="h-6 w-6" />
+            <Avatar className="h-12 w-12 ring-2 ring-white/20">
+              <AvatarImage 
+                src={employeeAvatar} 
+                alt="Profile" 
+                className="object-cover"
+              />
+              <AvatarFallback className="bg-blue-500">
+                <User className="h-7 w-7 text-white" />
               </AvatarFallback>
             </Avatar>
             <div>
