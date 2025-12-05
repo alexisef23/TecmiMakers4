@@ -79,10 +79,9 @@ export function GoogleMap({
         zoomControl: true,
       });
 
-      // Obtener ubicación del usuario en tiempo real
+      // Obtener ubicación del usuario
       if (navigator.geolocation) {
-        // Watchear la posición para actualizaciones en tiempo real
-        const watchId = navigator.geolocation.watchPosition(
+        navigator.geolocation.getCurrentPosition(
           (position) => {
             const userPos = {
               lat: position.coords.latitude,
@@ -91,54 +90,33 @@ export function GoogleMap({
 
             if (!googleMapInstanceRef.current) return;
 
-            // Actualizar o crear marcador de usuario
+            // Crear marcador de usuario
             if (userMarkerRef.current) {
-              // Actualizar posición existente
-              userMarkerRef.current.setPosition(userPos);
-            } else {
-              // Crear nuevo marcador
-              userMarkerRef.current = new google.maps.Marker({
-                position: userPos,
-                map: googleMapInstanceRef.current,
-                title: 'Mi Ubicación en Tiempo Real',
-                icon: {
-                  path: google.maps.SymbolPath.CIRCLE,
-                  fillColor: '#4285F4',
-                  fillOpacity: 1,
-                  strokeColor: '#ffffff',
-                  strokeWeight: 3,
-                  scale: 10,
-                },
-                zIndex: 1000,
-              });
+              userMarkerRef.current.setMap(null);
             }
 
-            // Centrar en usuario solo la primera vez
-            if (!userMarkerRef.current.getPosition()) {
-              googleMapInstanceRef.current.setCenter(userPos);
-            }
-            
-            // Actualizar ruta hacia la ubicación del usuario
-            if (showRoute && useDirections && markers.length > 0) {
-              drawDirectionsRoute();
-            }
+            userMarkerRef.current = new google.maps.Marker({
+              position: userPos,
+              map: googleMapInstanceRef.current,
+              title: 'Mi Ubicación',
+              icon: {
+                path: google.maps.SymbolPath.CIRCLE,
+                fillColor: '#4285F4',
+                fillOpacity: 1,
+                strokeColor: '#ffffff',
+                strokeWeight: 3,
+                scale: 10,
+              },
+              zIndex: 1000,
+            });
+
+            // Centrar en usuario
+            googleMapInstanceRef.current.setCenter(userPos);
           },
           (error) => {
             console.log('Error obteniendo ubicación:', error);
-          },
-          {
-            enableHighAccuracy: true,
-            maximumAge: 0,
-            timeout: 5000
           }
         );
-
-        // Guardar el ID del watch para limpiarlo después
-        return () => {
-          if (watchId) {
-            navigator.geolocation.clearWatch(watchId);
-          }
-        };
       }
 
       // Agregar marcadores
@@ -226,7 +204,7 @@ export function GoogleMap({
     };
 
     const drawDirectionsRoute = () => {
-      if (!googleMapInstanceRef.current || !window.google) return;
+      if (!googleMapInstanceRef.current || !window.google || markers.length < 2) return;
 
       const directionsService = new google.maps.DirectionsService();
       
@@ -246,56 +224,38 @@ export function GoogleMap({
         },
       });
 
-      // Determinar origen y destino
-      let origin, destination;
-      
-      if (markers.length >= 2) {
-        // Si hay múltiples marcadores, usar el primero y el último
-        const waypoints = markers.slice(1, -1).map(m => ({
-          location: m.position,
-          stopover: true,
-        }));
-        
-        origin = markers[0].position;
-        destination = markers[markers.length - 1].position;
-        
-        const request: google.maps.DirectionsRequest = {
-          origin: origin,
-          destination: destination,
-          waypoints: waypoints,
-          travelMode: google.maps.TravelMode.DRIVING,
-          optimizeWaypoints: false,
-        };
-        
-        directionsService.route(request, (result, status) => {
-          if (status === google.maps.DirectionsStatus.OK && result) {
-            directionsRendererRef.current?.setDirections(result);
-          } else {
-            console.error('Error al calcular la ruta:', status);
-          }
-        });
-      } else if (markers.length === 1 && userMarkerRef.current) {
-        // Si solo hay un marcador (vehículo), usar la ubicación del usuario como destino
-        origin = markers[0].position;
-        destination = userMarkerRef.current.getPosition()?.toJSON();
-        
-        if (destination) {
-          const request: google.maps.DirectionsRequest = {
-            origin: origin,
-            destination: destination,
-            travelMode: google.maps.TravelMode.DRIVING,
-            optimizeWaypoints: false,
-          };
-          
-          directionsService.route(request, (result, status) => {
-            if (status === google.maps.DirectionsStatus.OK && result) {
-              directionsRendererRef.current?.setDirections(result);
-            } else {
-              console.error('Error al calcular la ruta:', status);
-            }
+      // Preparar waypoints (puntos intermedios)
+      const waypoints = markers.slice(1, -1).map(m => ({
+        location: m.position,
+        stopover: true,
+      }));
+
+      // Calcular ruta
+      const request: google.maps.DirectionsRequest = {
+        origin: markers[0].position,
+        destination: markers[markers.length - 1].position,
+        waypoints: waypoints,
+        travelMode: google.maps.TravelMode.DRIVING,
+        optimizeWaypoints: false, // Mantener el orden de las paradas
+      };
+
+      directionsService.route(request, (result, status) => {
+        if (status === google.maps.DirectionsStatus.OK && result) {
+          directionsRendererRef.current?.setDirections(result);
+        } else {
+          console.error('Error al calcular la ruta:', status);
+          // Fallback a línea recta si falla
+          const path = markers.map(m => m.position);
+          polylineRef.current = new google.maps.Polyline({
+            path: path,
+            geodesic: true,
+            strokeColor: '#3b82f6',
+            strokeOpacity: 0.8,
+            strokeWeight: 4,
+            map: googleMapInstanceRef.current,
           });
         }
-      }
+      });
     };
 
     const getMarkerColor = (type?: string) => {
