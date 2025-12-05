@@ -6,9 +6,7 @@ import {
   DollarSign, 
   BarChart3, 
   Settings, 
-  LogOut,
-  Menu,
-  X
+  LogOut
 } from 'lucide-react';
 import { DashboardHome } from './admin/DashboardHome';
 import { RouteManagement } from './admin/RouteManagement';
@@ -25,7 +23,6 @@ type ActiveModule = 'home' | 'routes' | 'finance' | 'reports' | 'settings';
 
 export function AdminDashboard({ onLogout }: AdminDashboardProps) {
   const [activeModule, setActiveModule] = useState<ActiveModule>('home');
-  const [sidebarOpen, setSidebarOpen] = useState(true);
 
   const menuItems = [
     { id: 'home' as const, label: 'Panel Principal', icon: LayoutDashboard },
@@ -37,82 +34,14 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
 
   return (
     <div className="flex h-screen bg-slate-50 dark:bg-slate-950 overflow-hidden">
-      {/* Sidebar - Solo visible en desktop */}
-      <aside 
-        className={`bg-blue-900 dark:bg-blue-950 text-white transition-all duration-300 flex-col shadow-xl border-r-4 border-blue-600 dark:border-blue-700 hidden lg:flex ${
-          sidebarOpen ? 'w-64' : 'w-24'
-        }`}
-      >
-        <div className="p-4 border-b border-blue-800 dark:border-blue-900 flex items-center justify-between">
-          {sidebarOpen ? (
-            <>
-              <div className="flex items-center gap-3">
-                <img src={oxxoGoLogo} alt="OXXO GO" className="w-10 h-10" />
-                <span className="font-semibold">OXXO GO</span>
-              </div>
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => setSidebarOpen(false)}
-                className="text-white hover:bg-blue-800 h-8 w-8"
-              >
-                <X className="w-5 h-5" />
-              </Button>
-            </>
-          ) : (
-            <div className="flex items-center justify-center">
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => setSidebarOpen(true)}
-                className="text-white hover:bg-blue-700 h-12 w-12 bg-blue-800"
-              >
-                <Menu className="w-7 h-7" />
-              </Button>
-            </div>
-          )}
-        </div>
-
-        <nav className="flex-1 p-4 space-y-2 overflow-y-auto">
-          {menuItems.map((item) => (
-            <Button
-              key={item.id}
-              variant={activeModule === item.id ? 'secondary' : 'ghost'}
-              className={`w-full justify-start ${
-                activeModule === item.id 
-                  ? 'bg-white text-blue-900 hover:bg-white' 
-                  : 'text-white hover:bg-blue-800'
-              } ${!sidebarOpen && 'justify-center h-14 w-14 mx-auto my-2'}`}
-              onClick={() => setActiveModule(item.id)}
-            >
-              <item.icon className={`w-5 h-5 ${sidebarOpen ? 'mr-3' : ''}`} />
-              {sidebarOpen && <span>{item.label}</span>}
-            </Button>
-          ))}
-        </nav>
-
-        <div className="p-4 border-t border-blue-800 space-y-2">
-          <Button
-            variant="ghost"
-            className={`w-full justify-start text-white hover:bg-blue-800 dark:hover:bg-blue-900 ${
-              !sidebarOpen && 'justify-center h-14 w-14 mx-auto'
-            }`}
-            onClick={onLogout}
-          >
-            <LogOut className={`w-5 h-5 ${sidebarOpen ? 'mr-3' : ''}`} />
-            {sidebarOpen && <span>Cerrar Sesión</span>}
-          </Button>
-        </div>
-      </aside>
-
       {/* Main Content */}
-      <main className="flex-1 overflow-y-auto pb-20 lg:pb-0">
+      <main className="flex-1 overflow-y-auto pb-20">
         <div className="p-4 lg:p-8">
-          {/* Header móvil con logo */}
-          <div className="lg:hidden mb-4 flex items-center justify-between bg-blue-900 dark:bg-blue-950 text-white p-4 -m-4 mb-4">
+          {/* Header con logo y botón de logout */}
+          <div className="mb-4 flex items-center justify-between bg-blue-900 dark:bg-blue-950 text-white p-4 -m-4 mb-4 rounded-lg">
             <div className="flex items-center gap-3">
               <img src={oxxoGoLogo} alt="OXXO GO" className="w-10 h-10" />
-              <span className="font-semibold">OXXO GO</span>
+              <span className="font-semibold">OXXO GO Admin</span>
             </div>
             <Button
               variant="ghost"
@@ -121,6 +50,7 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
               className="text-white hover:bg-blue-800"
             >
               <LogOut className="w-5 h-5" />
+              <span className="ml-2 hidden sm:inline">Cerrar Sesión</span>
             </Button>
           </div>
 
@@ -132,9 +62,9 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
         </div>
       </main>
 
-      {/* Bottom Navigation - Solo móvil */}
-      <nav className="lg:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-slate-900 border-t dark:border-slate-700 shadow-lg z-50">
-        <div className="grid grid-cols-5 gap-1 p-2">
+      {/* Bottom Navigation - Visible en todas las plataformas */}
+      <nav className="fixed bottom-0 left-0 right-0 bg-white dark:bg-slate-900 border-t dark:border-slate-700 shadow-lg z-50">
+        <div className="grid grid-cols-5 gap-1 p-2 max-w-screen-xl mx-auto">
           {menuItems.map((item) => (
             <Button
               key={item.id}
